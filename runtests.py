@@ -11,6 +11,6 @@ if __name__ == '__main__':
     django.setup()
     TestRunner = get_runner(settings)
     test_runner = TestRunner()
-    tests = ['safedelete.tests'] if len(sys.argv) == 1 else sys.argv[1:]
+    tests = ['notifications.tests'] if len(sys.argv) == 1 else sys.argv[1:]
     failures = test_runner.run_tests(tests)
     sys.exit(bool(failures))
