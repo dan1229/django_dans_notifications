@@ -24,6 +24,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -------------------------------------------------------
 ### TODO
 
+#### tests
+- post api tests?
+
+-----
+
+#### typing
+
+mypy + django stubs
+
+-----
+
+email api
+- finish POST endpoint?
+
+-----
+
+badges
+- coverage?
+- workflows
+
+
+ci - test python / django stuff
+
 cd - add python build and stuff
 
 -------------------------------------------------------
