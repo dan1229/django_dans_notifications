@@ -1,7 +1,7 @@
-from notifications.models.basic import NotificationBasic
-from notifications.test.model_tests.base import (
-    BaseModelTestCase,
+from ..base import (
+	BaseModelTestCase,
 )
+from ....models.basic import NotificationBasic
 
 """
 # ========================================================================= #

@@ -3,7 +3,7 @@ import logging
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 
-from notifications.api_response import ApiResponse
+from .api_response import ApiResponse
 
 logger = logging.getLogger(__name__)
 

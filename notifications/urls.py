@@ -5,9 +5,9 @@
 #  For questions, comments, concerns, and more -> dnaz@danielnazarian.com
 from rest_framework.routers import DefaultRouter
 
-from notifications.views.basic import NotificationBasicViewSet
-from notifications.views.email import NotificationEmailViewSet
-from notifications.views.push import NotificationPushViewSet
+from views.basic import NotificationBasicViewSet
+from views.email import NotificationEmailViewSet
+from views.push import NotificationPushViewSet
 
 """
 # =================================================================================================== #
