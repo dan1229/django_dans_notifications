@@ -44,6 +44,7 @@ coverage
 - codecov
 - badge?
 
+add lint/flake8 check
 
 -----
 ### 1.0.1
