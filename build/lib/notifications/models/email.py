@@ -8,7 +8,6 @@ from django.db import models
 from django.template import TemplateDoesNotExist
 from django.template.loader import render_to_string, get_template
 from django.utils.html import strip_tags
-from safedelete import HARD_DELETE_NOCASCADE
 
 from .base import NotificationBase
 

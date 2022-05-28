@@ -57,7 +57,7 @@ ci - test python / django stuff
 
 cd - add python build and stuff
 
-
+https://github.com/caktus/django-app-template/blob/master/runtests.py
 
 ### [1.0.1] - 2022-05-DD
 - CI/CD improvements

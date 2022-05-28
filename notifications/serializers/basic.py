@@ -1,5 +1,5 @@
 from .base import BaseSerializer
-from ..models import NotificationBasic
+from ..models.basic import NotificationBasic
 
 """
 ============================================================================================ #

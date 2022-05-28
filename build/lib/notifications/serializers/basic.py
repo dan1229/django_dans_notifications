@@ -1,5 +1,5 @@
-from api.serializers.base import BaseSerializer
 from notifications.models.basic import NotificationBasic
+from .base import BaseSerializer
 
 """
 ============================================================================================ #
