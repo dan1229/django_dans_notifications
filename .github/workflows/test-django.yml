@@ -43,11 +43,15 @@ jobs:
         python -m pip install --upgrade pip
         pip install -e .
         pip install -U Django~=${{ matrix.django_version }}
+        pip install tox
 
-    - name: Test Django
-      run: python `which django-admin` test --settings=notifications.tests.settings
+    - name: Run tests
+      run: tox -e py-dj${{ matrix.tox-django-version }}
+#    - name: Test Django
+#      run: python `which django-admin` test --settings=notifications.tests.settings
 
-    - name: Coverage
-      if: ${{ success() }}
-      run: |
-        coveralls --service=github
+#    # TODO coverage/codecov
+#    - name: Coverage
+#      if: ${{ success() }}
+#      run: |
+#        coveralls --service=github
