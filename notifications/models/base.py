@@ -1,7 +1,5 @@
-from django.db import models
-from safedelete import SOFT_DELETE_CASCADE
-
 from core.models.base import AbstractBaseModel
+from django.db import models
 
 """
 # ==================================================================================== #
@@ -14,8 +12,6 @@ from core.models.base import AbstractBaseModel
 # NOTIFICATION BASE =================== #
 #
 class NotificationBase(AbstractBaseModel):
-    _safedelete_policy = SOFT_DELETE_CASCADE
-
     datetime_sent = models.DateTimeField(null=True, blank=True)
     sent_successfully = models.BooleanField(default=False, null=False, blank=False)
     sender = models.CharField(

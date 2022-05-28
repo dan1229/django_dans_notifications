@@ -1,5 +1,7 @@
+import logging
 from smtplib import SMTPException
 
+from core.models.base import AbstractBaseModel
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.db import models
@@ -7,10 +9,9 @@ from django.template import TemplateDoesNotExist
 from django.template.loader import render_to_string, get_template
 from django.utils.html import strip_tags
 
-from core.helpers import log_error
-from core.models.base import AbstractBaseModel
 from notifications.models.base import NotificationBase
 
+logger = logging.getLogger(__name__)
 """
 # ==================================================================================== #
 # NOTIFICATION EMAIL ================================================================= #
@@ -148,7 +149,7 @@ class NotificationEmailManager(models.Manager):
                 message.send(fail_silently=False)
             notification_email.sent_successfully = True
         except SMTPException as e:
-            log_error(e)
+            logger.error(e)
             notification_email.sent_successfully = False
         notification_email.save()
         return notification_email
@@ -170,7 +171,7 @@ class NotificationEmailTemplate(AbstractBaseModel):
         try:
             return render_to_string(self.path, context)
         except Exception as e:
-            log_error(e)
+            logger.error(e)
             return render_to_string("emails/default.html", context)
 
 
