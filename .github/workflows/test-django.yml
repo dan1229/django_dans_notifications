@@ -34,7 +34,6 @@ jobs:
     - name: Cache pip
       uses: actions/cache@v2
       with:
-        # This path is specific to Ubuntu
         path: ~/.cache/pip
         key: ${{ runner.os }}-pip-${{ matrix.python-version }}-${{ matrix.django_version }}
 
@@ -46,7 +45,7 @@ jobs:
         pip install tox
 
     - name: Run tests
-      run: tox -e py-dj${{ matrix.tox-django-version }}
+      run: tox -e py-dj${{ matrix.django-version }}
 #    - name: Test Django
 #      run: python `which django-admin` test --settings=notifications.tests.settings
 
