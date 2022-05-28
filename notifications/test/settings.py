@@ -1,6 +1,5 @@
 SECRET_KEY = "secret"
 
-ROOT_URLCONF = "notifications.urls"
 
 DEBUG = True
 
