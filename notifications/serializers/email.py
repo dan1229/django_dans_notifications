@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from api.serializers.base import BaseSerializer
+from notifications.serializers.base import BaseSerializer
 from notifications.models.email import NotificationEmail, NotificationEmailTemplate
 
 """

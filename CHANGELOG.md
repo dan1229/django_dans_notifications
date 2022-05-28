@@ -49,6 +49,13 @@ ci - test python / django stuff
 
 cd - add python build and stuff
 
+
+-----
+
+replace base model
+
+replace loggers
+
 -------------------------------------------------------
 
 ##### [https://danielnazarian.com](https://danielnazarian.com)

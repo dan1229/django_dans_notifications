@@ -42,11 +42,10 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -e .
-        pip install -U flake8 coveralls argparse
         pip install -U Django~=${{ matrix.django_version }}
 
     - name: Test Django
-      run: python coverage run `which django-admin` test --settings=notifications.tests.settings
+      run: python `which django-admin` test --settings=notifications.tests.settings
 
     - name: Coverage
       if: ${{ success() }}

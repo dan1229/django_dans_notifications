@@ -6,7 +6,6 @@ from django.db import models
 from django.template import TemplateDoesNotExist
 from django.template.loader import render_to_string, get_template
 from django.utils.html import strip_tags
-from safedelete import HARD_DELETE_NOCASCADE
 
 from core.helpers import log_error
 from core.models.base import AbstractBaseModel
@@ -159,7 +158,6 @@ class NotificationEmailManager(models.Manager):
 # NOTIFICATION EMAIL TEMPLATE =============== #
 #
 class NotificationEmailTemplate(AbstractBaseModel):
-    _safedelete_policy = HARD_DELETE_NOCASCADE
     objects = NotificationEmailTemplateManager()
 
     path = models.CharField(max_length=300, null=False, blank=False)
