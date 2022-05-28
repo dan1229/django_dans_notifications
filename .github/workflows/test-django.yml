@@ -3,7 +3,8 @@
 
 name: Test Django
 
-on: [push, pull_request]
+on:
+  push:
 
 jobs:
   tests_python:
