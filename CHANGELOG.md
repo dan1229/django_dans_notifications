@@ -44,6 +44,8 @@ coverage
 - codecov
 - badge?
 
+license
+
 -----
 
 ci - test python / django stuff
