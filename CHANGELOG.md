@@ -48,6 +48,9 @@ add lint/flake8 check
 
 -----
 ### 1.0.1
+
+finish readme
+
 license
 
 ci - test python / django stuff
