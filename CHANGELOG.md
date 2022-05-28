@@ -44,14 +44,20 @@ coverage
 - codecov
 - badge?
 
-license
 
 -----
+### 1.0.1
+license
 
 ci - test python / django stuff
 
 cd - add python build and stuff
 
+
+
+### [1.0.1] - 2022-05-DD
+- CI/CD improvements
+- Refactored notifications app to work better with standard Django app
 
 -------------------------------------------------------
 

@@ -25,6 +25,7 @@ License-File: LICENSE
 License-File: AUTHORS
 
 # Django Dans Notifications
+[![Test Django](https://github.com/dan1229/django_dans_notifications/actions/workflows/test-django.yml/badge.svg)](https://github.com/dan1229/django_dans_notifications/actions/workflows/test-django.yml)
 
 ### [GitHub](https://github.com/dan1229/django_dans_notifications)
 ### [PyPi](https://pypi.org/project/django-dans-notifications/)
