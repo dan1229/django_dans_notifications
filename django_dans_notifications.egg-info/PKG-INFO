@@ -6,10 +6,9 @@ Home-page: https://www.github.com/dan1229/django_dans_notifications
 Author: Daniel Nazarian
 Author-email: dnaz@danielnazarian.com
 License: BSD-3-Clause  # Example license
-Platform: UNKNOWN
 Classifier: Environment :: Web Environment
 Classifier: Framework :: Django
-Classifier: Framework :: Django :: X.Y  # Replace "X.Y" as appropriate
+Classifier: Framework :: Django :: 3.0
 Classifier: Intended Audience :: Developers
 Classifier: License :: OSI Approved :: BSD License
 Classifier: Operating System :: OS Independent
@@ -21,16 +20,15 @@ Classifier: Programming Language :: Python :: 3.9
 Classifier: Topic :: Internet :: WWW/HTTP
 Classifier: Topic :: Internet :: WWW/HTTP :: Dynamic Content
 Requires-Python: >=3.8
+Description-Content-Type: text/markdown
 License-File: LICENSE
 
-=====
-DJANGO DANS NOTIFICATION
-=====
+# DJANGO DANS NOTIFICATION
 
 A Django app to handle notifications.
 
-Models
------------
+## Models
+
 TODO
 
 NotificationEmail
@@ -41,22 +39,23 @@ NotificationBasic
 NotificationPush
 
 
-Usage
------------
+## Usage
+
 TODO
 
 NotificationManager
 
 
-Quick start
------------
+## Quick start
 
-1. Add "polls" to your INSTALLED_APPS setting like this::
+1. Add "polls" to your INSTALLED_APPS setting like this:
 
-    INSTALLED_APPS = [
-        ...
-        'notifications',
-    ]
+```python
+INSTALLED_APPS = [
+    ...
+    'notifications',
+]
+```
 
 2. Include the polls URLconf in your project urls.py like this::
 
@@ -66,3 +65,21 @@ Quick start
 
 4. Create notifications via the API or Admin portal!
 
+
+
+## Packaging
+
+To build run:
+
+```bash
+python setup.py sdist
+python setup.py bdist_wheel
+```
+
+To release run:
+
+```bash
+python3 -m twine upload --repository testpypi dist/*
+```
+
+This expects you to have the proper credentials in your `$HOME/.pypirc` file

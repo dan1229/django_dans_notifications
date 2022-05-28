@@ -1,0 +1,26 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    branches:
+      - 'master'
+    inputs:
+      version:
+        required: true
+        type: string
+        description: Version for this release. Format "X.X.X".
+
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      # TODO - add python build and release to pypi
+
+      - name: Create release in GitHub
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ github.event.inputs.version }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit: ${{ github.event.pull_request.head.sha }}
+          body: ${{ github.event.head_commit.message }}
