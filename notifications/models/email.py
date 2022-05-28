@@ -1,7 +1,6 @@
 import logging
 from smtplib import SMTPException
 
-from core.models.base import AbstractBaseModel
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.db import models
@@ -9,9 +8,10 @@ from django.template import TemplateDoesNotExist
 from django.template.loader import render_to_string, get_template
 from django.utils.html import strip_tags
 
-from notifications.models.base import NotificationBase
+from notifications.models.base import NotificationBase, AbstractBaseModel
 
 logger = logging.getLogger(__name__)
+
 """
 # ==================================================================================== #
 # NOTIFICATION EMAIL ================================================================= #
