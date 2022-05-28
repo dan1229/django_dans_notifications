@@ -1,3 +1,4 @@
+AUTHORS
 LICENSE
 MANIFEST.in
 README.md
@@ -28,6 +29,7 @@ notifications/models/basic.py
 notifications/models/email.py
 notifications/models/push.py
 notifications/serializers/__init__.py
+notifications/serializers/base.py
 notifications/serializers/basic.py
 notifications/serializers/email.py
 notifications/serializers/push.py
@@ -38,6 +40,7 @@ notifications/templates/emails/empty.html
 notifications/templates/emails/password_reset_request.html
 notifications/templates/emails/template.html
 notifications/test/__init__.py
+notifications/test/settings.py
 notifications/test/model_tests/__init__.py
 notifications/test/model_tests/base.py
 notifications/test/model_tests/basic/__init__.py

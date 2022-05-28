@@ -22,10 +22,15 @@ Classifier: Topic :: Internet :: WWW/HTTP :: Dynamic Content
 Requires-Python: >=3.8
 Description-Content-Type: text/markdown
 License-File: LICENSE
+License-File: AUTHORS
 
-# DJANGO DANS NOTIFICATION
+# Django Dans Notifications
+
+### [GitHub](https://github.com/dan1229/django_dans_notifications)
+### [PyPi](https://pypi.org/project/django-dans-notifications/)
 
 A Django app to handle notifications.
+
 
 ## Models
 
@@ -79,7 +84,7 @@ python setup.py bdist_wheel
 To release run:
 
 ```bash
-python3 -m twine upload --repository testpypi dist/*
+python3 -m twine upload --repository pypi dist/*
 ```
 
 This expects you to have the proper credentials in your `$HOME/.pypirc` file

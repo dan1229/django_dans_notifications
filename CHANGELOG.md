@@ -37,24 +37,19 @@ mypy + django stubs
 
 email api
 - finish POST endpoint?
+  - can replace other email endpoint?
+
+
+coverage
+- codecov
+- badge?
 
 -----
-
-badges
-- coverage?
-- workflows
-
 
 ci - test python / django stuff
 
 cd - add python build and stuff
 
-
------
-
-replace base model
-
-replace loggers
 
 -------------------------------------------------------
 
