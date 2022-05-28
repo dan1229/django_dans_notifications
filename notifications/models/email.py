@@ -1,3 +1,4 @@
+import logging
 from smtplib import SMTPException
 
 from django.conf import settings
@@ -6,11 +7,10 @@ from django.db import models
 from django.template import TemplateDoesNotExist
 from django.template.loader import render_to_string, get_template
 from django.utils.html import strip_tags
-from safedelete import HARD_DELETE_NOCASCADE
 
-from core.helpers import log_error
-from core.models.base import AbstractBaseModel
-from notifications.models.base import NotificationBase
+from notifications.models.base import NotificationBase, AbstractBaseModel
+
+logger = logging.getLogger(__name__)
 
 """
 # ==================================================================================== #
@@ -149,7 +149,7 @@ class NotificationEmailManager(models.Manager):
                 message.send(fail_silently=False)
             notification_email.sent_successfully = True
         except SMTPException as e:
-            log_error(e)
+            logger.error(e)
             notification_email.sent_successfully = False
         notification_email.save()
         return notification_email
@@ -159,7 +159,6 @@ class NotificationEmailManager(models.Manager):
 # NOTIFICATION EMAIL TEMPLATE =============== #
 #
 class NotificationEmailTemplate(AbstractBaseModel):
-    _safedelete_policy = HARD_DELETE_NOCASCADE
     objects = NotificationEmailTemplateManager()
 
     path = models.CharField(max_length=300, null=False, blank=False)
@@ -172,7 +171,7 @@ class NotificationEmailTemplate(AbstractBaseModel):
         try:
             return render_to_string(self.path, context)
         except Exception as e:
-            log_error(e)
+            logger.error(e)
             return render_to_string("emails/default.html", context)
 
 

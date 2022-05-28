@@ -3,7 +3,8 @@
 
 name: Test Django
 
-on: [push, pull_request]
+on:
+  push:
 
 jobs:
   tests_python:
@@ -34,7 +35,6 @@ jobs:
     - name: Cache pip
       uses: actions/cache@v2
       with:
-        # This path is specific to Ubuntu
         path: ~/.cache/pip
         key: ${{ runner.os }}-pip-${{ matrix.python-version }}-${{ matrix.django_version }}
 
@@ -42,13 +42,16 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -e .
-        pip install -U flake8 coveralls argparse
         pip install -U Django~=${{ matrix.django_version }}
+        pip install tox
 
-    - name: Test Django
-      run: python coverage run `which django-admin` test --settings=notifications.tests.settings
+    - name: Run tests
+      run: tox -e py-dj${{ matrix.django_version }}
+#    - name: Test Django
+#      run: python `which django-admin` test --settings=notifications.tests.settings
 
-    - name: Coverage
-      if: ${{ success() }}
-      run: |
-        coveralls --service=github
+#    # TODO coverage/codecov
+#    - name: Coverage
+#      if: ${{ success() }}
+#      run: |
+#        coveralls --service=github

@@ -1,7 +1,26 @@
-from django.db import models
-from safedelete import SOFT_DELETE_CASCADE
+import uuid
 
-from core.models.base import AbstractBaseModel
+from django.db import models
+
+"""
+# ==================================================================================== #
+# ABSTRACT BASE MODEL ================================================================ #
+# ==================================================================================== #
+"""
+
+
+class AbstractBaseModel(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+    datetime_created = models.DateTimeField(auto_now_add=True, editable=False)
+    datetime_modified = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        return "Abstract Base Model"
+
 
 """
 # ==================================================================================== #
@@ -14,8 +33,6 @@ from core.models.base import AbstractBaseModel
 # NOTIFICATION BASE =================== #
 #
 class NotificationBase(AbstractBaseModel):
-    _safedelete_policy = SOFT_DELETE_CASCADE
-
     datetime_sent = models.DateTimeField(null=True, blank=True)
     sent_successfully = models.BooleanField(default=False, null=False, blank=False)
     sender = models.CharField(

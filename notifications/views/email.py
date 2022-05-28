@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from rest_framework import viewsets
 
-from api.api_response_handler import ApiResponseHandler
+from notifications.api_response_handler import ApiResponseHandler
 from notifications.models import NotificationEmail
 from notifications.serializers.email import NotificationEmailSerializer
 
