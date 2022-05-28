@@ -41,11 +41,7 @@ jobs:
         pip install -e .
         pip install -U flake8 coveralls argparse
         pip install -U Django~=${{ matrix.django_version }}
-    - name: Lint with flake8
-      run: |
-        flake8 --ignore=E501,W504 notifications
     - name: Test Django
-      if: matrix.django_version != '1.11'
       run: |
         python -W error::DeprecationWarning -W error::PendingDeprecationWarning \
           -m coverage run `which django-admin` test --settings=notifications.tests.settings
