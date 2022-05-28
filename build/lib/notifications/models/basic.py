@@ -1,6 +1,6 @@
 from django.db import models
 
-from notifications.models.base import NotificationBase
+from .base import NotificationBase
 
 """
 # ==================================================================================== #
