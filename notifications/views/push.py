@@ -2,7 +2,7 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 from rest_framework import viewsets
 
-from api.api_response_handler import ApiResponseHandler
+from notifications.api_response_handler import ApiResponseHandler
 from notifications.models import NotificationPush
 from notifications.serializers.push import NotificationPushSerializer
 
