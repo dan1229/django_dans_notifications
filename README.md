@@ -1,4 +1,4 @@
-# DJANGO DANS NOTIFICATION
+# Django Dans Notifications
 
 ### [GitHub](https://github.com/dan1229/django_dans_notifications)
 ### [PyPi](https://pypi.org/project/django-dans-notifications/)
