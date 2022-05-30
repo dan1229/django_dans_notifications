@@ -26,6 +26,11 @@ INSTALLED_APPS = [
 
 4. Create notifications via the API or Admin portal.
 
+### REQUIREMENTS
+- Python 3.0 or higher
+- Django 3.0 or higher
+- Django Rest Framework
+
 ## Models
 
 To use this package simply utilize the models included as well as their properties/helper methods.

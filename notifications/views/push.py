@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 
 from ..api_response_handler import ApiResponseHandler
 from ..models.push import NotificationPush
@@ -21,6 +22,7 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
     response_handler = ApiResponseHandler()
     queryset = NotificationPush.objects.all()
     serializer_class = NotificationPushSerializer
+    permission_classes = (IsAuthenticated,)
 
     def list(self, request, *args, **kwargs):
         """
