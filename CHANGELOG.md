@@ -27,6 +27,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### docs
 - api docs
   - take out of readme.md
+- usage docs
+  - send email
+  - different models
+- templates
 
 -----
 
@@ -39,23 +43,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - post api tests?
 
 -----
-
-#### typing
-
-mypy + django stubs
-
------
-
-remove api response handler
-- create more generic django apis
-
+#### apis
 
 email api
 - finish POST endpoint?
   - can replace other email endpoint?
 
 
-users can add their own email templates
+
+remove api response handler
+- create more generic django apis
+
+-----
+
+#### typing
+
+mypy + django stubs
+
+-----
+#### templates
+
+do we need the actual 'templates' folder?
+- can we just store it as a string?
+  - need users to be able to add their own, probably weird for them to copy paste
+
+user editable
+- users add to their own 'tepmlates' folder
+
+-----
 
 
 coverage
@@ -66,8 +81,6 @@ add lint/flake8 check
 
 -----
 ### 1.0.1
-
-finish readme
 
 license
 

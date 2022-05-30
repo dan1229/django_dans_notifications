@@ -70,7 +70,7 @@ class NotificationManager:
     # UPDATE
     #
     @staticmethod
-    def mark_notification_read(notification_basic, read=True):
+    def mark_notification_basic_read(notification_basic, read=True):
         """
         Mark a NotificationBasic as read
         :param NotificationBasic notification_basic: notification basic to update
