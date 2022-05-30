@@ -64,7 +64,7 @@ class NotificationManager:
         emails = self.get_notifications_email(user_email=user_email)
         basic = self.get_notifications_basic(user_email=user_email)
         push = self.get_notifications_push(user_email=user_email)
-        return {'emails': emails, 'basic': basic, 'push': push}
+        return {"emails": emails, "basic": basic, "push": push}
 
     #
     # UPDATE

@@ -1,5 +1,9 @@
 from django.contrib import admin
 
+from .models.basic import NotificationBasic
+from .models.email import NotificationEmail, NotificationEmailTemplate
+from .models.push import NotificationPush
+
 """
 # ==================================================================================== #
 # NOTIFICATIONS ====================================================================== #

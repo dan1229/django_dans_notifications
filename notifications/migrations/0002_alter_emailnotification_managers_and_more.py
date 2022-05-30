@@ -4,7 +4,7 @@ import django.db.models.deletion
 from django.conf import settings
 from django.db import migrations, models
 
-import notifications.models
+from ..models.email import NotificationEmailManager
 
 
 class Migration(migrations.Migration):
@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
         migrations.AlterModelManagers(
             name="emailnotification",
             managers=[
-                ("objects", notifications.models.NotificationEmailManager()),
+                ("objects", NotificationEmailManager()),
             ],
         ),
         migrations.AlterField(

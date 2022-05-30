@@ -1,6 +1,5 @@
 SECRET_KEY = "secret"
 
-
 DEBUG = True
 
 DATABASES = {
@@ -34,6 +33,8 @@ INSTALLED_APPS = (
     "django.contrib.sessions",
     "django.contrib.admin",
     "django.contrib.messages",
+    "rest_framework",
+    "rest_framework.authtoken",
     "notifications",
 )
 
