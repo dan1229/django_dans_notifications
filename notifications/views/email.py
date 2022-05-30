@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 
 from ..api_response_handler import ApiResponseHandler
 from ..models.email import NotificationEmail
@@ -20,6 +21,7 @@ class NotificationEmailViewSet(viewsets.GenericViewSet):
     response_handler = ApiResponseHandler()
     queryset = NotificationEmail.objects.all()
     serializer_class = NotificationEmailSerializer
+    permission_classes = (IsAuthenticated,)
 
     def list(self, request, *args, **kwargs):
         """
@@ -41,8 +43,8 @@ class NotificationEmailViewSet(viewsets.GenericViewSet):
     def retrieve(self, request, *args, **kwargs):
         """
         Endpoint to retrieve specific Email Notification
-        @[PARAM]
-        pk          - UUID of NotificationEmail to retrieve
+
+        :param uuid pk: UUID of NotificationEmail to retrieve
         """
         pk = self.kwargs.get("pk")
         try:

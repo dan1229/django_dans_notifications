@@ -1,9 +1,9 @@
 import json
 import uuid
 
-from notifications.models.push import NotificationPush
-from notifications.test.view_tests.base import BaseAPITestCase
-from notifications.views.push import NotificationPushViewSet
+from .base import BaseAPITestCase
+from ...models.push import NotificationPush
+from ...views.push import NotificationPushViewSet
 
 """
 # =============================================================================================

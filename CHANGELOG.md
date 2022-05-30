@@ -24,8 +24,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -------------------------------------------------------
 ### TODO
 
+#### docs
+- api docs
+  - take out of readme.md
+- usage docs
+  - send email
+  - different models
+- templates
+
+-----
+
+#### notification models
+- how to allow user to add extras fields?
+
+-----
+
 #### tests
 - post api tests?
+
+-----
+#### apis
+
+email api
+- finish POST endpoint?
+  - can replace other email endpoint?
+
+
+
+remove api response handler
+- create more generic django apis
 
 -----
 
@@ -34,10 +61,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 mypy + django stubs
 
 -----
+#### templates
 
-email api
-- finish POST endpoint?
-  - can replace other email endpoint?
+do we need the actual 'templates' folder?
+- can we just store it as a string?
+  - need users to be able to add their own, probably weird for them to copy paste
+
+user editable
+- users add to their own 'tepmlates' folder
+
+-----
 
 
 coverage
@@ -49,15 +82,14 @@ add lint/flake8 check
 -----
 ### 1.0.1
 
-finish readme
-
-license
 
 ci - test python / django stuff
 
 cd - add python build and stuff
 
-https://github.com/caktus/django-app-template/blob/master/runtests.py
+how to include settings with package
+- i.e., for rest framework settings
+
 
 ### [1.0.1] - 2022-05-DD
 - CI/CD improvements
