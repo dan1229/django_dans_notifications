@@ -1,7 +1,5 @@
-from notifications.models.email import NotificationEmailTemplate
-from notifications.test.model_tests.base import (
-    BaseModelTestCase,
-)
+from ..base import BaseModelTestCase
+from ....models.email import NotificationEmailTemplate
 
 """
 # ========================================================================= #
