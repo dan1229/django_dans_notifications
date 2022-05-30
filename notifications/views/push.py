@@ -42,8 +42,8 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
     def retrieve(self, request, *args, **kwargs):
         """
         Endpoint to retrieve specific Push Notification
-        @[PARAM]
-        pk          - UUID of NotificationPush to retrieve
+
+        :param uuid pk: UUID of NotificationPush to retrieve
         """
         pk = self.kwargs.get("pk")
         try:

@@ -46,11 +46,17 @@ mypy + django stubs
 
 -----
 
+remove api response handler
+- create more generic django apis
+
+
 email api
 - finish POST endpoint?
   - can replace other email endpoint?
 
+
 users can add their own email templates
+
 
 coverage
 - codecov

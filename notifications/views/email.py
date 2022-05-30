@@ -41,8 +41,8 @@ class NotificationEmailViewSet(viewsets.GenericViewSet):
     def retrieve(self, request, *args, **kwargs):
         """
         Endpoint to retrieve specific Email Notification
-        @[PARAM]
-        pk          - UUID of NotificationEmail to retrieve
+
+        :param uuid pk: UUID of NotificationEmail to retrieve
         """
         pk = self.kwargs.get("pk")
         try:
