@@ -16,6 +16,13 @@ class ApiResponse:
         self.extras = kwargs
 
     def dict(self):
+        """
+        Convert ApiResponse to dict
+        Primarily to use in actual Response object
+
+        :returns: Dict containing ApiResponse object info
+        :rtype: dict
+        """
         res = {
             "status": self.status,
             "message": self.message,

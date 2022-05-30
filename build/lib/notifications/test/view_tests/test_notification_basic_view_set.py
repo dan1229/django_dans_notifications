@@ -1,9 +1,9 @@
 import json
 import uuid
 
-from notifications.models.basic import NotificationBasic
-from notifications.test.view_tests.base import BaseAPITestCase
-from notifications.views.basic import NotificationBasicViewSet
+from .base import BaseAPITestCase
+from ...models.basic import NotificationBasic
+from ...views.basic import NotificationBasicViewSet
 
 """
 # =============================================================================================

@@ -1,7 +1,5 @@
 SECRET_KEY = "secret"
 
-ROOT_URLCONF = "notifications.urls"
-
 DEBUG = True
 
 DATABASES = {
@@ -35,6 +33,8 @@ INSTALLED_APPS = (
     "django.contrib.sessions",
     "django.contrib.admin",
     "django.contrib.messages",
+    "rest_framework",
+    "rest_framework.authtoken",
     "notifications",
 )
 
@@ -53,6 +53,14 @@ TEMPLATES = [
         },
     },
 ]
+
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.TokenAuthentication",
+    ),
+}
+
 
 # This is for Django 3.2, harmless for previous versions.
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"

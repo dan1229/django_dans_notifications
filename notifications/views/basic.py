@@ -1,10 +1,12 @@
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 
-from notifications.helpers import str_to_bool
-from notifications.models import NotificationBasic
-from notifications.serializers.basic import NotificationBasicSerializer
+from ..api_response_handler import ApiResponseHandler
+from ..helpers import str_to_bool
+from ..models.basic import NotificationBasic
+from ..serializers.basic import NotificationBasicSerializer
 
 """
 ============================================================================================ #
@@ -21,6 +23,7 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
     response_handler = ApiResponseHandler()
     queryset = NotificationBasic.objects.all()
     serializer_class = NotificationBasicSerializer
+    permission_classes = (IsAuthenticated,)
 
     def list(self, request, *args, **kwargs):
         """
@@ -42,8 +45,8 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
     def retrieve(self, request, *args, **kwargs):
         """
         Endpoint to retrieve specific Basic Notification
-        @[PARAM]
-        pk          - UUID of NotificationBasic to retrieve
+
+        :param uuid pk: UUID of NotificationBasic to retrieve
         """
         pk = self.kwargs.get("pk")
         try:
@@ -87,8 +90,10 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
     def partial_update(self, request, *args, **kwargs):
         """
         Endpoint to update specific Basic Notification
-        @[PARAM]
-        pk          - UUID of NotificationBasic to update
+
+        :param uuid pk: UUID of NotificationBasic to update
+
+        :param (body, optional) bool read: mark NotificationBasic read or ont
         """
         pk = self.kwargs.get("pk")
         try:

@@ -1,7 +1,7 @@
-from notifications.models.push import NotificationPush
-from notifications.test.model_tests.base import (
+from ..base import (
     BaseModelTestCase,
 )
+from ....models.push import NotificationPush
 
 """
 # ========================================================================= #
