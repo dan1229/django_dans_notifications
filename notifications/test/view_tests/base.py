@@ -11,6 +11,7 @@ from rest_framework.test import APITestCase, APIRequestFactory
 
 
 class BaseAPITestCase(APITestCase):
+    username = "testuser1"
     email = "test@test.com"
     username = "api-test-user"
     password = "password"
@@ -23,6 +24,6 @@ class BaseAPITestCase(APITestCase):
 
         # create user
         self.user = get_user_model().objects.create_user(
-            email=self.email, password=self.password
+            username=self.username, email=self.email, password=self.password
         )
         self.user_token = Token.objects.create(user=self.user)

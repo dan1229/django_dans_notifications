@@ -2,10 +2,10 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 from rest_framework import viewsets
 
-from api.api_response_handler import ApiResponseHandler
-from core.helpers import str_to_bool
-from notifications.models import NotificationBasic
-from notifications.serializers.basic import NotificationBasicSerializer
+from ..api_response_handler import ApiResponseHandler
+from ..helpers import str_to_bool
+from ..models.basic import NotificationBasic
+from ..serializers.basic import NotificationBasicSerializer
 
 """
 ============================================================================================ #

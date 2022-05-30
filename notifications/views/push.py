@@ -1,10 +1,11 @@
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 
-from notifications.api_response_handler import ApiResponseHandler
-from notifications.models import NotificationPush
-from notifications.serializers.push import NotificationPushSerializer
+from ..api_response_handler import ApiResponseHandler
+from ..models.push import NotificationPush
+from ..serializers.push import NotificationPushSerializer
 
 """
 ============================================================================================ #
@@ -21,6 +22,7 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
     response_handler = ApiResponseHandler()
     queryset = NotificationPush.objects.all()
     serializer_class = NotificationPushSerializer
+    permission_classes = (IsAuthenticated,)
 
     def list(self, request, *args, **kwargs):
         """
@@ -42,8 +44,8 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
     def retrieve(self, request, *args, **kwargs):
         """
         Endpoint to retrieve specific Push Notification
-        @[PARAM]
-        pk          - UUID of NotificationPush to retrieve
+
+        :param uuid pk: UUID of NotificationPush to retrieve
         """
         pk = self.kwargs.get("pk")
         try:

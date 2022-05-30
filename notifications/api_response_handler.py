@@ -3,7 +3,7 @@ import logging
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 
-from notifications.api_response import ApiResponse
+from .api_response import ApiResponse
 
 logger = logging.getLogger(__name__)
 
@@ -24,6 +24,15 @@ API RESPONSE HANDLER ===========================================================
 # can help enforce structure or format such that you can have responses
 # look however you choose.
 #
+# The general format we are after for this project is:
+#
+#         Response({
+#                 'message': <str:message>,
+#                 'status': <int:status>,
+#                 'results': results,
+#                 ... - if given 'response' other keys will be included
+#         })
+#
 class ApiResponseHandler:
     def __init__(
         self,
@@ -36,13 +45,13 @@ class ApiResponseHandler:
         self.print_log = print_log
 
     @staticmethod
-    def format_response(response, results, message, status):
+    def _format_response(response, results, message, status):
         api_response = ApiResponse(message=message, status=status, results=results)
         if response:  # response passed -> simply edit
             api_response.extras = response.data
         return Response(api_response.dict(), status=status)
 
-    def handle_logging(self, print_log, msg):
+    def _handle_logging(self, print_log, msg):
         if print_log is None:  # print_log not passed, go by default
             if self.print_log:
                 logger.error(msg)
@@ -61,26 +70,20 @@ class ApiResponseHandler:
         status=HTTP_200_OK,
     ):
         """
-        @[PARAM]
-        message         - message to include
-        results         - results to include in response
-        response        - response to edit
-        status          - status to use
+        :param str message: message to include in response
+        :param object results: results object/list to include in response
+        :param Response response: response object to simply edit
+        :param int status: HTTP status to use
 
-        @[RETURN]
-        Response({
-                'message': <str:message>,
-                'status': <int:status>,
-                'results': results,
-                ... - if given 'response' other keys will be included
-        })
+        :returns: response of the desired format
+        :rtype: Response
         """
         # no message = use default
         if not message or message == "":
             message = self.message_success
         message = str(message)
 
-        return self.format_response(
+        return self._format_response(
             response=response, results=results, message=message, status=status
         )
 
@@ -90,23 +93,19 @@ class ApiResponseHandler:
         message=None,
         results=None,
         response=None,
-        print_log=None,
         status=HTTP_400_BAD_REQUEST,
+        print_log=None,
     ):
         """
-        @[PARAM]
-        error           - error message
-        results         - results to include in response
-        response        - response to edit
-        status          - status to use
+        :param str error: error message to log
+        :param str message: message to include in response
+        :param object results: results object/list to include in response
+        :param Response response: response object to simply edit
+        :param int status: HTTP status to use
+        :param bool print_log: override whether to print this error
 
-        @[RETURN]
-        Response({
-                'message': <str:message>,
-                'status': <int:status>,
-                'results': results,
-                ... - if given 'response' other keys will be included
-        })
+        :returns: response of the desired format
+        :rtype: Response
         """
         # no message - use default
         if not message or message == "":
@@ -118,7 +117,7 @@ class ApiResponseHandler:
             error = message
         error = str(error)
 
-        self.handle_logging(print_log, error)
-        return self.format_response(
+        self._handle_logging(print_log, error)
+        return self._format_response(
             response=response, results=results, message=message, status=status
         )

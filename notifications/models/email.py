@@ -8,7 +8,7 @@ from django.template import TemplateDoesNotExist
 from django.template.loader import render_to_string, get_template
 from django.utils.html import strip_tags
 
-from notifications.models.base import NotificationBase, AbstractBaseModel
+from .base import NotificationBase, AbstractBaseModel
 
 logger = logging.getLogger(__name__)
 
