@@ -24,6 +24,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -------------------------------------------------------
 ### TODO
 
+#### docs
+- api docs
+  - take out of readme.md
+
+-----
+
+#### notification models
+- how to allow user to add extras fields?
+
+-----
+
 #### tests
 - post api tests?
 
@@ -39,6 +50,7 @@ email api
 - finish POST endpoint?
   - can replace other email endpoint?
 
+users can add their own email templates
 
 coverage
 - codecov
