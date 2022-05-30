@@ -6,11 +6,11 @@ import django
 from django.conf import settings
 from django.test.utils import get_runner
 
-if __name__ == '__main__':
-    os.environ['DJANGO_SETTINGS_MODULE'] = 'notifications.test.settings'
+if __name__ == "__main__":
+    os.environ["DJANGO_SETTINGS_MODULE"] = "notifications.test.settings"
     django.setup()
     TestRunner = get_runner(settings)
     test_runner = TestRunner()
-    tests = ['notifications.test'] if len(sys.argv) == 1 else sys.argv[1:]
+    tests = ["notifications.test"] if len(sys.argv) == 1 else sys.argv[1:]
     failures = test_runner.run_tests(tests)
     sys.exit(bool(failures))

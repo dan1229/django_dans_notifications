@@ -26,11 +26,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### docs
 - api docs
-  - take out of readme.md
+  - improve
 - usage docs
   - send email
   - different models
 - templates
+  - improve
+  - add docs about adding your own
+
+-----
+
+#### tests
+- post api tests
 
 -----
 
@@ -39,8 +46,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -----
 
-#### tests
-- post api tests?
+#### mypy typing
+
+mypy + django stubs
+
+-----
+#### templates
+
+do we need the actual 'templates' folder?
+- can we just store it as a string in the db?
+  - data migration as 'fixture'
+  - need users to be able to add their own
+    - probably weird for them to copy paste into admin
+
+user editable
+- users add to their own 'templates' folder
 
 -----
 #### apis
@@ -56,28 +76,14 @@ remove api response handler
 
 -----
 
-#### typing
-
-mypy + django stubs
-
------
-#### templates
-
-do we need the actual 'templates' folder?
-- can we just store it as a string?
-  - need users to be able to add their own, probably weird for them to copy paste
-
-user editable
-- users add to their own 'tepmlates' folder
-
------
-
 
 coverage
 - codecov
-- badge?
+- badge
 
-add lint/flake8 check
+ci
+- add lint/flake8 check
+- badge
 
 -----
 ### 1.0.1
@@ -91,7 +97,8 @@ how to include settings with package
 - i.e., for rest framework settings
 
 
-### [1.0.1] - 2022-05-DD
+### [1.0.1] - 2022-05-31
+- LOTS of cleanup and refactoring
 - CI/CD improvements
 - Refactored notifications app to work better with standard Django app
 
