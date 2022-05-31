@@ -3,7 +3,18 @@ branch = True
 source = .
 
 omit =
-    */build/*
+    AUTHORS
+    CHANGELOG.md
+    .gitignore
+    LICENSE
+    MANIFEST.in
+    pyproject.toml
+    README.md
+    requirements.txt
+    runtests.py
+    setup.cfg
+    setup.py
+
     */build/*
     */dist/*
     */docs/*
