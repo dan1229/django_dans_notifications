@@ -95,12 +95,11 @@ remove api response handler
 - create more generic django apis
 
 
-cd - add python build and stuff
-
-
 ### [1.0.1] - 2022-05-31
 - LOTS of cleanup and refactoring
 - CI/CD improvements
+  - test-django
+    - release.yml
 - Refactored notifications app to work better with standard Django app
 
 -------------------------------------------------------
