@@ -21,7 +21,7 @@ Support for basic notifications, push notifications and email notifications.
 ```python
 INSTALLED_APPS = [
 	...
-	'notifications',
+	'django_dans_notifications',
 ]
 ```
 
