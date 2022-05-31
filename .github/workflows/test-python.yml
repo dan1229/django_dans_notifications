@@ -45,7 +45,7 @@ jobs:
       run: python -m coverage run runtests.py
 
     - name: Generate coverage report
-      run: python coverage xml
+      run: python -m coverage xml
 
     - name: Upload to CodeCov
       uses: codecov/codecov-action@v2
