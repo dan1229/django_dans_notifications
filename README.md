@@ -80,8 +80,8 @@ Some available methods currently are:
 
 ### APIs
 
-See `docs/apis.md`.
+See [API docs](./docs/apis.md).
 
 ### Email Templates
 
-See `docs/email-templates.md`.
+See [Email Template docs](./docs/email-templates.md).
