@@ -15,7 +15,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
-### [1.0.2] - 2022-05-31
+### [1.0.3] - 2022-05-30
+- HOTFIX 2
+- LOTS of cleanup and refactoring
+- CI/CD improvements
+    - lint
+    - test_python
+    - release
+- Coverage!
+- Refactored notifications app to work better with standard Django app
+
+
+### [1.0.2] - 2022-05-30
 - HOTFIX
 - LOTS of cleanup and refactoring
 - CI/CD improvements
@@ -26,7 +37,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Refactored notifications app to work better with standard Django app
 
 
-### [1.0.1] - 2022-05-31
+### [1.0.1] - 2022-05-30
 - LOTS of cleanup and refactoring
 - CI/CD improvements
     - lint
@@ -93,7 +104,7 @@ user editable
 
 
 ------
-### 1.0.3
+### 1.0.4
 
 
 #### tests
@@ -108,13 +119,12 @@ do we need the actual 'templates' folder?
         - probably weird for them to copy paste into admin
 
 
-replace readme links with absolute paths
-- github links
-- relative paths break in pypi and elsewhere
+how does python break when run in users application?
+- i.e., dans backend tests break but these ones are passing just fine?
 
-### [1.0.3] - 2022-MM-DD
+
+### [1.0.4] - 2022-MM-DD
 #### TODO
-
 
 -------------------------------------------------------
 

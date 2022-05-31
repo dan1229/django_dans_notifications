@@ -72,12 +72,12 @@ Some available methods currently are:
 
 ### Models
 
-See [Model docs](./docs/models.md).
+See [Model docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/models.md).
 
 ### APIs
 
-See [API docs](./docs/apis.md).
+See [API docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/apis.md).
 
 ### Email Templates
 
-See [Email Template docs](./docs/email-templates.md).
+See [Email Template docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/email-templates.md).

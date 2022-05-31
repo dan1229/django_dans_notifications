@@ -3,7 +3,7 @@
 import django.db.models.deletion
 from django.db import migrations, models
 
-import notifications.models.email
+from ..models.email import NotificationEmailTemplateManager, get_default_template
 
 
 class Migration(migrations.Migration):
@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
             managers=[
                 (
                     "objects",
-                    notifications.models.email.NotificationEmailTemplateManager(),
+                    NotificationEmailTemplateManager(),
                 ),
             ],
         ),
@@ -40,7 +40,7 @@ class Migration(migrations.Migration):
             model_name="notificationemail",
             name="template",
             field=models.ForeignKey(
-                default=notifications.models.email.get_default_template,
+                default=get_default_template,
                 on_delete=django.db.models.deletion.DO_NOTHING,
                 related_name="template",
                 to="notifications.notificationemailtemplate",
