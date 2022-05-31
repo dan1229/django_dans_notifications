@@ -3,7 +3,6 @@ from django.utils import timezone
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
-from ..api_response_handler import ApiResponseHandler
 from ..helpers import str_to_bool
 from ..models.basic import NotificationBasic
 from ..serializers.basic import NotificationBasicSerializer

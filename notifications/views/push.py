@@ -3,7 +3,7 @@ from django.utils import timezone
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
-from ..api_response_handler import ApiResponseHandler
+from ..helpers import api_response_error
 from ..models.push import NotificationPush
 from ..serializers.push import NotificationPushSerializer
 
@@ -19,7 +19,6 @@ PUSH ===========================================================================
 # NOTIFICATION PUSH VIEW SET
 #
 class NotificationPushViewSet(viewsets.GenericViewSet):
-    response_handler = ApiResponseHandler()
     queryset = NotificationPush.objects.all()
     serializer_class = NotificationPushSerializer
     permission_classes = (IsAuthenticated,)
@@ -37,9 +36,7 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
             context={"request": request},
         )
         page = self.paginate_queryset(serializer.data)
-        return self.response_handler.response_success(
-            response=self.get_paginated_response(page)
-        )
+        return self.get_paginated_response(page)
 
     def retrieve(self, request, *args, **kwargs):
         """
@@ -53,9 +50,7 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
             if not notification_push.recipients_contains(request.user.email):
                 raise NotificationPush.DoesNotExist
         except (NotificationPush.DoesNotExist, ValidationError):
-            return self.response_handler.response_error(
-                message="Notification not found."
-            )
+            return api_response_error("Notification not found.")
 
         # serializer and return
         serializer = self.get_serializer_class()(
@@ -77,11 +72,13 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
             serializer = serializer_class(request_data_copy)
             NotificationPush.objects.create(**serializer.data)
         except (ValidationError, TypeError) as e:
-            return self.response_handler.response_error(
-                message="Error creating notification. Please try again later.", error=e
+            return api_response_error(
+                "Error creating notification. Please try again later."
             )
 
         try:
             return self.response_handler.response_success(results=serializer.data)
         except (AttributeError,) as e:
+            return api_response_error(e)
+
             return self.response_handler.response_error(error=e)

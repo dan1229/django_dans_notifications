@@ -1,3 +1,6 @@
+from rest_framework import status
+from rest_framework.response import Response
+
 """
 # ===============================================================================
 # HELPERS =======================================================================
@@ -13,3 +16,11 @@ def str_to_bool(v):
         "1",
         "on",
     )
+
+
+def api_response_success(message="Success!."):
+    return Response({"success": str(message)}, status=status.HTTP_200_OK)
+
+
+def api_response_error(message="Error. Please try again later."):
+    return Response({"error": str(message)}, status=status.HTTP_400_BAD_REQUEST)
