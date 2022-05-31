@@ -1,4 +1,4 @@
-from ...base import BaseModelTestCase
+from ..base import BaseModelTestCase
 from ....models.email import NotificationEmail
 
 """
