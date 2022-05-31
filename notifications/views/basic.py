@@ -38,7 +38,6 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
         page = self.paginate_queryset(serializer.data)
         return self.get_paginated_response(page)
 
-
     def retrieve(self, request, *args, **kwargs):
         """
         Endpoint to retrieve specific Basic Notification
