@@ -220,7 +220,6 @@ class TestNotificationPushViewSet(BaseAPITestCase):
 
         # confirm status code and data
         self.assertEqual(response.status_code, 200)
-        print(json_response)
         self.assertEqual(json_response["success"]["id"], str(pk))
 
     def test_notification_push_retrieve_pk_invalid_uuid(self):

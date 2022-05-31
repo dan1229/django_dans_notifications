@@ -178,7 +178,7 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
 
         # confirm status code and data
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(json_response["results"]["id"], str(pk))
+        self.assertEqual(json_response["success"]["id"], str(pk))
 
     def test_notification_email_retrieve_pk_valid_multiple_notification_email_not_recp(
         self,
