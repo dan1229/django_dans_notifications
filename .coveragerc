@@ -1,0 +1,17 @@
+[run]
+branch = True
+source = .
+
+omit =
+    */build/*
+    */build/*
+    */dist/*
+    */docs/*
+    */test/*
+    */migrations/*
+    */apps.py
+    */admin.py
+    */urls.py
+
+[html]
+directory = coverage_html_report
