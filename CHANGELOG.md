@@ -15,6 +15,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
+### [1.0.1] - 2022-05-31
+- LOTS of cleanup and refactoring
+- CI/CD improvements
+    - lint
+    - test_python
+    - release
+- Coverage!
+- Refactored notifications app to work better with standard Django app
+
+
 ### [1.0.0] - 2022-05-28
 - Initial release!
 
@@ -42,9 +52,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 -----
 
-#### tests
 
-- post api tests
+-----
+
+#### apis
+
+email api
+- finish POST endpoint?
+    - can replace other email endpoint?
 
 -----
 
@@ -62,6 +77,19 @@ mypy + django stubs
 
 #### templates
 
+user editable
+- users add to their own 'templates' folder
+
+
+------
+### 1.0.2
+
+
+#### tests
+- post api tests
+
+
+
 do we need the actual 'templates' folder?
 - can we just store it as a string in the db?
     - data migration as 'fixture'
@@ -69,30 +97,10 @@ do we need the actual 'templates' folder?
         - probably weird for them to copy paste into admin
 
 
-user editable
-- users add to their own 'templates' folder
 
------
+### [1.0.2] - 2022-MM-DD
+#### TODO
 
-#### apis
-
-email api
-- finish POST endpoint?
-    - can replace other email endpoint?
-
-
-------
-### 1.0.1
-
-
-### [1.0.1] - 2022-05-31
-- LOTS of cleanup and refactoring
-- CI/CD improvements
-    - lint
-    - test_python
-    - release
-- Coverage!
-- Refactored notifications app to work better with standard Django app
 
 -------------------------------------------------------
 
