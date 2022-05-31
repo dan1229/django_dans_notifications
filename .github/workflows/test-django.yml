@@ -43,10 +43,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install -e .
         pip install -U Django~=${{ matrix.django_version }}
-        pip install tox
 
     - name: Run tests
-      run: tox -e py-dj${{ matrix.django_version }}
+      run: python runtests.py
+#      run: tox -e py-dj${{ matrix.django_version }}
 #    - name: Test Django
 #      run: python `which django-admin` test --settings=notifications.tests.settings
 
