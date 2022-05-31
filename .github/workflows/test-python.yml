@@ -39,10 +39,13 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -e .
-        pip install -U Django~=${{ matrix.django_version }} django-rest-framework
+        pip install -U Django~=${{ matrix.django_version }} django-rest-framework coverage
 
     - name: Run tests
-      run: python runtests.py
+      run: python -m coverage run runtests.py
+
+    - name: Generate coverage report
+      run: python coverage xml
 
     - name: Upload to CodeCov
       uses: codecov/codecov-action@v2
