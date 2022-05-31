@@ -68,12 +68,7 @@ user editable
 email api
 - finish POST endpoint?
   - can replace other email endpoint?
-
-
-
-remove api response handler
-- create more generic django apis
-
+  
 -----
 
 
@@ -89,12 +84,18 @@ ci
 ### 1.0.1
 
 
-cd - add python build and stuff
 
 how to include settings with package
 - https://stackoverflow.com/questions/37264326/django-reusable-application-configuration
 - i.e., for rest framework settings
   - could just say you need to add it?
+
+
+remove api response handler
+- create more generic django apis
+
+
+cd - add python build and stuff
 
 
 ### [1.0.1] - 2022-05-31
