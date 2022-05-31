@@ -148,6 +148,8 @@ class NotificationEmailManager(models.Manager):
             message.attach_alternative(html_string, "text/html")
             if hasattr(settings, "IN_TEST") and not settings.IN_TEST:
                 message.send(fail_silently=False)
+            else:
+                message.send(fail_silently=False)
             notification_email.sent_successfully = True
         except SMTPException as e:
             logger.error(e)
