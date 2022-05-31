@@ -16,12 +16,12 @@ Support for basic notifications, push notifications and email notifications.
 
 ## Quick start
 
-1. Add "notifications" to your INSTALLED_APPS setting like this:
+1. Add "django_dans_notifications" to your INSTALLED_APPS setting like this:
 
 ```python
 INSTALLED_APPS = [
 	...
-	'notifications',
+	'django_dans_notifications',
 ]
 ```
 
