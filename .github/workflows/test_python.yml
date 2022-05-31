@@ -43,12 +43,9 @@ jobs:
 
     - name: Run tests
       run: python runtests.py
-#      run: tox -e py-dj${{ matrix.django_version }}
-#    - name: Test Django
-#      run: python `which django-admin` test --settings=notifications.tests.settings
 
-#    # TODO coverage/codecov
-#    - name: Coverage
-#      if: ${{ success() }}
-#      run: |
-#        coveralls --service=github
+    - name: Upload to CodeCov
+      uses: codecov/codecov-action@v2
+      with:
+        fail_ci_if_error: false
+        token: ${{ secrets.CODECOV_TOKEN }}
