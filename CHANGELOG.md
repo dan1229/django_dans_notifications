@@ -93,12 +93,6 @@ coverage
 
 ### 1.0.1
 
-how to include settings with package
-
-- https://stackoverflow.com/questions/37264326/django-reusable-application-configuration
-- i.e., for rest framework settings
-    - could just say you need to add it?
-
 ### [1.0.1] - 2022-05-31
 - LOTS of cleanup and refactoring
 - CI/CD improvements

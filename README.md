@@ -11,6 +11,8 @@
 
 A Django app to handle notifications.
 
+Support for basic notifications, push notifications and email notifications.
+
 ## Quick start
 
 1. Add "notifications" to your INSTALLED_APPS setting like this:
@@ -37,6 +39,22 @@ path("notifications/", include("notifications.urls")),
 - Python 3.0 or higher
 - Django 3.0 or higher
 - Django Rest Framework
+  - **NOTE:** not only must you have this installed, you must have set `DEFAULT_AUTHENTICATION_CLASSES` and `DEFAULT_PAGINATION_CLASS` in your `settings.py` to work with the APIs properly. An example config would be:
+
+```python
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 20,
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.TokenAuthentication",
+    ),
+}
+```
+
+
+### Available Settings
+
+- `IN_TEST` - Whether running in tests or not. Used to determine whether to actually send email.
 
 ## Models
 
