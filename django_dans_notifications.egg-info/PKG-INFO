@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: django-dans-notifications
-Version: 1.0
+Version: 1.0.3
 Summary: A Django app to handle notifications.
 Home-page: https://www.github.com/dan1229/django_dans_notifications
 Author: Daniel Nazarian
@@ -9,14 +9,14 @@ License: BSD-3-Clause  # Example license
 Classifier: Environment :: Web Environment
 Classifier: Framework :: Django
 Classifier: Framework :: Django :: 3.0
+Classifier: Framework :: Django :: 4.0
 Classifier: Intended Audience :: Developers
 Classifier: License :: OSI Approved :: BSD License
 Classifier: Operating System :: OS Independent
 Classifier: Programming Language :: Python
-Classifier: Programming Language :: Python :: 3
-Classifier: Programming Language :: Python :: 3 :: Only
 Classifier: Programming Language :: Python :: 3.8
 Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
 Classifier: Topic :: Internet :: WWW/HTTP
 Classifier: Topic :: Internet :: WWW/HTTP :: Dynamic Content
 Requires-Python: >=3.8
@@ -25,67 +25,85 @@ License-File: LICENSE
 License-File: AUTHORS
 
 # Django Dans Notifications
-[![Test Django](https://github.com/dan1229/django_dans_notifications/actions/workflows/test-django.yml/badge.svg)](https://github.com/dan1229/django_dans_notifications/actions/workflows/test-django.yml)
 
-### [GitHub](https://github.com/dan1229/django_dans_notifications)
-### [PyPi](https://pypi.org/project/django-dans-notifications/)
+[![Lint](https://github.com/dan1229/django_dans_notifications/actions/workflows/lint.yml/badge.svg)](https://github.com/dan1229/django_dans_notifications/actions/workflows/lint.yml)
+[![Test Python](https://github.com/dan1229/django_dans_notifications/actions/workflows/test-python.yml/badge.svg)](https://github.com/dan1229/django_dans_notifications/actions/workflows/test-python.yml)
+[![codecov](https://codecov.io/gh/dan1229/django_dans_notifications/branch/main/graph/badge.svg?token=TL09HDQWBJ)](https://codecov.io/gh/dan1229/django_dans_notifications)
+
+#### [GitHub](https://github.com/dan1229/django_dans_notifications)
+
+#### [PyPi](https://pypi.org/project/django-dans-notifications/)
+
+## Description
 
 A Django app to handle notifications.
 
+Support for basic notifications, push notifications and email notifications.
 
-## Models
+## Quick start
 
-TODO
+1. Add "notifications" to your INSTALLED_APPS setting like this:
 
-NotificationEmail
-- send email
+```python
+INSTALLED_APPS = [
+	...
+	'notifications',
+]
+```
 
-NotificationBasic
+2. Include the notifications URLconf in your project urls.py like this:
 
-NotificationPush
+```python
+path("notifications/", include("notifications.urls")),
+```
+
+3. Run `python manage.py migrate` to create the models.
+
+4. Create notifications via the API endpoints, in code or your Admin portal.
+
+### Requirements
+
+- Python 3.0 or higher
+- Django 3.0 or higher
+- Django Rest Framework
+  - **NOTE:** not only must you have this installed, you must have set `DEFAULT_AUTHENTICATION_CLASSES` and `DEFAULT_PAGINATION_CLASS` in your `settings.py` to work with the APIs properly. An example config would be:
+
+```python
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 20,
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.TokenAuthentication",
+    ),
+}
+```
+
+
+### Available Settings
+
+- `IN_TEST` - Whether running in tests or not. Used to determine whether to actually send email.
 
 
 ## Usage
 
-TODO
+The main way to interact with this app is to create and use the appropriate models and their managers' methods as needed.
 
-NotificationManager
+Also included is the `NotificationManager` a class to expose some common functionality and maintain object permissions.
 
+Some available methods currently are:
 
-## Quick start
+- get_notifications_push/email/basic/all
+    - Enforce object ownership and notification 'direction'
+- mark_notification_basic_read
 
-1. Add "polls" to your INSTALLED_APPS setting like this:
+### Models
 
-```python
-INSTALLED_APPS = [
-    ...
-    'notifications',
-]
-```
+See [Model docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/models.md).
 
-2. Include the polls URLconf in your project urls.py like this::
+### APIs
 
-    path("notifications/", include("notifications.urls")),
+See [API docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/apis.md).
 
-3. Run ``python manage.py migrate`` to create the models.
+### Email Templates
 
-4. Create notifications via the API or Admin portal!
-
-
-
-## Packaging
-
-To build run:
-
-```bash
-python setup.py sdist
-python setup.py bdist_wheel
-```
-
-To release run:
-
-```bash
-python3 -m twine upload --repository pypi dist/*
-```
-
-This expects you to have the proper credentials in your `$HOME/.pypirc` file
+See [Email Template docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/email-templates.md).

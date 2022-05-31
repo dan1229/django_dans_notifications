@@ -8,3 +8,4 @@ venv
 coverage.xml
 dist/
 build/
+django-dans-notifications-db

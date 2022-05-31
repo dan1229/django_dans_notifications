@@ -10,10 +10,12 @@ django_dans_notifications.egg-info/SOURCES.txt
 django_dans_notifications.egg-info/dependency_links.txt
 django_dans_notifications.egg-info/requires.txt
 django_dans_notifications.egg-info/top_level.txt
+docs/apis.md
+docs/email-templates.md
+docs/models.md
+docs/release.md
 notifications/__init__.py
 notifications/admin.py
-notifications/api_response.py
-notifications/api_response_handler.py
 notifications/apps.py
 notifications/helpers.py
 notifications/notification_manager.py
@@ -38,7 +40,6 @@ notifications/serializers/email.py
 notifications/serializers/push.py
 notifications/templates/emails/base.html
 notifications/templates/emails/default.html
-notifications/templates/emails/email_templates.md
 notifications/templates/emails/empty.html
 notifications/templates/emails/password_reset_request.html
 notifications/templates/emails/template.html

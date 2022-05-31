@@ -15,6 +15,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
+### [1.0.4] - 2022-05-30
+- Migration fixes
+
+
 ### [1.0.3] - 2022-05-30
 - HOTFIX 2
 - LOTS of cleanup and refactoring
@@ -104,7 +108,7 @@ user editable
 
 
 ------
-### 1.0.4
+### 1.0.5
 
 
 #### tests
@@ -121,9 +125,11 @@ do we need the actual 'templates' folder?
 
 how does python break when run in users application?
 - i.e., dans backend tests break but these ones are passing just fine?
+- is it a flake8/lint thing?
+- lack of coverage?
 
 
-### [1.0.4] - 2022-MM-DD
+### [1.0.5] - 2022-MM-DD
 #### TODO
 
 -------------------------------------------------------
