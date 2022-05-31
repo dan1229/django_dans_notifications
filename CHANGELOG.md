@@ -15,6 +15,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
+### [1.0.5] - 2022-05-30
+- URL fixes
+
+
 ### [1.0.4] - 2022-05-30
 - Migration fixes
 
@@ -108,7 +112,7 @@ user editable
 
 
 ------
-### 1.0.5
+### 1.0.6
 
 
 #### tests
@@ -129,7 +133,7 @@ how does python break when run in users application?
 - lack of coverage?
 
 
-### [1.0.5] - 2022-MM-DD
+### [1.0.6] - 2022-MM-DD
 #### TODO
 
 -------------------------------------------------------
