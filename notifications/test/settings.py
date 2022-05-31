@@ -47,9 +47,7 @@ INSTALLED_APPS = (
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [
-            os.path.join(BASE_DIR, 'templates')
-        ],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -68,7 +66,6 @@ USE_TZ = False
 
 # This is for Django 3.2, harmless for previous versions.
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
-
 
 
 REST_FRAMEWORK = {
