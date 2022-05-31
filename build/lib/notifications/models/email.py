@@ -158,7 +158,6 @@ class NotificationEmailManager(models.Manager):
 # NOTIFICATION EMAIL TEMPLATE =============== #
 #
 class NotificationEmailTemplate(AbstractBaseModel):
-    _safedelete_policy = HARD_DELETE_NOCASCADE
     objects = NotificationEmailTemplateManager()
 
     path = models.CharField(max_length=300, null=False, blank=False)

@@ -15,6 +15,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
+### [1.0.2] - 2022-05-31
+- HOTFIX
+- LOTS of cleanup and refactoring
+- CI/CD improvements
+    - lint
+    - test_python
+    - release
+- Coverage!
+- Refactored notifications app to work better with standard Django app
+
+
 ### [1.0.1] - 2022-05-31
 - LOTS of cleanup and refactoring
 - CI/CD improvements
@@ -82,7 +93,7 @@ user editable
 
 
 ------
-### 1.0.2
+### 1.0.3
 
 
 #### tests
@@ -97,8 +108,11 @@ do we need the actual 'templates' folder?
         - probably weird for them to copy paste into admin
 
 
+replace readme links with absolute paths
+- github links
+- relative paths break in pypi and elsewhere
 
-### [1.0.2] - 2022-MM-DD
+### [1.0.3] - 2022-MM-DD
 #### TODO
 
 
