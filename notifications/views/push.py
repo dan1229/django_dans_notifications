@@ -3,7 +3,7 @@ from django.utils import timezone
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
-from ..helpers import api_response_error
+from ..helpers import api_response_error, api_response_success
 from ..models.push import NotificationPush
 from ..serializers.push import NotificationPushSerializer
 
@@ -56,7 +56,7 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
         serializer = self.get_serializer_class()(
             notification_push, context={"request": request}
         )
-        return self.response_handler.response_success(results=serializer.data)
+        return api_response_success(serializer.data)
 
     def create(self, request, *args, **kwargs):
         """
@@ -77,8 +77,6 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
             )
 
         try:
-            return self.response_handler.response_success(results=serializer.data)
+            return api_response_success(serializer.data)
         except (AttributeError,) as e:
             return api_response_error(e)
-
-            return self.response_handler.response_error(error=e)
