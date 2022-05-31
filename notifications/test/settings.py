@@ -1,3 +1,8 @@
+import os
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 SECRET_KEY = "secret"
 
 DEBUG = True
@@ -33,6 +38,7 @@ INSTALLED_APPS = (
     "django.contrib.sessions",
     "django.contrib.admin",
     "django.contrib.messages",
+    # rest framework
     "rest_framework",
     "rest_framework.authtoken",
     "notifications",
@@ -41,7 +47,9 @@ INSTALLED_APPS = (
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [
+            os.path.join(BASE_DIR, 'templates')
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -55,6 +63,14 @@ TEMPLATES = [
 ]
 
 
+# This is for Django 4.0, harmless for previous versions.
+USE_TZ = False
+
+# This is for Django 3.2, harmless for previous versions.
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
+
+
 REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,
@@ -62,13 +78,6 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.TokenAuthentication",
     ),
 }
-
-
-# This is for Django 3.2, harmless for previous versions.
-DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
-
-# This is for Django 4.0, harmless for previous versions.
-USE_TZ = False
 
 
 IN_TEST = True

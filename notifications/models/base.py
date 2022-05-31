@@ -39,7 +39,7 @@ class NotificationBase(AbstractBaseModel):
         max_length=300,
         null=False,
         blank=False,
-        help_text="This should be the users email.",
+        help_text="This should be the sending users email.",
     )
     recipients = models.CharField(
         max_length=900,
