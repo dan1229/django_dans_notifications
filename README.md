@@ -1,6 +1,6 @@
 # Django Dans Notifications
 
-[![Test Python](https://github.com/dan1229/django_dans_notifications/actions/workflows/test_python.yml/badge.svg)](https://github.com/dan1229/django_dans_notifications/actions/workflows/test_python.yml)
+[![Test Python](https://github.com/dan1229/django_dans_notifications/actions/workflows/test-python.yml/badge.svg)](https://github.com/dan1229/django_dans_notifications/actions/workflows/test-python.yml)
 [![Lint](https://github.com/dan1229/django_dans_notifications/actions/workflows/lint.yml/badge.svg)](https://github.com/dan1229/django_dans_notifications/actions/workflows/lint.yml)
 
 #### [GitHub](https://github.com/dan1229/django_dans_notifications)

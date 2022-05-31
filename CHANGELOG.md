@@ -83,14 +83,6 @@ email api
 
 -----
 
-
-coverage
-
-- codecov
-- badge
-
------
-
 ### 1.0.1
 
 ### [1.0.1] - 2022-05-31
@@ -99,6 +91,7 @@ coverage
     - lint
     - test_python
     - release
+- Coverage!
 - Refactored notifications app to work better with standard Django app
 
 -------------------------------------------------------

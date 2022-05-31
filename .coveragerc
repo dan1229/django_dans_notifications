@@ -1,0 +1,28 @@
+[run]
+branch = True
+source = .
+
+omit =
+    AUTHORS
+    CHANGELOG.md
+    .gitignore
+    LICENSE
+    MANIFEST.in
+    pyproject.toml
+    README.md
+    requirements.txt
+    runtests.py
+    setup.cfg
+    setup.py
+
+    */build/*
+    */dist/*
+    */docs/*
+    */test/*
+    */migrations/*
+    */apps.py
+    */admin.py
+    */urls.py
+
+[html]
+directory = coverage_html_report
