@@ -89,12 +89,12 @@ ci
 ### 1.0.1
 
 
-ci - test python / django stuff
-
 cd - add python build and stuff
 
 how to include settings with package
+- https://stackoverflow.com/questions/37264326/django-reusable-application-configuration
 - i.e., for rest framework settings
+  - could just say you need to add it?
 
 
 ### [1.0.1] - 2022-05-31

@@ -21,13 +21,15 @@ INSTALLED_APPS = [
 ]
 ```
 
-2. Include the notifications URLconf in your project urls.py like this::
+2. Include the notifications URLconf in your project urls.py like this:
 
-   path("notifications/", include("notifications.urls")),
+```python
+path("notifications/", include("notifications.urls")),
+```
 
-3. Run ``python manage.py migrate`` to create the models.
+3. Run `python manage.py migrate` to create the models.
 
-4. Create notifications via the API or Admin portal.
+4. Create notifications via the API endpoints, in code or your Admin portal.
 
 ### Requirements
 
@@ -54,6 +56,14 @@ The included models are:
     - Have a 'read' property
 - `NotificationPush`
     - Track push notifications that may require extra information
+
+
+ALL notifications inherit from `NotificationBase` and thus all have the following properties:
+- `recipients` - comma separated list of emails the notification was sent to.
+- `sender` - email of the sending user.
+- `datetime_sent` - date time the notification was sent.
+- `sent_successfully` - whether the notification was processed correctly.
+
 
 ## Usage
 
