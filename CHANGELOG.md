@@ -88,9 +88,6 @@ how to include settings with package
   - could just say you need to add it?
 
 
-remove api response handler
-- create more generic django apis
-
 
 ### [1.0.1] - 2022-05-31
 - LOTS of cleanup and refactoring

@@ -2,7 +2,7 @@ from django.core.exceptions import ValidationError
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
-from ..api_response_handler import ApiResponseHandler
+from ..helpers import api_response_success, api_response_error
 from ..models.email import NotificationEmail
 from ..serializers.email import NotificationEmailSerializer
 
@@ -18,7 +18,6 @@ EMAIL ==========================================================================
 # NOTIFICATION EMAIL VIEW SET
 #
 class NotificationEmailViewSet(viewsets.GenericViewSet):
-    response_handler = ApiResponseHandler()
     queryset = NotificationEmail.objects.all()
     serializer_class = NotificationEmailSerializer
     permission_classes = (IsAuthenticated,)
@@ -36,9 +35,7 @@ class NotificationEmailViewSet(viewsets.GenericViewSet):
             context={"request": request},
         )
         page = self.paginate_queryset(serializer.data)
-        return self.response_handler.response_success(
-            response=self.get_paginated_response(page)
-        )
+        return self.get_paginated_response(page)
 
     def retrieve(self, request, *args, **kwargs):
         """
@@ -52,12 +49,10 @@ class NotificationEmailViewSet(viewsets.GenericViewSet):
             if not notification_email.recipients_contains(request.user.email):
                 raise NotificationEmail.DoesNotExist
         except (NotificationEmail.DoesNotExist, ValidationError):
-            return self.response_handler.response_error(
-                message="Notification not found."
-            )
+            return api_response_error("Notification not found.")
 
         # serializer and return
         serializer = self.get_serializer_class()(
             notification_email, context={"request": request}
         )
-        return self.response_handler.response_success(results=serializer.data)
+        return api_response_success(serializer.data)

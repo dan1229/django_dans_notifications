@@ -63,6 +63,7 @@ class TestNotificationPushViewSet(BaseAPITestCase):
         self.assertEqual(json_response["count"], 0)
         self.assertEqual(json_response["next"], None)
         self.assertEqual(json_response["previous"], None)
+        self.assertEqual(json_response["results"], [])
 
     def test_notification_push_list_one(self):
         # create notification(s)
@@ -101,6 +102,7 @@ class TestNotificationPushViewSet(BaseAPITestCase):
         self.assertEqual(json_response["count"], 0)
         self.assertEqual(json_response["next"], None)
         self.assertEqual(json_response["previous"], None)
+        self.assertEqual(json_response["results"], [])
 
     def test_notification_push_list_man_one_recp(self):
         # create notification(s)
@@ -161,7 +163,7 @@ class TestNotificationPushViewSet(BaseAPITestCase):
 
         # confirm status code and data
         self.assertEqual(response.status_code, 400)
-        self.assertEqual(json_response["message"], "Notification not found.")
+        self.assertEqual(json_response["error"], "Notification not found.")
 
     def test_notification_push_retrieve_pk_valid(self):
         # create notification(s)
@@ -178,7 +180,7 @@ class TestNotificationPushViewSet(BaseAPITestCase):
 
         # confirm status code and data
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(json_response["results"]["id"], str(pk))
+        self.assertEqual(json_response["success"]["id"], str(pk))
 
     def test_notification_push_retrieve_pk_valid_multiple_notification_push_not_recp(
         self,
@@ -199,7 +201,7 @@ class TestNotificationPushViewSet(BaseAPITestCase):
 
         # confirm status code and data
         self.assertEqual(response.status_code, 400)
-        self.assertEqual(json_response["message"], "Notification not found.")
+        self.assertEqual(json_response["error"], "Notification not found.")
 
     def test_notification_push_retrieve_pk_valid_multiple_notification_push(self):
         # create notification(s)
@@ -218,7 +220,7 @@ class TestNotificationPushViewSet(BaseAPITestCase):
 
         # confirm status code and data
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(json_response["results"]["id"], str(pk))
+        self.assertEqual(json_response["success"]["id"], str(pk))
 
     def test_notification_push_retrieve_pk_invalid_uuid(self):
         # create notification(s)
@@ -237,7 +239,7 @@ class TestNotificationPushViewSet(BaseAPITestCase):
 
         # confirm status code and data
         self.assertEqual(response.status_code, 400)
-        self.assertEqual(json_response["message"], "Notification not found.")
+        self.assertEqual(json_response["error"], "Notification not found.")
 
     def test_notification_push_retrieve_pk_missing(self):
         # create notification(s)
@@ -256,4 +258,4 @@ class TestNotificationPushViewSet(BaseAPITestCase):
 
         # confirm status code and data
         self.assertEqual(response.status_code, 400)
-        self.assertEqual(json_response["message"], "Notification not found.")
+        self.assertEqual(json_response["error"], "Notification not found.")
