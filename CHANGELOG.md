@@ -81,13 +81,9 @@ email api
 - finish POST endpoint?
     - can replace other email endpoint?
 
+-----
 
 ### 1.0.1
-
-coverage
-
-- codecov
-- badge
 
 ### [1.0.1] - 2022-05-31
 - LOTS of cleanup and refactoring
