@@ -15,6 +15,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
+### [1.0.6] - 2022-05-30
+- Package name update
+
+
 ### [1.0.5] - 2022-05-30
 - URL fixes
 
@@ -132,10 +136,6 @@ how does python break when run in users application?
 
 ### [1.0.7] - 2022-MM-DD
 #### TODO
-
-
-### [1.0.6] - 2022-05-30
-- Package name fix
 
 -------------------------------------------------------
 
