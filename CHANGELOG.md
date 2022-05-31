@@ -112,7 +112,7 @@ user editable
 
 
 ------
-### 1.0.6
+### 1.0.7
 
 
 #### tests
@@ -133,8 +133,12 @@ how does python break when run in users application?
 - lack of coverage?
 
 
-### [1.0.6] - 2022-MM-DD
+### [1.0.7] - 2022-MM-DD
 #### TODO
+
+
+### [1.0.6] - 2022-05-30
+- Package name fix
 
 -------------------------------------------------------
 

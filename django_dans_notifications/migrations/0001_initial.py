@@ -161,7 +161,10 @@ class Migration(migrations.Migration):
                 "abstract": False,
             },
             managers=[
-                ("objects", django_dans_notifications.models.email.NotificationEmailManager()),
+                (
+                    "objects",
+                    django_dans_notifications.models.email.NotificationEmailManager(),
+                ),
             ],
         ),
     ]
