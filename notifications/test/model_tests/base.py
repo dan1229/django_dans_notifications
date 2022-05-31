@@ -11,7 +11,7 @@ from django.test import TestCase
 
 
 class BaseModelTestCase(TestCase):
-    username = 'testuser1'
+    username = "testuser1"
     base_email = "test@email.com"
     base_password = "12345"
 
@@ -23,4 +23,3 @@ class BaseModelTestCase(TestCase):
             username=self.username, email=self.base_email, password=self.base_password
         )
         self.client.force_login(self.base_user)
-

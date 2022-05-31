@@ -104,6 +104,7 @@ class NotificationEmailManager(models.Manager):
     ):
         """
         Send email function - sends email, handles notification system and object creation and everything
+        WILL NOT send in test mode - set via 'IN_TEST' in settings.py file.
 
         :param str subject: Subject for email.
         :param str template: Template file path or nickname.
@@ -145,7 +146,7 @@ class NotificationEmailManager(models.Manager):
                 to=notification_email.recipients_list,
             )
             message.attach_alternative(html_string, "text/html")
-            if not settings.IN_TEST:
+            if hasattr(settings, "IN_TEST") and not settings.IN_TEST:
                 message.send(fail_silently=False)
             notification_email.sent_successfully = True
         except SMTPException as e:
