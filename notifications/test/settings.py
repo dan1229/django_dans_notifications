@@ -10,9 +10,9 @@ DEBUG = True
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": 'django-dans-notifications-db',
-        "USER": 'django-dans-notifications',
-        "PASSWORD": 'test-password',
+        "NAME": "django-dans-notifications-db",
+        "USER": "django-dans-notifications",
+        "PASSWORD": "test-password",
     }
 }
 

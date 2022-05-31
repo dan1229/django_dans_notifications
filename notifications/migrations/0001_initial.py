@@ -12,78 +12,156 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='NotificationBasic',
+            name="NotificationBasic",
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('datetime_created', models.DateTimeField(auto_now_add=True)),
-                ('datetime_modified', models.DateTimeField(auto_now=True)),
-                ('datetime_sent', models.DateTimeField(blank=True, null=True)),
-                ('sent_successfully', models.BooleanField(default=False)),
-                ('sender', models.CharField(help_text='This should be the sending users email.', max_length=300)),
-                ('recipients', models.CharField(help_text='Comma separated list of email recipients.', max_length=900)),
-                ('read', models.BooleanField(default=False)),
-                ('message', models.CharField(max_length=600)),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                ("datetime_created", models.DateTimeField(auto_now_add=True)),
+                ("datetime_modified", models.DateTimeField(auto_now=True)),
+                ("datetime_sent", models.DateTimeField(blank=True, null=True)),
+                ("sent_successfully", models.BooleanField(default=False)),
+                (
+                    "sender",
+                    models.CharField(
+                        help_text="This should be the sending users email.",
+                        max_length=300,
+                    ),
+                ),
+                (
+                    "recipients",
+                    models.CharField(
+                        help_text="Comma separated list of email recipients.",
+                        max_length=900,
+                    ),
+                ),
+                ("read", models.BooleanField(default=False)),
+                ("message", models.CharField(max_length=600)),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='NotificationEmailTemplate',
+            name="NotificationEmailTemplate",
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('datetime_created', models.DateTimeField(auto_now_add=True)),
-                ('datetime_modified', models.DateTimeField(auto_now=True)),
-                ('path', models.CharField(max_length=300)),
-                ('nickname', models.CharField(max_length=300)),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                ("datetime_created", models.DateTimeField(auto_now_add=True)),
+                ("datetime_modified", models.DateTimeField(auto_now=True)),
+                ("path", models.CharField(max_length=300)),
+                ("nickname", models.CharField(max_length=300)),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
             managers=[
-                ('objects', notifications.models.email.NotificationEmailTemplateManager()),
+                (
+                    "objects",
+                    notifications.models.email.NotificationEmailTemplateManager(),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='NotificationPush',
+            name="NotificationPush",
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('datetime_created', models.DateTimeField(auto_now_add=True)),
-                ('datetime_modified', models.DateTimeField(auto_now=True)),
-                ('datetime_sent', models.DateTimeField(blank=True, null=True)),
-                ('sent_successfully', models.BooleanField(default=False)),
-                ('sender', models.CharField(help_text='This should be the sending users email.', max_length=300)),
-                ('recipients', models.CharField(help_text='Comma separated list of email recipients.', max_length=900)),
-                ('message', models.CharField(max_length=300)),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                ("datetime_created", models.DateTimeField(auto_now_add=True)),
+                ("datetime_modified", models.DateTimeField(auto_now=True)),
+                ("datetime_sent", models.DateTimeField(blank=True, null=True)),
+                ("sent_successfully", models.BooleanField(default=False)),
+                (
+                    "sender",
+                    models.CharField(
+                        help_text="This should be the sending users email.",
+                        max_length=300,
+                    ),
+                ),
+                (
+                    "recipients",
+                    models.CharField(
+                        help_text="Comma separated list of email recipients.",
+                        max_length=900,
+                    ),
+                ),
+                ("message", models.CharField(max_length=300)),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='NotificationEmail',
+            name="NotificationEmail",
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('datetime_created', models.DateTimeField(auto_now_add=True)),
-                ('datetime_modified', models.DateTimeField(auto_now=True)),
-                ('datetime_sent', models.DateTimeField(blank=True, null=True)),
-                ('sent_successfully', models.BooleanField(default=False)),
-                ('sender', models.CharField(help_text='This should be the sending users email.', max_length=300)),
-                ('recipients', models.CharField(help_text='Comma separated list of email recipients.', max_length=900)),
-                ('subject', models.CharField(max_length=300)),
-                ('context', models.JSONField(blank=True, null=True)),
-                ('template', models.ForeignKey(default=notifications.models.email.get_default_template, on_delete=django.db.models.deletion.DO_NOTHING, related_name='template', to='notifications.notificationemailtemplate')),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                ("datetime_created", models.DateTimeField(auto_now_add=True)),
+                ("datetime_modified", models.DateTimeField(auto_now=True)),
+                ("datetime_sent", models.DateTimeField(blank=True, null=True)),
+                ("sent_successfully", models.BooleanField(default=False)),
+                (
+                    "sender",
+                    models.CharField(
+                        help_text="This should be the sending users email.",
+                        max_length=300,
+                    ),
+                ),
+                (
+                    "recipients",
+                    models.CharField(
+                        help_text="Comma separated list of email recipients.",
+                        max_length=900,
+                    ),
+                ),
+                ("subject", models.CharField(max_length=300)),
+                ("context", models.JSONField(blank=True, null=True)),
+                (
+                    "template",
+                    models.ForeignKey(
+                        default=notifications.models.email.get_default_template,
+                        on_delete=django.db.models.deletion.DO_NOTHING,
+                        related_name="template",
+                        to="notifications.notificationemailtemplate",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
             managers=[
-                ('objects', notifications.models.email.NotificationEmailManager()),
+                ("objects", notifications.models.email.NotificationEmailManager()),
             ],
         ),
     ]

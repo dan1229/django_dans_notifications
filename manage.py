@@ -9,6 +9,7 @@ import sys
 # This is primarily used for generating migrations
 # and other 'simpler' Django commands
 
+
 def main():
     """Run administrative tasks."""
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "notifications.test.settings")
