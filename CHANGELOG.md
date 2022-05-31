@@ -76,9 +76,6 @@ coverage
 - codecov
 - badge
 
-ci
-- add lint/flake8 check
-- badge
 
 -----
 ### 1.0.1
@@ -98,8 +95,9 @@ remove api response handler
 ### [1.0.1] - 2022-05-31
 - LOTS of cleanup and refactoring
 - CI/CD improvements
-  - test-django
-    - release.yml
+  - lint
+  - test_python
+  - release
 - Refactored notifications app to work better with standard Django app
 
 -------------------------------------------------------
