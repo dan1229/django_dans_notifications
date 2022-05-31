@@ -44,7 +44,7 @@ class TestNotificationPushViewSet(BaseAPITestCase):
         self.assertEqual(json_response["count"], 0)
         self.assertEqual(json_response["next"], None)
         self.assertEqual(json_response["previous"], None)
-        self.assertEqual(json_response["success"], [])
+        self.assertEqual(json_response["results"], [])
 
     def test_notification_push_list_one_not_recp(self):
         # create notification(s)
@@ -63,6 +63,7 @@ class TestNotificationPushViewSet(BaseAPITestCase):
         self.assertEqual(json_response["count"], 0)
         self.assertEqual(json_response["next"], None)
         self.assertEqual(json_response["previous"], None)
+        self.assertEqual(json_response["results"], [])
 
     def test_notification_push_list_one(self):
         # create notification(s)
@@ -101,6 +102,7 @@ class TestNotificationPushViewSet(BaseAPITestCase):
         self.assertEqual(json_response["count"], 0)
         self.assertEqual(json_response["next"], None)
         self.assertEqual(json_response["previous"], None)
+        self.assertEqual(json_response["results"], [])
 
     def test_notification_push_list_man_one_recp(self):
         # create notification(s)
