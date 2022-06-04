@@ -9,3 +9,13 @@ coverage.xml
 dist/
 build/
 django-dans-notifications-db
+
+
+# env
+**/.env
+# Byte-compiled / optimized / DLL files
+**/__pycache__
+__pycache__/
+__pycache__
+*.pyc
+*$py.class

@@ -90,14 +90,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 -----
 
-#### apis
-
-email api
-- finish POST endpoint?
-    - can replace other email endpoint?
-
------
-
 #### notification models
 
 - how to allow user to add extras fields?
@@ -112,19 +104,6 @@ mypy + django stubs
 
 #### templates
 
-user editable
-- users add to their own 'templates' folder
-
-
-------
-### 1.1.0
-
-
-#### tests
-- post api tests
-
-
-
 do we need the actual 'templates' folder?
 - can we just store it as a string in the db?
     - data migration as 'fixture'
@@ -132,10 +111,34 @@ do we need the actual 'templates' folder?
         - probably weird for them to copy paste into admin
 
 
-how does python break when run in users application?
-- i.e., dans backend tests break but these ones are passing just fine?
-- is it a flake8/lint thing?
-- lack of coverage?
+------
+### 1.1.1
+
+
+tests
+- post api tests
+
+
+email api
+- finish POST endpoint?
+    - can replace other email endpoint?
+
+
+------
+### 1.1.0
+
+
+user editable
+- users add to their own 'templates' folder
+- docs
+
+
+flake8
+- add to project
+- ci step
+
+
+remove pycache
 
 
 ### [1.1.0] - 2022-MM-DD
