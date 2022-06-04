@@ -115,8 +115,8 @@ do we need the actual 'templates' folder?
     - need users to be able to add their own
         - probably weird for them to copy paste into admin
 
+-----
 
-------
 ### 1.1.1
 
 
@@ -125,7 +125,7 @@ do we need the actual 'templates' folder?
 mypy + django stubs
 
 
-### [1.1.0] - 2022-MM-DD
+### [1.1.1] - 2022-MM-DD
 #### TODO
 
 ------
