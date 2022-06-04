@@ -11,3 +11,6 @@ jobs:
 
       - name: Run black
         uses: psf/black@stable
+
+      - name: Run flake8
+        run: pip install flake8==4.0.1 && flake8 .
