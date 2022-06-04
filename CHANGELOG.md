@@ -136,9 +136,9 @@ flake8
 
 
 ### [1.1.0] - 2022-06-04
-#### TODO
 - User editable Email Templates!
   - Including docs
+#### TODO
 - Flake8 + Linting improvements 
 
 -------------------------------------------------------
