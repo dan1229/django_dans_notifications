@@ -128,10 +128,6 @@ email api
 ### 1.1.0
 
 
-user editable
-- users add to their own 'templates' folder
-- docs
-
 
 flake8
 - add to project
