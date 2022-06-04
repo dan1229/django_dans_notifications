@@ -1,0 +1,28 @@
+[flake8]
+# Recommend matching the black line length (default 88),
+# rather than using the flake8 default of 79:
+max-line-length = 88
+
+
+exclude =
+    venv/
+    .github
+    .git
+    build
+    dist
+    migrations
+    __pycache__
+    manage.py
+    settings.py
+    env
+    .env
+    ./env
+    env/
+    .env/
+
+extend-ignore =
+    # See https://github.com/PyCQA/pycodestyle/issues/373
+    E203,  # whitespace before ':' (conflicts with Black)
+    E231,  # Bad trailing comma (conflicts with Black)
+    E501,  # line too long (conflicts with Black)
+    F841,  # local variable 'X' is assigned to but never used
