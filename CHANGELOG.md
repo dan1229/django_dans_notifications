@@ -138,11 +138,12 @@ flake8
 - ci step
 
 
-remove pycache
 
-
-### [1.1.0] - 2022-MM-DD
+### [1.1.0] - 2022-06-04
 #### TODO
+- User editable Email Templates!
+  - Including docs
+- Flake8 + Linting improvements 
 
 -------------------------------------------------------
 
