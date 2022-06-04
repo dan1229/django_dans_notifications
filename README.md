@@ -66,14 +66,10 @@ Some available methods currently are:
     - Enforce object ownership and notification 'direction'
 - mark_notification_basic_read
 
-### Models
+## Docs
 
-See [Model docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/models.md).
+### [Model docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/models.md).
 
-### APIs
+### [API docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/apis.md).
 
-See [API docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/apis.md).
-
-### Email Templates
-
-See [Email Template docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/email-templates.md).
+### [Email Template docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/email-templates.md).
