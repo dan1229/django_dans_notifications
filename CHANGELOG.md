@@ -96,9 +96,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 -----
 
-#### mypy typing
+#### tests
+- post api tests
 
-mypy + django stubs
+
+#### apis
+email api
+- finish POST endpoint?
+    - can replace other email endpoint?
 
 -----
 
@@ -110,39 +115,27 @@ do we need the actual 'templates' folder?
     - need users to be able to add their own
         - probably weird for them to copy paste into admin
 
+-----
 
-------
 ### 1.1.1
 
 
-tests
-- post api tests
+#### mypy typing
+
+mypy + django stubs
 
 
-email api
-- finish POST endpoint?
-    - can replace other email endpoint?
-
+### [1.1.1] - 2022-MM-DD
+#### TODO
 
 ------
 ### 1.1.0
 
 
-user editable
-- users add to their own 'templates' folder
-- docs
-
-
-flake8
-- add to project
-- ci step
-
-
-remove pycache
-
-
-### [1.1.0] - 2022-MM-DD
-#### TODO
+### [1.1.0] - 2022-06-04
+- User editable Email Templates!
+  - Including docs
+- Flake8 + Linting improvements 
 
 -------------------------------------------------------
 
