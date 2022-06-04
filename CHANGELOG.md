@@ -15,6 +15,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
+### [1.1.0] - 2022-06-04
+- User editable Email Templates!
+  - Including docs
+- Flake8 + Linting improvements 
+
+
 ### [1.0.7] - 2022-05-30
 - Email Template paths fix
 
@@ -127,15 +133,6 @@ mypy + django stubs
 
 ### [1.1.1] - 2022-MM-DD
 #### TODO
-
-------
-### 1.1.0
-
-
-### [1.1.0] - 2022-06-04
-- User editable Email Templates!
-  - Including docs
-- Flake8 + Linting improvements 
 
 -------------------------------------------------------
 
