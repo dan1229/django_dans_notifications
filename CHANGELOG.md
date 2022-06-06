@@ -102,6 +102,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 -----
 
+#### mypy typing
+
+mypy + django stubs
+
+
+-----
+
+### 1.1.1
+
 #### tests
 - post api tests
 
@@ -110,25 +119,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 email api
 - finish POST endpoint?
     - can replace other email endpoint?
-
------
-
-#### templates
-
-do we need the actual 'templates' folder?
-- can we just store it as a string in the db?
-    - data migration as 'fixture'
-    - need users to be able to add their own
-        - probably weird for them to copy paste into admin
-
------
-
-### 1.1.1
-
-
-#### mypy typing
-
-mypy + django stubs
 
 
 ### [1.1.1] - 2022-MM-DD
