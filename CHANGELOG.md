@@ -120,6 +120,10 @@ email api
 - finish POST endpoint?
     - can replace other email endpoint?
 
+datetime_sent not setting
+
+
+make admin better
 
 ### [1.1.1] - 2022-MM-DD
 #### TODO
