@@ -6,6 +6,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.db import models
 from django.template import TemplateDoesNotExist
 from django.template.loader import render_to_string, get_template
+from django.utils import timezone
 from django.utils.html import strip_tags
 
 from .base import NotificationBase, AbstractBaseModel
@@ -151,10 +152,10 @@ class NotificationEmailManager(models.Manager):
             else:
                 message.send(fail_silently=False)
             notification_email.sent_successfully = True
-            # TODO save datetime_sent
         except SMTPException as e:
             logger.error(e)
             notification_email.sent_successfully = False
+        notification_email.sent_datetime = timezone.now()  # save regardless of status
         notification_email.save()
         return notification_email
 

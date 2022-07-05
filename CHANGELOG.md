@@ -133,14 +133,11 @@ make admin better
 - add datetime_created to admin?
 
 
-#### bugs
-- datetime_sent not working for email notifications
 
-
-add contact email template
-
-
-### [1.1.1] - 2022-MM-DD
+### [1.1.1] - 2022-07-05
+- Added contact email template
+- Improved email template docs
+- Fixed datetime sent for emails bug
 #### TODO
 
 -------------------------------------------------------
