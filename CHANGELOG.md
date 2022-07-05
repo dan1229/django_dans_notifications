@@ -15,6 +15,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
+### [1.1.1] - 2022-07-05
+- Added contact email template
+- Improved email template docs
+- Fixed datetime sent for emails bug
+- Improved Django admin
+
+
 ### [1.1.0] - 2022-06-04
 - User editable Email Templates!
   - Including docs
@@ -123,21 +130,8 @@ email api
     - one endpoint that requires a recipient and one 'contact style' i.e., SERVER_EMAIL?
   - TESTS
 
------
 
-### 1.1.1
-
-
-make admin better
-- order by datetime_sent/created
-- add datetime_created to admin?
-
-
-
-### [1.1.1] - 2022-07-05
-- Added contact email template
-- Improved email template docs
-- Fixed datetime sent for emails bug
+### [1.1.2] - 2022-MM-DD
 #### TODO
 
 -------------------------------------------------------
