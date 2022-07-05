@@ -119,7 +119,9 @@ mypy + django stubs
 #### apis
 email api
 - finish POST endpoint?
-    - can replace other email endpoint?
+  - can replace other email endpoint?
+    - one endpoint that requires a recipient and one 'contact style' i.e., SERVER_EMAIL?
+  - TESTS
 
 -----
 
