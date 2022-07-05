@@ -151,6 +151,7 @@ class NotificationEmailManager(models.Manager):
             else:
                 message.send(fail_silently=False)
             notification_email.sent_successfully = True
+            # TODO save datetime_sent
         except SMTPException as e:
             logger.error(e)
             notification_email.sent_successfully = False
