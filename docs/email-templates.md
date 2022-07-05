@@ -42,24 +42,23 @@ Default email template. You probably will never send this, it's primarily for er
 |-------------|------|----------|-------------------------------------|
 | `team_name` | str  | no       | Name of 'team' running this project |
 
-
 ### empty.html
 
 Empty email template. Used for contact forms and messages where the 'message' or 'content' can be supplied
 
-| Name      | Type | Required | Description                    |
-|-----------|------|----------|--------------------------------|
-| `message` | str  | yes      | Body message/content for email |
+| Name        | Type | Required | Description                         |
+|-------------|------|----------|-------------------------------------|
+| `message`   | str  | yes      | Body message/content for email      |
+| `team_name` | str  | no       | Name of 'team' running this project |
 
 ### password_reset.html
 
 Email to send on a password reset request. Should include link for user to go to, to actually reset their password.
 
-#### Context Variables
-
-| Name                 | Type | Required | Description           |
-|----------------------|------|----------|-----------------------|
-| `password_reset_url` | str  | yes      | URL to direct user to |
+| Name                 | Type | Required | Description                         |
+|----------------------|------|----------|-------------------------------------|
+| `password_reset_url` | str  | yes      | URL to direct user to               |
+| `team_name`          | str  | no       | Name of 'team' running this project |
 
 ### template.html
 
