@@ -2,7 +2,11 @@
 
 {% block content %}
 <tr>
-	<td>This is an email from Dan's Backend.</td>
+	{% if team_name %}
+		<td>This is an email from {{ team_name }}.</td>
+	{% else %}
+		<td>This is an email.</td>
+	{% endif %}
 </tr>
 <tr>
 	<td><br/></td>

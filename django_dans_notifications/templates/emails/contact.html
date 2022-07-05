@@ -1,0 +1,32 @@
+{% extends "emails/base.html" %}
+
+{% block content %}
+	<tr>
+		{% if team_name %}
+			<td>This is a contact email from {{ team_name }}.</td>
+		{% else %}
+			<td>This is a contact email.</td>
+		{% endif %}
+	</tr>
+	<tr>
+		<td><br/></td>
+	</tr>
+	<tr>
+		<td>NAME: {{ name }}</td>
+	</tr>
+	<tr>
+		<td>EMAIL: {{ email }}</td>
+	</tr>
+	<tr>
+		<td>=========================</td>
+	</tr>
+	<tr>
+		<td>{{ message }}</td>
+	</tr>
+	<tr>
+		<td><br/></td>
+	</tr>
+	<tr>
+		<td>Have a great day!</td>
+	</tr>
+{% endblock %}

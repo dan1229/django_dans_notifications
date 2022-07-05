@@ -109,7 +109,8 @@ mypy + django stubs
 
 -----
 
-### 1.1.1
+### 1.1.2
+
 
 #### tests
 - post api tests
@@ -118,14 +119,25 @@ mypy + django stubs
 #### apis
 email api
 - finish POST endpoint?
-    - can replace other email endpoint?
+  - can replace other email endpoint?
+    - one endpoint that requires a recipient and one 'contact style' i.e., SERVER_EMAIL?
+  - TESTS
 
-datetime_sent not setting
+-----
+
+### 1.1.1
 
 
 make admin better
+- order by datetime_sent/created
+- add datetime_created to admin?
 
-### [1.1.1] - 2022-MM-DD
+
+
+### [1.1.1] - 2022-07-05
+- Added contact email template
+- Improved email template docs
+- Fixed datetime sent for emails bug
 #### TODO
 
 -------------------------------------------------------

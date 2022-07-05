@@ -22,6 +22,7 @@ class NotificationBasicAdmin(admin.ModelAdmin):
         "recipients",
         "read",
         "message",
+        "datetime_created",
         "datetime_sent",
         "sent_successfully",
     )
@@ -60,6 +61,7 @@ class NotificationEmailAdmin(admin.ModelAdmin):
         "recipients",
         "subject",
         "template",
+        "datetime_created",
         "datetime_sent",
         "sent_successfully",
     )
@@ -84,6 +86,7 @@ class NotificationPushAdmin(admin.ModelAdmin):
         "sender",
         "recipients",
         "message",
+        "datetime_created",
         "datetime_sent",
         "sent_successfully",
     )

@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	<title>Dan's Backend</title>
+	<title></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 
@@ -15,24 +15,29 @@
 	<tr>
 		<td><br/></td>
 	</tr>
+	{# INTRO #}
 	<tr>
 		<td>Hi there,</td>
 	</tr>
 	<tr>
 		<td><br/></td>
 	</tr>
-			{% block content %}
-			{% endblock %}
+	{% block content %}
+	{% endblock %}
 	{# FOOTER #}
 	<tr>
 		<td><br/></td>
 	</tr>
-	<tr>
-		<td>Yours Truly,</td>
-	</tr>
-	<tr>
-		<td>The team at Dan's Backend</td>
-	</tr>
+	{% if team_name %}
+		<tr>
+			<td>Yours Truly,</td>
+		</tr>
+		<tr>
+			<td>The team at {{ team_name }}</td>
+		</tr>
+	{% else %}
+		<td>Thank you for using our site!</td>
+	{% endif %}
 </table>
 </body>
 </html>
