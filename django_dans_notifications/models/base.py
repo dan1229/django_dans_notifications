@@ -17,6 +17,7 @@ class AbstractBaseModel(models.Model):
 
     class Meta:
         abstract = True
+        ordering = ['datetime_created']
 
     def __str__(self):
         return "Abstract Base Model"
