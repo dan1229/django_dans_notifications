@@ -27,15 +27,21 @@ For your convenience, a number of HTML templates have been included by default.
 
 Used for contact style emails.
 
-| Name      | Type | Required | Description                      |
-|-----------|------|----------|----------------------------------|
-| `name`    | str  | yes      | Name of person filling out form  |
-| `email`   | str  | yes      | Email of person filling out form |
-| `message` | str  | yes      | Body message/content for email   |
+| Name        | Type | Required | Description                         |
+|-------------|------|----------|-------------------------------------|
+| `name`      | str  | yes      | Name of person filling out form     |
+| `email`     | str  | yes      | Email of person filling out form    |
+| `message`   | str  | yes      | Body message/content for email      |
+| `team_name` | str  | no       | Name of 'team' running this project |
 
 ### default.html
 
 Default email template. You probably will never send this, it's primarily for errors.
+
+| Name        | Type | Required | Description                         |
+|-------------|------|----------|-------------------------------------|
+| `team_name` | str  | no       | Name of 'team' running this project |
+
 
 ### empty.html
 
