@@ -15,6 +15,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
+### [1.1.2] - 2022-07-06
+- Some hotfixes
+
+
 ### [1.1.1] - 2022-07-05
 - Added contact email template
 - Improved email template docs
@@ -116,7 +120,7 @@ mypy + django stubs
 
 -----
 
-### 1.1.2
+### 1.1.3
 
 
 #### tests
@@ -131,7 +135,7 @@ email api
   - TESTS
 
 
-### [1.1.2] - 2022-MM-DD
+### [1.1.3] - 2022-MM-DD
 #### TODO
 
 -------------------------------------------------------
