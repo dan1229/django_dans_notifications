@@ -21,10 +21,10 @@ INSTALLED_APPS = [
 ]
 ```
 
-2. Include the notifications URLconf in your project urls.py like this:
+2. Include the notifications URLconf in your project urls.py for the REST API endpoints like this:
 
 ```python
-path("notifications/", include("notifications.urls")),
+path("api/notifications/", include("django_dans_notifications.urls")),
 ```
 
 3. Run `python manage.py migrate` to create the models.
