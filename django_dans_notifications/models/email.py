@@ -125,8 +125,8 @@ class NotificationEmailManager(models.Manager):
             raise ValueError("EmailTemplate with path/nickname does not exist.")
 
         # add TEAM_NAME var to context if appropriate
-        if hasattr(settings.TEAM_NAME) and context:
-            if not "team_name" in context:
+        if hasattr(settings, "TEAM_NAME") and context:
+            if not ("team_name" in context):
                 context["team_name"] = settings.TEAM_NAME
 
         # render html with context object

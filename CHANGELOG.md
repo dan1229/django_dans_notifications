@@ -15,6 +15,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
+### [1.1.4] - 2022-07-20
+- Support for `TEAM_NAME` setting
+- Fixed emails in test mode
+
+
 ### [1.1.3] - 2022-07-20
 - Support for `TEAM_NAME` setting
 - Fixed emails in test mode
@@ -125,7 +130,7 @@ mypy + django stubs
 
 -----
 
-### 1.1.4
+### 1.1.5
 
 
 #### tests
@@ -140,7 +145,7 @@ email api
   - TESTS
 
 
-### [1.1.4] - 2022-MM-DD
+### [1.1.5] - 2022-MM-DD
 #### TODO
 
 -------------------------------------------------------
