@@ -126,7 +126,7 @@ class NotificationEmailManager(models.Manager):
 
         # add TEAM_NAME var to context if appropriate
         if hasattr(settings, "TEAM_NAME") and context:
-            if not ("team_name" in context):
+            if "team_name" not in context:
                 context["team_name"] = settings.TEAM_NAME
 
         # render html with context object
