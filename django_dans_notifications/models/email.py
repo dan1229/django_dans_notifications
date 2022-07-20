@@ -1,6 +1,4 @@
 import logging
-from smtplib import SMTPException
-
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.db import models
@@ -8,6 +6,7 @@ from django.template import TemplateDoesNotExist
 from django.template.loader import render_to_string, get_template
 from django.utils import timezone
 from django.utils.html import strip_tags
+from smtplib import SMTPException
 
 from .base import NotificationBase, AbstractBaseModel
 
@@ -125,6 +124,11 @@ class NotificationEmailManager(models.Manager):
         if not email_template:
             raise ValueError("EmailTemplate with path/nickname does not exist.")
 
+        # add TEAM_NAME var to context if appropriate
+        if hasattr(settings.TEAM_NAME) and context:
+            if not "team_name" in context:
+                context["team_name"] = settings.TEAM_NAME
+
         # render html with context object
         html_string = email_template.html_to_str(context)
 
@@ -148,7 +152,7 @@ class NotificationEmailManager(models.Manager):
             )
             message.attach_alternative(html_string, "text/html")
             if hasattr(settings, "IN_TEST") and not settings.IN_TEST:
-                message.send(fail_silently=False)
+                pass  # dont send mail in tests
             else:
                 message.send(fail_silently=False)
             notification_email.sent_successfully = True
