@@ -159,7 +159,7 @@ class NotificationEmailManager(models.Manager):
         except SMTPException as e:
             logger.error(e)
             notification_email.sent_successfully = False
-        notification_email.sent_datetime = timezone.now()  # save regardless of status
+        notification_email.datetime_sent = timezone.now()  # save regardless of status
         notification_email.save()
         return notification_email
 

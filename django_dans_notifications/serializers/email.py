@@ -40,6 +40,7 @@ class NotificationEmailSerializer(BaseSerializer):
             "template_ref",
             "subject",
             "context",
+            "datetime_created",
             "datetime_sent",
             "sent_successfully",
             "sender",
@@ -49,10 +50,7 @@ class NotificationEmailSerializer(BaseSerializer):
         read_only_fields = (
             "id",
             "template_ref",
-            "datetime_sent",
-            "sent_successfully",
-            "sender",
-            "content",
+            "datetime_created",
         )
 
     @staticmethod

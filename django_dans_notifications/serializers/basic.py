@@ -18,8 +18,13 @@ class NotificationBasicSerializer(BaseSerializer):
             "id",
             "message",
             "read",
+            "datetime_created",
             "datetime_sent",
             "sent_successfully",
             "sender",
             "recipients",
+        )
+        read_only_fields = (
+            "id",
+            "datetime_created",
         )

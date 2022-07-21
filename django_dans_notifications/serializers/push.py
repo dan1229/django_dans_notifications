@@ -17,6 +17,7 @@ class NotificationPushSerializer(BaseSerializer):
         fields = (
             "id",
             "message",
+            "datetime_created",
             "datetime_sent",
             "sent_successfully",
             "sender",
@@ -24,7 +25,5 @@ class NotificationPushSerializer(BaseSerializer):
         )
         read_only_fields = (
             "id",
-            "datetime_sent",
-            "sent_successfully",
-            "sender",
+            "datetime_created",
         )
