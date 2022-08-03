@@ -151,7 +151,7 @@ class NotificationEmailManager(models.Manager):
                 to=notification_email.recipients_list,
             )
             message.attach_alternative(html_string, "text/html")
-            if hasattr(settings, "IN_TEST") and not settings.IN_TEST:
+            if hasattr(settings, "IN_TEST") and settings.IN_TEST:
                 pass  # dont send mail in tests
             else:
                 message.send(fail_silently=False)

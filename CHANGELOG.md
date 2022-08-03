@@ -15,6 +15,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
+### [1.1.6] - 2022-08-03
+- IN_TEST fix for POST email API
+
+
 ### [1.1.5] - 2022-07-20
 - Fixed datetime_sent on BaseNotification
 
@@ -134,7 +138,7 @@ mypy + django stubs
 
 -----
 
-### 1.1.6
+### 1.1.7
 
 
 #### tests
@@ -150,7 +154,7 @@ email api
 
 
 
-### [1.1.6] - 2022-MM-DD
+### [1.1.7] - 2022-MM-DD
 #### TODO
 
 -------------------------------------------------------
