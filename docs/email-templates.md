@@ -12,7 +12,7 @@ notification_email = NotificationEmail.objects.send_email(
     subject,
     "emails/file.html",
     from_email,
-    [to_email],
+    [to_email(s)],
     {context_dict},
 )
 ```

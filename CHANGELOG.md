@@ -15,6 +15,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
+### [1.1.7] - 2022-08-04
+- Added line breaks to email templates
+- Doc updates
+
+
 ### [1.1.6] - 2022-08-03
 - IN_TEST fix for POST email API
 
@@ -138,7 +143,7 @@ mypy + django stubs
 
 -----
 
-### 1.1.7
+### 1.1.8
 
 
 #### tests
@@ -154,7 +159,7 @@ email api
 
 
 
-### [1.1.7] - 2022-MM-DD
+### [1.1.8] - 2022-MM-DD
 #### TODO
 
 -------------------------------------------------------
