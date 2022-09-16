@@ -163,7 +163,8 @@ email api
 
 ### [1.1.9] - 2022-09-16
 - Email subject fix
-
+- Doc improvements
+- Email attachement/ICS support
 
 -------------------------------------------------------
 
