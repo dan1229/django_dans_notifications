@@ -5,7 +5,7 @@ work however as you add templates, please include them in this document.
 
 ## Adding Your Own
 
-To add your own email template, simply add your `.html` files to your local templates folder. You can also place it in `<TEMPLATES_DIRECTORY>/emails` and it will be picked up automatically.
+To add your own email template, simply add your `.html` files to your local templates folder. You can also place it in `<TEMPLATES_DIRECTORY>/emails` and it will be picked up automatically. These can be written as [Django Templates](https://docs.djangoproject.com/en/3.2/ref/templates/language/) and passed context variables from the `send_email` function.
 
 Then, to send an email simply use the `send_email` function and pass any options you'd like. For example:
 
