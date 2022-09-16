@@ -101,7 +101,7 @@ class NotificationEmailManager(models.Manager):
         sender=settings.DEFAULT_FROM_EMAIL,
         recipients=None,
         context=None,
-        file_attachment=None
+        file_attachment=None,
     ):
         """
         Send email function - sends email, handles notification system and object creation and everything
@@ -154,19 +154,21 @@ class NotificationEmailManager(models.Manager):
             )
             message.attach_alternative(html_string, "text/html")
             if file_attachment is not None:
-                message.attach_file(file_attachment, 'text/calendar')
+                message.attach_file(file_attachment, "text/calendar")
             if hasattr(settings, "IN_TEST") and settings.IN_TEST:
                 pass  # dont send mail in tests
             else:
                 message.send(fail_silently=False)
             notification_email.sent_successfully = True
-        except (SMTPException, Exception) as e:  # TODO - catch specific exceptions, 'attach_file' may throw an error
+        except (
+            SMTPException,
+            Exception,
+        ) as e:  # TODO - catch specific exceptions, 'attach_file' may throw an error
             logger.error(e)
             notification_email.sent_successfully = False
         notification_email.datetime_sent = timezone.now()  # save regardless of status
         notification_email.save()
         return notification_email
-
 
 
 #

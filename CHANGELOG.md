@@ -15,6 +15,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
+### [1.1.8] - 2022-09-16
+- Email subject fix
+- Doc improvements
+- Email attachement/ICS support
+
+
 ### [1.1.7] - 2022-08-04
 - Added line breaks to email templates
 - Doc updates
@@ -157,14 +163,8 @@ email api
     - one endpoint that requires a recipient and one 'contact style' i.e., SERVER_EMAIL?
   - TESTS
 
-### [1.1.8] - 2022-MM-DD
+### [1.1.9] - 2022-MM-DD
 #### TODO
-
-
-### [1.1.9] - 2022-09-16
-- Email subject fix
-- Doc improvements
-- Email attachement/ICS support
 
 -------------------------------------------------------
 
