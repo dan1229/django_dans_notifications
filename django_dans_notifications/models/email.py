@@ -96,7 +96,7 @@ class NotificationEmailManager(models.Manager):
 
     @staticmethod
     def send_email(
-        subject="Email from Dan's Backend",
+        subject=None,
         template="emails/default.html",
         sender=settings.DEFAULT_FROM_EMAIL,
         recipients=None,
@@ -112,6 +112,12 @@ class NotificationEmailManager(models.Manager):
         :param str recipients: List of email(s) to send to.
         :param dict context: Context dict for template.
         """
+        if subject is None:
+            if settings.TEAM_NAME is not None:
+                subject = f"Email from {settings.TEAM_NAME}"
+            else:
+                subject = "Email Notification"
+                
         if recipients is None:
             recipients = ""
 
