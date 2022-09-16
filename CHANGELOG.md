@@ -157,10 +157,14 @@ email api
     - one endpoint that requires a recipient and one 'contact style' i.e., SERVER_EMAIL?
   - TESTS
 
-
-
 ### [1.1.8] - 2022-MM-DD
 #### TODO
+
+
+### [1.1.9] - 2022-09-16
+- Email subject fix
+- Doc improvements
+- Email attachement/ICS support
 
 -------------------------------------------------------
 
