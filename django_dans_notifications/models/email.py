@@ -1,4 +1,3 @@
-import logging
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.db import models
@@ -10,7 +9,6 @@ from smtplib import SMTPException
 
 from .base import NotificationBase, AbstractBaseModel
 
-logger = logging.getLogger(__name__)
 
 """
 # ==================================================================================== #
@@ -153,18 +151,19 @@ class NotificationEmailManager(models.Manager):
                 to=notification_email.recipients_list,
             )
             message.attach_alternative(html_string, "text/html")
-            if file_attachment is not None:
-                message.attach_file(file_attachment, "text/calendar")
+            try:
+                if file_attachment is not None:  # attach file if applicable
+                    message.attach(file_attachment.name, file_attachment.read())
+            except (AttributeError, Exception) as e:  # TODO catch specific exception
+                print(f"Issue attaching to email: {type(e)} - {e}")
+
             if hasattr(settings, "IN_TEST") and settings.IN_TEST:
                 pass  # dont send mail in tests
             else:
                 message.send(fail_silently=False)
             notification_email.sent_successfully = True
-        except (
-            SMTPException,
-            Exception,
-        ) as e:  # TODO - catch specific exceptions, 'attach_file' may throw an error
-            logger.error(e)
+        except (SMTPException,) as e:
+            print(f"Error creating and sending email: {type(e)} - {e}")
             notification_email.sent_successfully = False
         notification_email.datetime_sent = timezone.now()  # save regardless of status
         notification_email.save()
@@ -187,7 +186,7 @@ class NotificationEmailTemplate(AbstractBaseModel):
         try:
             return render_to_string(self.path, context)
         except Exception as e:
-            logger.error(e)
+            print(f"Error rendering email template: ({type(e)}) {e}")
             return render_to_string("emails/default.html", context)
 
 
