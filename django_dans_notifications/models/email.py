@@ -162,7 +162,7 @@ class NotificationEmailManager(models.Manager):
             SMTPException,
             Exception,
         ) as e:  # TODO - catch specific exceptions, 'attach_file' may throw an error
-            print("Error sending email: ", e)
+            print("Error sending email: ", type(e),  e)
             notification_email.sent_successfully = False
         notification_email.datetime_sent = timezone.now()  # save regardless of status
         notification_email.save()
@@ -185,7 +185,7 @@ class NotificationEmailTemplate(AbstractBaseModel):
         try:
             return render_to_string(self.path, context)
         except Exception as e:
-            print("Error rendering email template: " + str(e))
+            print("Error rendering email template: (" + str(type(e)) + ") " + str(e))
             return render_to_string("emails/default.html", context)
 
 

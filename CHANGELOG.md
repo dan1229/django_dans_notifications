@@ -173,6 +173,7 @@ email api
 
 ### [1.1.9] - 2022-09-DD
 - Logging fixes
+- Better error handling
 
 -------------------------------------------------------
 
