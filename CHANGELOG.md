@@ -163,8 +163,13 @@ email api
     - one endpoint that requires a recipient and one 'contact style' i.e., SERVER_EMAIL?
   - TESTS
 
-### [1.1.9] - 2022-MM-DD
+### [1.1.10] - 2022-MM-DD
 #### TODO
+
+
+
+### [1.1.9] - 2022-09-DD
+- Logging fixes
 
 -------------------------------------------------------
 

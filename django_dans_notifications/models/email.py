@@ -1,4 +1,3 @@
-import logging
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.db import models
@@ -10,7 +9,6 @@ from smtplib import SMTPException
 
 from .base import NotificationBase, AbstractBaseModel
 
-logger = logging.getLogger(__name__)
 
 """
 # ==================================================================================== #
@@ -164,7 +162,7 @@ class NotificationEmailManager(models.Manager):
             SMTPException,
             Exception,
         ) as e:  # TODO - catch specific exceptions, 'attach_file' may throw an error
-            logger.error(e)
+            print("Error sending email: ", e)
             notification_email.sent_successfully = False
         notification_email.datetime_sent = timezone.now()  # save regardless of status
         notification_email.save()
@@ -187,7 +185,7 @@ class NotificationEmailTemplate(AbstractBaseModel):
         try:
             return render_to_string(self.path, context)
         except Exception as e:
-            logger.error(e)
+            print("Error rendering email template: " + str(e))
             return render_to_string("emails/default.html", context)
 
 
