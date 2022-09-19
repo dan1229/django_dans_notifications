@@ -18,7 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### [1.1.8] - 2022-09-16
 - Email subject fix
 - Doc improvements
-- Email attachement/ICS support
+- Email attachment/ICS support
 
 
 ### [1.1.7] - 2022-08-04
@@ -172,11 +172,6 @@ email api
 
 
 
-lint
-
-if file not included, how to handle that error?
-- retry email without file
-- fail email - log error
 
 ### [1.1.9] - 2022-09-19
 - Logging fixes

@@ -154,17 +154,15 @@ class NotificationEmailManager(models.Manager):
             try:
                 if file_attachment is not None:  # attach file if applicable
                     message.attach(file_attachment.name, file_attachment.read())
-            except (AttributeError, Exception ) as e:  # TODO catch specific exception
+            except (AttributeError, Exception) as e:  # TODO catch specific exception
                 print(f"Issue attaching to email: {type(e)} - {e}")
-                
+
             if hasattr(settings, "IN_TEST") and settings.IN_TEST:
                 pass  # dont send mail in tests
             else:
                 message.send(fail_silently=False)
             notification_email.sent_successfully = True
-        except (
-            SMTPException,
-        ) as e:
+        except (SMTPException,) as e:
             print(f"Error creating and sending email: {type(e)} - {e}")
             notification_email.sent_successfully = False
         notification_email.datetime_sent = timezone.now()  # save regardless of status
