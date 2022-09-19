@@ -166,17 +166,22 @@ email api
     - one endpoint that requires a recipient and one 'contact style' i.e., SERVER_EMAIL?
   - TESTS
 
-### [1.1.10] - 2022-MM-DD
+
+### [1.2.0] - 2022-MM-DD
 #### TODO
 
 
 
 lint
 
+if file not included, how to handle that error?
+- retry email without file
+- fail email - log error
 
-### [1.1.9] - 2022-09-DD
+### [1.1.9] - 2022-09-19
 - Logging fixes
 - Better error handling
+- Fix file attachment in emails
 
 -------------------------------------------------------
 

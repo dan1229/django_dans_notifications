@@ -151,8 +151,8 @@ class NotificationEmailManager(models.Manager):
                 to=notification_email.recipients_list,
             )
             message.attach_alternative(html_string, "text/html")
-            if file_attachment is not None:
-                message.attach_file(file_attachment, "text/calendar")
+            if file_attachment is not None:  # attach file if applicable
+                message.attach(file_attachment.name, file_attachment.read())
             if hasattr(settings, "IN_TEST") and settings.IN_TEST:
                 pass  # dont send mail in tests
             else:
