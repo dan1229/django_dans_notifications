@@ -15,6 +15,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
+### [1.1.9] - 2022-09-19
+- Logging fixes
+- Better error handling
+- Fix file attachment in emails
+- Documentation improvements
+
+
 ### [1.1.8] - 2022-09-16
 - Email subject fix
 - Doc improvements
@@ -169,14 +176,6 @@ email api
 
 ### [1.2.0] - 2022-MM-DD
 #### TODO
-
-
-
-
-### [1.1.9] - 2022-09-19
-- Logging fixes
-- Better error handling
-- Fix file attachment in emails
 
 -------------------------------------------------------
 

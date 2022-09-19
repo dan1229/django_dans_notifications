@@ -162,7 +162,10 @@ class NotificationEmailManager(models.Manager):
             else:
                 message.send(fail_silently=False)
             notification_email.sent_successfully = True
-        except (SMTPException, Exception) as e:  # TODO - could potentially throw other exceptions, catch specific ones
+        except (
+            SMTPException,
+            Exception,
+        ) as e:  # TODO - could potentially throw other exceptions, catch specific ones
             print(f"Error creating and sending email: {type(e)} - {e}")
             notification_email.sent_successfully = False
         notification_email.datetime_sent = timezone.now()  # save regardless of status

@@ -51,6 +51,8 @@ REST_FRAMEWORK = {
 
 ### Available Settings
 
+Currently all available settings are optional:
+
 - `TEAM_NAME` - Default team name to use for emails, can be added to message context manually as well still.
 - `IN_TEST` - Whether running in tests or not. Used to determine whether to actually send email.
 
@@ -61,11 +63,19 @@ The main way to interact with this app is to create and use the appropriate mode
 
 Also included is the `NotificationManager` a class to expose some common functionality and maintain object permissions.
 
-Some available methods currently are:
+Some of its methods currently are:
 
 - get_notifications_push/email/basic/all
     - Enforce object ownership and notification 'direction'
 - mark_notification_basic_read
+
+You can also interact directly, so for example to send an email notification:
+
+```python
+from django_dans_notifications.models import EmailNotification
+
+email_notification = EmailNotification.objects.send_email(...)
+```
 
 ## Docs
 
