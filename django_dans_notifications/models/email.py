@@ -162,7 +162,7 @@ class NotificationEmailManager(models.Manager):
             SMTPException,
             Exception,
         ) as e:  # TODO - catch specific exceptions, 'attach_file' may throw an error
-            print("Error sending email: ", type(e),  e)
+            print("Error sending email: ", type(e), e)
             notification_email.sent_successfully = False
         notification_email.datetime_sent = timezone.now()  # save regardless of status
         notification_email.save()
