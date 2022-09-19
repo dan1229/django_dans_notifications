@@ -151,6 +151,9 @@ mypy + django stubs
 
 ### 1.1.8
 
+#### logging
+- switch from print statements :/
+
 
 #### tests
 - post api tests
