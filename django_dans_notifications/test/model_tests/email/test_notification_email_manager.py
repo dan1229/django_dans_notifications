@@ -29,7 +29,7 @@ class TestNotificationEmailManager(BaseModelTestCase):
             self.assertTrue(True)
 
     def test_send_email_template_does_exist(self):
-        template = "emails/default.html"
+        template = "django-dans-emails/default.html"
         notification_email = NotificationEmail.objects.send_email(
             template=template,
         )
@@ -37,7 +37,7 @@ class TestNotificationEmailManager(BaseModelTestCase):
         self.assertEqual(notification_email.template.path, template)
 
     def test_send_email_no_recipients(self):
-        template = "emails/default.html"
+        template = "django-dans-emails/default.html"
         recipients = []
         notification_email = NotificationEmail.objects.send_email(
             template=template, recipients=recipients
@@ -47,7 +47,7 @@ class TestNotificationEmailManager(BaseModelTestCase):
 
     def test_send_email_with_one_recipients_list(self):
         email1 = "danielnazarian@outlook.com"
-        template = "emails/default.html"
+        template = "django-dans-emails/default.html"
         recipients = [email1]
         notification_email = NotificationEmail.objects.send_email(
             template=template, recipients=recipients
@@ -57,7 +57,7 @@ class TestNotificationEmailManager(BaseModelTestCase):
 
     def test_send_email_with_one_recipients_str(self):
         email1 = "danielnazarian@outlook.com"
-        template = "emails/default.html"
+        template = "django-dans-emails/default.html"
         recipients = str([email1])
         notification_email = NotificationEmail.objects.send_email(
             template=template, recipients=recipients
@@ -69,7 +69,7 @@ class TestNotificationEmailManager(BaseModelTestCase):
         email1 = "danielnazarian@outlook.com"
         email2 = "danielnazarian+32523@outlook.com"
         email3 = "danielnazarian+352346@outlook.com"
-        template = "emails/default.html"
+        template = "django-dans-emails/default.html"
         recipients = [email1, email2, email3]
         notification_email = NotificationEmail.objects.send_email(
             template=template, recipients=recipients
@@ -83,7 +83,7 @@ class TestNotificationEmailManager(BaseModelTestCase):
         email1 = "danielnazarian@outlook.com"
         email2 = "danielnazarian+32523@outlook.com"
         email3 = "danielnazarian+352346@outlook.com"
-        template = "emails/default.html"
+        template = "django-dans-emails/default.html"
         recipients = str([email1, email2, email3])
         notification_email = NotificationEmail.objects.send_email(
             template=template, recipients=recipients
@@ -95,7 +95,7 @@ class TestNotificationEmailManager(BaseModelTestCase):
 
     def test_send_email_with_context_dict(self):
         context = {"user": "2563468934986734986"}
-        template = "emails/default.html"
+        template = "django-dans-emails/default.html"
         notification_email = NotificationEmail.objects.send_email(
             template=template, context=context
         )

@@ -28,7 +28,7 @@ class TestEmailNotificationTemplate(BaseModelTestCase):
 
     def test_with_path_exists(self):
         self.email_template_nickname = "template1"
-        self.email_template_path = "emails/template.html"
+        self.email_template_path = "django-dans-emails/template.html"
         self.email_template = self.model.objects.create(
             nickname=self.email_template_nickname, path=self.email_template_path
         )
@@ -37,7 +37,7 @@ class TestEmailNotificationTemplate(BaseModelTestCase):
 
     def test_with_path_exists_no_extension(self):
         self.email_template_nickname = "template1"
-        self.email_template_path = "emails/template"
+        self.email_template_path = "django-dans-emails/template"
         self.email_template = self.model.objects.create(
             nickname=self.email_template_nickname, path=self.email_template_path
         )

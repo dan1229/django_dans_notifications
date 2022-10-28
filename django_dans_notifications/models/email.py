@@ -34,10 +34,18 @@ class NotificationEmailTemplateManager(models.Manager):
         """
         get or create NotificationEmailTemplate object for the passed 'template'
 
-        :param str template: Path of email template to use should be of this form 'emails/<NAME>.html'. Can also be the templates 'nickname'.
+        :param str template: Path of email template to use should be of this form 'django-dans-emails/<NAME>.html'. Can also be the templates 'nickname'.
         """
         try:
             return NotificationEmailTemplate.objects.get(path=template)
+        except NotificationEmailTemplate.DoesNotExist:
+            pass
+
+        # see if file exists at path 'emails/'
+        try:
+            return NotificationEmailTemplate.objects.get(
+                path=f"django-dans-emails/{template}"
+            )
         except NotificationEmailTemplate.DoesNotExist:
             pass
 
@@ -60,6 +68,15 @@ class NotificationEmailTemplateManager(models.Manager):
         # template not found by path or nickname - see if file exists or not
         try:
             tmp = get_template(template)
+            return NotificationEmailTemplate.objects.get_or_create(
+                path=template, nickname=template
+            )[0]
+        except TemplateDoesNotExist:
+            pass
+
+        # see if file exists at "django-dans-emails/"
+        try:
+            tmp = get_template(f"django-dans-emails/{template}")
             return NotificationEmailTemplate.objects.get_or_create(
                 path=template, nickname=template
             )[0]
@@ -95,7 +112,7 @@ class NotificationEmailManager(models.Manager):
     @staticmethod
     def send_email(
         subject="Email from Dan's Backend",
-        template="emails/default.html",
+        template="django-dans-emails/default.html",
         sender=settings.DEFAULT_FROM_EMAIL,
         recipients=None,
         context=None,
@@ -190,13 +207,13 @@ class NotificationEmailTemplate(AbstractBaseModel):
             return render_to_string(self.path, context)
         except Exception as e:
             print(f"Error rendering email template: ({type(e)}) {e}")
-            return render_to_string("emails/default.html", context)
+            return render_to_string("django-dans-emails/default.html", context)
 
 
 def get_default_template():
-    return NotificationEmailTemplate.objects.get_or_create(path="emails/default.html")[
-        0
-    ]
+    return NotificationEmailTemplate.objects.get_or_create(
+        path="django-dans-emails/default.html"
+    )[0]
 
 
 #

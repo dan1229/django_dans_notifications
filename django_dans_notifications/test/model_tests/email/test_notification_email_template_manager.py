@@ -20,7 +20,7 @@ class TestNotificationEmailTemplateManager(BaseModelTestCase):
     # =================================================================== #
 
     def test_template_exists_by_path(self):
-        template = "emails/default.html"
+        template = "django-dans-emails/default.html"
         email_template = NotificationEmailTemplate.objects.find_email_template(template)
         self.assertEqual(email_template.path, template)
 
@@ -41,6 +41,6 @@ class TestNotificationEmailTemplateManager(BaseModelTestCase):
         self.assertEqual(email_template, None)
 
     def test_template_does_not_exists_by_path(self):
-        template = "emails/invalid"
+        template = "django-dans-emails/invalid"
         email_template = NotificationEmailTemplate.objects.find_email_template(template)
         self.assertEqual(email_template, None)
