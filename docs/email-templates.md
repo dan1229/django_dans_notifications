@@ -14,10 +14,10 @@ Then, to send an email simply use the `send_email` function and pass any options
 ```python
 notification_email = NotificationEmail.objects.send_email(
     "subject",
-    "emails/file.html",
+    "django-dans-emails/<FILENAME>.html",  # note: this can be a path to your local template
     from_email,
     [to_email(s)],
-    {context_dict},
+    {"context_variable": "value"},
 )
 ```
 
