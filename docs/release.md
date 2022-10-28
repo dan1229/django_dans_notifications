@@ -1,6 +1,6 @@
 ## Packaging
 
-**NOTE:** You MUST update your version number in `setup.cfg` before anything else as this is what actually determines the version!
+**IMPORTANT:** You MUST update your version number in `setup.cfg` before anything else as this is what actually determines the version!
 
 ### CD
 

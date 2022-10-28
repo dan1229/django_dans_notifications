@@ -1,1 +1,1 @@
-notifications
+django_dans_notifications

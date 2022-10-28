@@ -1,11 +1,12 @@
 Metadata-Version: 2.1
 Name: django-dans-notifications
-Version: 1.0.3
-Summary: A Django app to handle notifications.
+Version: 1.1.9
+Summary: A Django app to different handle notification types.
 Home-page: https://www.github.com/dan1229/django_dans_notifications
 Author: Daniel Nazarian
 Author-email: dnaz@danielnazarian.com
-License: BSD-3-Clause  # Example license
+License: BSD-3-Clause
+Platform: UNKNOWN
 Classifier: Environment :: Web Environment
 Classifier: Framework :: Django
 Classifier: Framework :: Django :: 3.0
@@ -30,10 +31,6 @@ License-File: AUTHORS
 [![Test Python](https://github.com/dan1229/django_dans_notifications/actions/workflows/test-python.yml/badge.svg)](https://github.com/dan1229/django_dans_notifications/actions/workflows/test-python.yml)
 [![codecov](https://codecov.io/gh/dan1229/django_dans_notifications/branch/main/graph/badge.svg?token=TL09HDQWBJ)](https://codecov.io/gh/dan1229/django_dans_notifications)
 
-#### [GitHub](https://github.com/dan1229/django_dans_notifications)
-
-#### [PyPi](https://pypi.org/project/django-dans-notifications/)
-
 ## Description
 
 A Django app to handle notifications.
@@ -42,19 +39,19 @@ Support for basic notifications, push notifications and email notifications.
 
 ## Quick start
 
-1. Add "notifications" to your INSTALLED_APPS setting like this:
+1. Add "django_dans_notifications" to your INSTALLED_APPS setting like this:
 
 ```python
 INSTALLED_APPS = [
 	...
-	'django',
+	'django_dans_notifications',
 ]
 ```
 
-2. Include the notifications URLconf in your project urls.py like this:
+2. Include the notifications URLconf in your project urls.py for the REST API endpoints like this:
 
 ```python
-path("notifications/", include("notifications.urls")),
+path("api/notifications/", include("django_dans_notifications.urls")),
 ```
 
 3. Run `python manage.py migrate` to create the models.
@@ -81,6 +78,9 @@ REST_FRAMEWORK = {
 
 ### Available Settings
 
+Currently all available settings are optional:
+
+- `TEAM_NAME` - Default team name to use for emails, can be added to message context manually as well still.
 - `IN_TEST` - Whether running in tests or not. Used to determine whether to actually send email.
 
 
@@ -90,20 +90,26 @@ The main way to interact with this app is to create and use the appropriate mode
 
 Also included is the `NotificationManager` a class to expose some common functionality and maintain object permissions.
 
-Some available methods currently are:
+Some of its methods currently are:
 
 - get_notifications_push/email/basic/all
     - Enforce object ownership and notification 'direction'
 - mark_notification_basic_read
 
-### Models
+You can also interact directly, so for example to send an email notification:
 
-See [Model docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/models.md).
+```python
+from django_dans_notifications.models import EmailNotification
 
-### APIs
+email_notification = EmailNotification.objects.send_email(...)
+```
 
-See [API docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/apis.md).
+## Docs
 
-### Email Templates
+### [Model docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/models.md).
 
-See [Email Template docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/email-templates.md).
+### [API docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/apis.md).
+
+### [Email Template docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/email-templates.md).
+
+
