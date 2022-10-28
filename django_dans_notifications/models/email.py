@@ -43,7 +43,9 @@ class NotificationEmailTemplateManager(models.Manager):
 
         # see if file exists at path 'emails/'
         try:
-            return NotificationEmailTemplate.objects.get(path=f"django-dans-emails/{template}")
+            return NotificationEmailTemplate.objects.get(
+                path=f"django-dans-emails/{template}"
+            )
         except NotificationEmailTemplate.DoesNotExist:
             pass
 
@@ -80,7 +82,7 @@ class NotificationEmailTemplateManager(models.Manager):
             )[0]
         except TemplateDoesNotExist:
             pass
-        
+
         # see if file exists at "emails/"
         try:
             tmp = get_template(f"emails/{template}")
@@ -209,9 +211,9 @@ class NotificationEmailTemplate(AbstractBaseModel):
 
 
 def get_default_template():
-    return NotificationEmailTemplate.objects.get_or_create(path="django-dans-emails/default.html")[
-        0
-    ]
+    return NotificationEmailTemplate.objects.get_or_create(
+        path="django-dans-emails/default.html"
+    )[0]
 
 
 #
