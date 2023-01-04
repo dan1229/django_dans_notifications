@@ -8,6 +8,7 @@ from django.utils.html import strip_tags
 from smtplib import SMTPException
 
 from .base import NotificationBase, AbstractBaseModel
+from django_dans_notifications.threads import EmailThread
 
 
 """
@@ -177,7 +178,7 @@ class NotificationEmailManager(models.Manager):
             if hasattr(settings, "IN_TEST") and settings.IN_TEST:
                 pass  # dont send mail in tests
             else:
-                message.send(fail_silently=False)
+                EmailThread().run(message.send(), fail_silently=False)
             notification_email.sent_successfully = True
         except (
             SMTPException,

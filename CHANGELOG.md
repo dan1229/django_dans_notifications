@@ -181,6 +181,11 @@ email api
 ### [1.2.0] - 2022-MM-DD
 #### TODO
 
+----
+
+### [1.1.11] - 2022-01-04
+- Send emails on threads to avoid blocking
+
 -------------------------------------------------------
 
 ##### [https://danielnazarian.com](https://danielnazarian.com)
