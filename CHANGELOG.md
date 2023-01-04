@@ -15,6 +15,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
+### [1.1.11] - 2022-01-04
+- Send emails on threads to avoid blocking
+
+
 ### [1.1.10] - 2022-10-27
 - Email templates fixes
 
@@ -181,10 +185,6 @@ email api
 ### [1.2.0] - 2022-MM-DD
 #### TODO
 
-----
-
-### [1.1.11] - 2022-01-04
-- Send emails on threads to avoid blocking
 
 -------------------------------------------------------
 
