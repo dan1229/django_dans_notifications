@@ -173,18 +173,13 @@ mypy + django stubs
 
 #### logging
 - switch from print statements :/
+- how to integrate with django logging?
+    - can we grab the default logger or something?
 
 
 #### tests
 - post api tests
-
-
-#### apis
-email api
-- finish POST endpoint?
-  - can replace other email endpoint?
-    - one endpoint that requires a recipient and one 'contact style' i.e., SERVER_EMAIL?
-  - TESTS
+- higher coverage overall (> 90%)
 
 
 ### [1.2.0] - 2022-MM-DD
