@@ -10,5 +10,5 @@ class EmailThread(Thread):
     Simply pass a function you want to run in a thread and any arguments
     """
 
-    def run(self, func, *args):
-        func(*args)
+    def run(self, func, *args, **kwargs):
+        func(*args, **kwargs)

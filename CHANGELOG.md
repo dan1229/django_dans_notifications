@@ -15,6 +15,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
+
+### [1.1.12] - 2022-01-04
+- Email threads fix
+
+
 ### [1.1.11] - 2022-01-04
 - Send emails on threads to avoid blocking
 
