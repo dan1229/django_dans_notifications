@@ -16,6 +16,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Released]
 
 
+### [1.1.15] - 2022-04-04
+- ACTUAL FIX for recipients_contains lol!!
+
+
 ### [1.1.14] - 2022-04-04
 - recipients_contains fix for ID support
 
@@ -192,11 +196,6 @@ mypy + django stubs
 
 ### [1.2.0] - 2022-MM-DD
 #### TODO
-
-
-
-### [1.1.15] - 2022-04-04
-- ACTUAL FIX for recipients_contains lol!!
 
 -------------------------------------------------------
 
