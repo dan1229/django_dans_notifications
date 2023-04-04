@@ -9,7 +9,6 @@ import django_dans_notifications.models.email
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = []
