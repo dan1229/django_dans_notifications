@@ -169,7 +169,7 @@ mypy + django stubs
 
 -----
 
-### 1.1.8
+### 1.2.0
 
 #### logging
 - switch from print statements :/
@@ -184,6 +184,12 @@ mypy + django stubs
 
 ### [1.2.0] - 2022-MM-DD
 #### TODO
+
+---
+
+
+### [1.1.13] - 2022-04-04
+- Updated GET/List APIs to include recipients listed as IDs
 
 
 -------------------------------------------------------

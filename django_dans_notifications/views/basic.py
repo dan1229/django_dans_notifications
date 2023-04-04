@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from ..helpers import str_to_bool, api_response_error, api_response_success
 from ..models.basic import NotificationBasic
 from ..serializers.basic import NotificationBasicSerializer
+from django.db.models import Q
 
 """
 ============================================================================================ #
@@ -30,7 +31,10 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
         serializer_class = self.get_serializer_class()
         serializer = serializer_class(
             self.filter_queryset(
-                self.queryset.filter(recipients__contains=request.user.email)
+                self.queryset.filter(
+                    Q(recipients__contains=request.user.email)
+                    | Q(recipients__contains=request.user.id)
+                )
             ),
             many=True,
             context={"request": request},
