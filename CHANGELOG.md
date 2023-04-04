@@ -15,6 +15,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
+### [1.1.13] - 2022-04-04
+- Updated GET/List APIs to include recipients listed as IDs
+
 
 ### [1.1.12] - 2022-01-04
 - Email threads fix
@@ -184,13 +187,6 @@ mypy + django stubs
 
 ### [1.2.0] - 2022-MM-DD
 #### TODO
-
----
-
-
-### [1.1.13] - 2022-04-04
-- Updated GET/List APIs to include recipients listed as IDs
-
 
 -------------------------------------------------------
 
