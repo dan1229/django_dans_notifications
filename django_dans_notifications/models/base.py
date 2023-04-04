@@ -94,6 +94,12 @@ class NotificationBase(AbstractBaseModel):
         """
         Detect if 'user' is involved with this notification or not
         """
-        if str(user) in self.recipients:
-            return True
+        if isinstance(user, str):
+            if user in self.recipients:
+                return True
+        else:
+            if hasattr(user, "email") and str(user.email) in self.recipients:
+                return True
+            if hasattr(user, "id") and str(user.id) in self.recipients:
+                return True
         return False
