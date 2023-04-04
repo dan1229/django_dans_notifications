@@ -15,6 +15,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
+### [1.1.14] - 2022-04-04
+- recipients_contains fix for ID support
+
+
 ### [1.1.13] - 2022-04-04
 - Updated GET/List APIs to include recipients listed as IDs
 

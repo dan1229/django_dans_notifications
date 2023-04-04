@@ -50,7 +50,7 @@ class NotificationEmailViewSet(viewsets.GenericViewSet):
         pk = self.kwargs.get("pk")
         try:
             notification_email = NotificationEmail.objects.get(pk=pk)
-            if not notification_email.recipients_contains(request.user.email):
+            if not notification_email.recipients_contains(request.user):
                 raise NotificationEmail.DoesNotExist
         except (NotificationEmail.DoesNotExist, ValidationError):
             return api_response_error("Notification not found.")

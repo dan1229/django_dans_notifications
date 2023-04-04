@@ -51,7 +51,7 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
         pk = self.kwargs.get("pk")
         try:
             notification_basic = NotificationBasic.objects.get(pk=pk)
-            if not notification_basic.recipients_contains(request.user.email):
+            if not notification_basic.recipients_contains(request.user):
                 raise NotificationBasic.DoesNotExist
         except (NotificationBasic.DoesNotExist, ValidationError):
             return api_response_error("Notification not found.")
@@ -96,7 +96,7 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
         pk = self.kwargs.get("pk")
         try:
             notification_basic = NotificationBasic.objects.get(pk=pk)
-            if not notification_basic.recipients_contains(request.user.email):
+            if not notification_basic.recipients_contains(request.user):
                 raise NotificationBasic.DoesNotExist
         except (NotificationBasic.DoesNotExist, ValidationError):
             return api_response_error("Notification not found.")
