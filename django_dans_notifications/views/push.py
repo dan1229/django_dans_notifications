@@ -30,7 +30,7 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
         serializer_class = self.get_serializer_class()
         serializer = serializer_class(
             self.filter_queryset(
-                self.queryset.filter(recipients__contains=request.user.email)
+                self.queryset.filter(Q(recipients__contains=request.user.email) | Q(recipients__contains=request.user.id))
             ),
             many=True,
             context={"request": request},
