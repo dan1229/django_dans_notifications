@@ -79,8 +79,15 @@ email_notification = EmailNotification.objects.send_email(...)
 
 ## Docs
 
-### [Model docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/models.md).
+#### [Model docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/models.md).
 
-### [API docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/apis.md).
+#### [API docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/apis.md).
 
-### [Email Template docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/email-templates.md).
+#### [Email Template docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/email-templates.md).
+
+-------------------------------------------------------
+
+##### [https://danielnazarian.com](https://danielnazarian.com)
+
+##### Copyright 2023 © Daniel Nazarian.
+
