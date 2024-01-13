@@ -35,6 +35,8 @@
 ### 1.2.0
 
 
+#### update requirements?
+- just newer packages?
 
 
 #### logging
@@ -53,15 +55,12 @@
 
 ---
 
-#### remove generic 'Exception's???
-
-TODO
 
 
-### [1.1.16] - 2022-04-04
+### [1.1.16] - 2024-01-13
 - `NotificationEmail` handling and error improvements
-
-- Code copyright updates
+- Removed generic `Exceptions` everywhere
+- Code and License copyright updates
 
 -------------------------------------------------------
 

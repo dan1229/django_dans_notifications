@@ -159,7 +159,7 @@ class NotificationEmailManager(models.Manager):
             recipients=recipients,
         )
 
-        # send email via django
+        # create message object
         try:
             text_content = strip_tags(html_string)
             message = EmailMultiAlternatives(
@@ -169,12 +169,21 @@ class NotificationEmailManager(models.Manager):
                 to=notification_email.recipients_list,
             )
             message.attach_alternative(html_string, "text/html")
-            try:
-                if file_attachment is not None:  # attach file if applicable
-                    message.attach(file_attachment.name, file_attachment.read())
-            except (AttributeError, Exception) as e:  # TODO catch specific exception
-                print(f"Issue attaching to email: {type(e)} - {e}")
+        except ValueError as e:
+            print(f"Error creating email message: {type(e)} - {e}")
+            notification_email.sent_successfully = False
+            notification_email.save()
+            return notification_email
 
+        # attach file if applicable
+        try:
+            if file_attachment is not None:  # attach file if applicable
+                message.attach(file_attachment.name, file_attachment.read())
+        except AttributeError as e:
+            print(f"Issue attaching to email: {type(e)} - {e}")
+
+        # send email via django
+        try:
             if hasattr(settings, "IN_TEST") and settings.IN_TEST:
                 pass  # dont send mail in tests
             else:
@@ -183,11 +192,12 @@ class NotificationEmailManager(models.Manager):
         except (
             SMTPException,
             SMTPAuthenticationError,
-            Exception,
-        ) as e:  # TODO - could potentially throw other exceptions, catch specific ones
+        ) as e:
             print(f"Error creating and sending email: {type(e)} - {e}")
             notification_email.sent_successfully = False
-        notification_email.datetime_sent = timezone.now()  # save regardless of status
+
+        # save regardless of status
+        notification_email.datetime_sent = timezone.now()
         notification_email.save()
         return notification_email
 
@@ -207,7 +217,7 @@ class NotificationEmailTemplate(AbstractBaseModel):
     def html_to_str(self, context):
         try:
             return render_to_string(self.path, context)
-        except Exception as e:
+        except TemplateDoesNotExist as e:
             print(f"Error rendering email template: ({type(e)}) {e}")
             return render_to_string("django-dans-emails/default.html", context)
 

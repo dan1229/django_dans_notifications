@@ -12,7 +12,13 @@ Support for basic notifications, push notifications and email notifications.
 
 ## Quick start
 
-1. Add "django_dans_notifications" to your INSTALLED_APPS setting like this:
+1. Install the package via pip:
+
+```bash
+pip install django-dans-notifications
+```
+
+2. Add "django_dans_notifications" to your INSTALLED_APPS setting like this:
 
 ```python
 INSTALLED_APPS = [
@@ -21,15 +27,15 @@ INSTALLED_APPS = [
 ]
 ```
 
-2. Include the notifications URLconf in your project urls.py for the REST API endpoints like this:
+3. Include the notifications URLconf in your project urls.py for the REST API endpoints like this:
 
 ```python
 path("api/notifications/", include("django_dans_notifications.urls")),
 ```
 
-3. Run `python manage.py migrate` to create the models.
+4. Run `python manage.py migrate` to update your database schema.
 
-4. Create notifications via the API endpoints, in code or your Admin portal.
+5. Create notifications via the API endpoints, in code or your Django admin portal.
 
 ### Requirements
 
@@ -89,5 +95,5 @@ email_notification = EmailNotification.objects.send_email(...)
 
 ##### [https://danielnazarian.com](https://danielnazarian.com)
 
-##### Copyright 2023 © Daniel Nazarian.
+##### Copyright 2024 © Daniel Nazarian.
 
