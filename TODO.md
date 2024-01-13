@@ -50,6 +50,11 @@
 - higher coverage overall (> 90%)
 
 
+#### improve api swagger docs
+- lots of api docs strings aren't showing up
+- need to add params and stuff
+
+
 ### [1.2.0] - 2022-MM-DD
 #### TODO
 
