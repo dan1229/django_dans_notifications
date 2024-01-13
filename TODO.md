@@ -53,15 +53,6 @@
 ### [1.2.0] - 2022-MM-DD
 #### TODO
 
----
-
-
-
-### [1.1.16] - 2024-01-13
-- `NotificationEmail` handling and error improvements
-- Removed generic `Exceptions` everywhere
-- Code and License copyright updates
-
 -------------------------------------------------------
 
 ##### Copyright 2024 © Daniel Nazarian.
