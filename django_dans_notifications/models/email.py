@@ -5,7 +5,7 @@ from django.template import TemplateDoesNotExist
 from django.template.loader import render_to_string, get_template
 from django.utils import timezone
 from django.utils.html import strip_tags
-from smtplib import SMTPException
+from smtplib import SMTPAuthenticationError, SMTPException
 
 from .base import NotificationBase, AbstractBaseModel
 from django_dans_notifications.threads import EmailThread
@@ -182,6 +182,7 @@ class NotificationEmailManager(models.Manager):
             notification_email.sent_successfully = True
         except (
             SMTPException,
+            SMTPAuthenticationError,
             Exception,
         ) as e:  # TODO - could potentially throw other exceptions, catch specific ones
             print(f"Error creating and sending email: {type(e)} - {e}")

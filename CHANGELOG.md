@@ -183,8 +183,12 @@ mypy + django stubs
 
 ### 1.2.0
 
+
+#### remove generic 'Exception's
+
+
 #### logging
-- switch from print statements :/
+- switch from print statements
 - how to integrate with django logging?
     - can we grab the default logger or something?
 
