@@ -1,4 +1,6 @@
-# TODO 
+# TODO - Django Dan's Notifications
+#### By: [Daniel Nazarian](https://danielnazarian) 🐧👹
+
 -------------------------------------------------------
 ## [Unreleased]
 -----
@@ -60,7 +62,7 @@
 - need to add params and stuff
 
 
-### [1.2.0] - 2022-MM-DD
+### [1.2.0] - 2024-MM-DD
 #### TODO
 
 -------------------------------------------------------
