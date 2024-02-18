@@ -39,6 +39,11 @@
 - just newer packages?
 
 
+#### improve status codes/api responses
+- i.e., 201 on creation
+- add 'message' to all responses
+
+
 #### logging
 - switch from print statements
 - how to integrate with django logging?
