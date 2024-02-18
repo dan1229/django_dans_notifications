@@ -27,7 +27,7 @@ INSTALLED_APPS = [
 ]
 ```
 
-3. Include the notifications URLconf in your project urls.py for the REST API endpoints like this:
+3. Include the URL configs in your project `urls.py` for the REST API endpoints like this:
 
 ```python
 path("api/notifications/", include("django_dans_notifications.urls")),
@@ -35,7 +35,7 @@ path("api/notifications/", include("django_dans_notifications.urls")),
 
 4. Run `python manage.py migrate` to update your database schema.
 
-5. Create notifications via the API endpoints, in code or your Django admin portal.
+5. Use the API endpoints, in code or your Django admin portal.
 
 ### Requirements
 

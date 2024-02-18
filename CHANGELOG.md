@@ -1,8 +1,6 @@
-# CHANGELOG for Django Dans Notifications
-
+# CHANGELOG - Django Dan's Notifications
 #### By: [Daniel Nazarian](https://danielnazarian) 🐧👹
-
-##### Contact me at <dnaz@danielnazarian.com>
+#### Contact me at <dnaz@danielnazarian.com>
 
 -------------------------------------------------------
 
