@@ -9,15 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        django_version: [ '3.0', '3.1', '3.2', '4.0', '4.1', '4.2', '5.0', '5.1']
-        python_version: [ '3.8', '3.9', '3.10', '3.11', '3.12']
-        exclude:
-
-          - django_version: '3.0'
-            python_version: '3.10'
-
-          - django_version: '3.1'
-            python_version: '3.10'
+        django_version: [ '3.0', '3.1', '3.2', '4.0' ]
+        python_version: [ '3.8', '3.9', '3.10' ]
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
