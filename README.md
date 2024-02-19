@@ -39,8 +39,8 @@ path("api/notifications/", include("django_dans_notifications.urls")),
 
 ### Requirements
 
-- Python 3.0 or higher
-- Django 3.0 or higher
+- Python 3.8 or higher
+- Django 3.1 or higher
 - Django Rest Framework
   - **NOTE:** not only must you have this installed, you must have set `DEFAULT_AUTHENTICATION_CLASSES` and `DEFAULT_PAGINATION_CLASS` in your `settings.py` to work with the APIs properly. An example config would be:
 

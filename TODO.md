@@ -70,6 +70,14 @@
 ### [1.2.0] - 2024-MM-DD
 #### TODO
 
+---
+
+
+### [1.1.17] - 2024-02-DD
+- Lots of documentation clean up
+- Packaging and PyPi clean up
+#### TODO
+
 -------------------------------------------------------
 
 ##### Copyright 2024 © Daniel Nazarian.
