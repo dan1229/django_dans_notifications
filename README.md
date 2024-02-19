@@ -62,6 +62,13 @@ Currently all available settings are optional:
 - `TEAM_NAME` - Default team name to use for emails, can be added to message context manually as well still.
 - `IN_TEST` - Whether running in tests or not. Used to determine whether to actually send email.
 
+Add these to your `settings.py` file to customize the app's behavior like so:
+
+```python
+TEAM_NAME = "My Team"
+IN_TEST = True
+```
+
 
 ## Usage
 

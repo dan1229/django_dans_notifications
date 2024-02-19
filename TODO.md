@@ -46,6 +46,11 @@
 - add 'message' to all responses
 
 
+#### update base serializer
+- newer version might be nicer?
+- revisit/improve masked fields and ref fields
+
+
 #### logging
 - switch from print statements
 - how to integrate with django logging?
