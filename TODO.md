@@ -38,11 +38,15 @@
 
 
 
-#### improve types?
-- add mypy?
+
+
+    
+#### add type support / stubs
+- add mypy
 - add ci stage to check for types?
-- do same for django dans notifications?
-- typed
+- py.typed and thing in setup.cfg
+- update docs
+
 
 
 #### improve docs
