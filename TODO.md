@@ -5,8 +5,10 @@
 ## [Unreleased]
 -----
 
-#### docs
 
+
+
+#### docs
 - getting started
     - move out of readme
 - api docs
@@ -18,26 +20,16 @@
     - improve
     - add docs about adding your own
 
------
 
 
 #### notification models
 - how to allow user to add extras fields?
 
 
------
-
-
-#### mypy typing
-- mypy + django stubs
-
 
 -----
 
 ### 1.2.0
-
-
-
 
 
     
@@ -56,7 +48,6 @@
     - python/django versions
     - https://pypi.org/project/django-admin-interface/
         - more inspo
-    - add to django dans notifications
 
 
 #### django dans api toolkit
@@ -68,10 +59,6 @@
 - i.e., 201 on creation
 - add 'message' to all responses
 
-
-#### update base serializer
-- newer version might be nicer?
-- revisit/improve masked fields and ref fields
 
 
 #### logging
