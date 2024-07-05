@@ -37,8 +37,32 @@
 ### 1.2.0
 
 
-#### update requirements?
-- just newer packages?
+
+#### improve types?
+- add mypy?
+- add ci stage to check for types?
+- do same for django dans notifications?
+- typed
+
+
+#### improve docs
+- improve readme
+- revisit other docs
+- more badges
+    - python/django versions
+    - https://pypi.org/project/django-admin-interface/
+        - more inspo
+    - add to django dans notifications
+
+
+#### django dans api toolkit
+- add dep for it
+- remove local code
+
+
+#### update requirements
+- python 3.12
+- django 5.0
 
 
 #### improve status codes/api responses
