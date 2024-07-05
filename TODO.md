@@ -89,21 +89,6 @@
 ### [1.2.0] - 2024-MM-DD
 #### TODO
 
-
----
-### 1.1.18
-
-
-#### update requirements
-- python 3.12
-- django 5.0
-
-
-### [1.1.18] - 2024-07-04
-- Added support for Python 3.12 and Django 5.0
-    - Updated CI as well
-
-
 -------------------------------------------------------
 
 ##### Copyright 2024 © Daniel Nazarian.

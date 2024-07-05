@@ -12,6 +12,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
+
+### [1.1.18] - 2024-07-04
+- Added support for Python 3.12 and Django 5.0
+    - Updated CI as well
+
+    
 ### [1.1.17] - 2024-02-18
 - Lots of documentation clean up
 - Packaging and PyPi clean up
