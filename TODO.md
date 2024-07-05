@@ -99,8 +99,9 @@
 - django 5.0
 
 
-### [1.1.18] - 2024-MM-DD
+### [1.1.18] - 2024-07-04
 - Added support for Python 3.12 and Django 5.0
+    - Updated CI as well
 
 
 -------------------------------------------------------
