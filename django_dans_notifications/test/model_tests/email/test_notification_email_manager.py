@@ -1,4 +1,7 @@
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core.files import File
+from io import BytesIO
+from unittest.mock import patch
 from ..base import BaseModelTestCase
 from ....models.email import NotificationEmail
 from ....logging import LOGGER
@@ -113,6 +116,25 @@ class TestNotificationEmailManager(BaseModelTestCase):
             )
 
         self.assertIsNotNone(notification_email)
+
+    def test_send_email_with_invalid_file_attachment(self):
+        template = "django-dans-emails/default.html"
+
+        # Create an invalid file object
+        invalid_file = SimpleUploadedFile("invalid_file.txt", b"")
+
+        # Mock the read method to raise an AttributeError
+        with patch.object(File, "read", side_effect=AttributeError("Invalid file")):
+            with self.assertLogs(LOGGER, level="ERROR") as log:
+                notification_email = NotificationEmail.objects.send_email(
+                    template=template, file_attachment=invalid_file
+                )
+                # Check that the attachment error log is present
+                self.assertTrue(
+                    any("Issue attaching to email" in message for message in log.output)
+                )
+
+            self.assertIsNotNone(notification_email)
 
     def test_send_email_with_subject_and_sender(self):
         subject = "Custom Subject"
