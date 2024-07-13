@@ -56,6 +56,13 @@
 
     
 
+
+#### revisit threads.py?
+- is this working as expected?
+- is there a better solution?
+
+
+
 #### improve status codes/api responses
 - i.e., 201 on creation
 - add 'message' to all responses
@@ -84,16 +91,10 @@
 
 
 
-#### logging
-- switch from print statements
-- how to integrate with django logging?
-    - can we grab the default logger or something?
-    - use our own logger?
-    - allow option to set logger by name?
 
-
-
-### [1.2.0] - 2024-MM-DD
+### [1.2.0] - 2024-07-DD
+- Improved logging and logger support
+    -  No more `print`s either!
 #### TODO
 
 -------------------------------------------------------

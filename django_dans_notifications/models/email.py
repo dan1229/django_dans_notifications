@@ -9,6 +9,7 @@ from smtplib import SMTPAuthenticationError, SMTPException
 
 from .base import NotificationBase, AbstractBaseModel
 from django_dans_notifications.threads import EmailThread
+from django_dans_notifications.logging import LOGGER
 
 
 """
@@ -170,7 +171,7 @@ class NotificationEmailManager(models.Manager):
             )
             message.attach_alternative(html_string, "text/html")
         except ValueError as e:
-            print(f"Error creating email message: {type(e)} - {e}")
+            LOGGER.error(f"Error creating email message: {type(e)} - {e}")
             notification_email.sent_successfully = False
             notification_email.save()
             return notification_email
@@ -180,12 +181,12 @@ class NotificationEmailManager(models.Manager):
             if file_attachment is not None:  # attach file if applicable
                 message.attach(file_attachment.name, file_attachment.read())
         except AttributeError as e:
-            print(f"Issue attaching to email: {type(e)} - {e}")
+            LOGGER.error(f"Issue attaching to email: {type(e)} - {e}")
 
         # send email via django
         try:
             if hasattr(settings, "IN_TEST") and settings.IN_TEST:
-                pass  # dont send mail in tests
+                pass  # don't send mail in tests
             else:
                 EmailThread().run(message.send, fail_silently=False)
             notification_email.sent_successfully = True
@@ -193,7 +194,7 @@ class NotificationEmailManager(models.Manager):
             SMTPException,
             SMTPAuthenticationError,
         ) as e:
-            print(f"Error creating and sending email: {type(e)} - {e}")
+            LOGGER.error(f"Error creating and sending email: {type(e)} - {e}")
             notification_email.sent_successfully = False
 
         # save regardless of status
@@ -218,7 +219,7 @@ class NotificationEmailTemplate(AbstractBaseModel):
         try:
             return render_to_string(self.path, context)
         except TemplateDoesNotExist as e:
-            print(f"Error rendering email template: ({type(e)}) {e}")
+            LOGGER.error(f"Error rendering email template: ({type(e)}) {e}")
             return render_to_string("django-dans-emails/default.html", context)
 
 
