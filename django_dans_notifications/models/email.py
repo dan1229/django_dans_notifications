@@ -180,6 +180,10 @@ class NotificationEmailManager(models.Manager):
         try:
             if file_attachment is not None:  # attach file if applicable
                 message.attach(file_attachment.name, file_attachment.read())
+                name = None
+                if hasattr(file_attachment, "name"):
+                    name = file_attachment.name
+                LOGGER.debug(f"File attached to email: {name}")
         except AttributeError as e:
             LOGGER.error(f"Issue attaching to email: {type(e)} - {e}")
 

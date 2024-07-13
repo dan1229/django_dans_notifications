@@ -1,3 +1,4 @@
+import logging
 from django.core.files.uploadedfile import SimpleUploadedFile
 from ..base import BaseModelTestCase
 from ....models.email import NotificationEmail
@@ -103,13 +104,16 @@ class TestNotificationEmailManager(BaseModelTestCase):
             notification_email = NotificationEmail.objects.send_email(
                 template=template, file_attachment=file_attachment
             )
+            # Check that the attachment error log is present
+            self.assertTrue(
+                any("File attached to email" in message for message in log.output)
+            )
+            # Check that the attachment error log is NOT present
+            self.assertFalse(
+                any("Issue attaching to email" in message for message in log.output)
+            )
 
         self.assertIsNotNone(notification_email)
-
-        # Check that the attachment debug log is present
-        self.assertTrue(
-            any("File attachment successful." in message for message in log.output)
-        )
 
     def test_send_email_with_subject_and_sender(self):
         subject = "Custom Subject"
