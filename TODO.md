@@ -93,7 +93,9 @@
 
 
 
-### [1.2.0] - 2024-MM-DD
+### [1.2.0] - 2024-07-DD
+- Improved logging and logger support
+    -  No more `print`s either!
 #### TODO
 
 -------------------------------------------------------
