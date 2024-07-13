@@ -1,6 +1,4 @@
-from ..base import (
-    BaseModelTestCase,
-)
+from ..base import BaseModelTestCase
 from ....models.basic import NotificationBasic
 
 """
@@ -24,15 +22,13 @@ class TestBasicNotification(BaseModelTestCase):
         self.notification = self.model.objects.create(
             recipients=self.base_email, sender=self.base_email
         )
-
-        self.assertNotEqual(str(self.notification), None)
+        self.assertIsNotNone(str(self.notification))
 
     def test_with_message(self):
         message = "this is a test message"
         self.notification = self.model.objects.create(
             recipients=self.base_email, sender=self.base_email, message=message
         )
-
         self.assertEqual(self.notification.message, message)
 
     # =================================================================== #
@@ -53,14 +49,12 @@ class TestBasicNotification(BaseModelTestCase):
             recipients=recipients, sender=self.base_email
         )
         self.assertEqual(self.notification.recipients, "")
-        self.assertEqual(self.notification.recipients, "")
 
     def test_recipients_empty_list(self):
         recipients = []
         self.notification = self.model.objects.create(
             recipients=recipients, sender=self.base_email
         )
-        self.assertEqual(self.notification.recipients, "")
         self.assertEqual(self.notification.recipients, "")
 
     def test_recipients_list_of_one(self):
@@ -69,7 +63,7 @@ class TestBasicNotification(BaseModelTestCase):
         self.notification = self.model.objects.create(
             recipients=recipients, sender=self.base_email
         )
-        self.assertTrue(email1 in self.notification.recipients)
+        self.assertIn(email1, self.notification.recipients)
 
     def test_recipients_list_str_of_one(self):
         email1 = "danielnazarian@outlook.com"
@@ -77,7 +71,7 @@ class TestBasicNotification(BaseModelTestCase):
         self.notification = self.model.objects.create(
             recipients=recipients, sender=self.base_email
         )
-        self.assertTrue(email1 in self.notification.recipients)
+        self.assertIn(email1, self.notification.recipients)
 
     def test_recipients_list_of_three(self):
         email1 = "danielnazarian@outlook.com"
@@ -87,9 +81,9 @@ class TestBasicNotification(BaseModelTestCase):
         self.notification = self.model.objects.create(
             recipients=recipients, sender=self.base_email
         )
-        self.assertTrue(email1 in self.notification.recipients)
-        self.assertTrue(email2 in self.notification.recipients)
-        self.assertTrue(email3 in self.notification.recipients)
+        self.assertIn(email1, self.notification.recipients)
+        self.assertIn(email2, self.notification.recipients)
+        self.assertIn(email3, self.notification.recipients)
 
     def test_recipients_list_str_of_three(self):
         email1 = "danielnazarian@outlook.com"
@@ -99,9 +93,9 @@ class TestBasicNotification(BaseModelTestCase):
         self.notification = self.model.objects.create(
             recipients=recipients, sender=self.base_email
         )
-        self.assertTrue(email1 in self.notification.recipients)
-        self.assertTrue(email2 in self.notification.recipients)
-        self.assertTrue(email3 in self.notification.recipients)
+        self.assertIn(email1, self.notification.recipients)
+        self.assertIn(email2, self.notification.recipients)
+        self.assertIn(email3, self.notification.recipients)
 
     #
     # RECIPIENTS CONTAINS
@@ -113,7 +107,7 @@ class TestBasicNotification(BaseModelTestCase):
             recipients=recipients, sender=self.base_email
         )
         self.assertEqual(self.notification.recipients, "")
-        self.assertEqual(self.notification.recipients_contains(email1), False)
+        self.assertFalse(self.notification.recipients_contains(email1))
 
     def test_recipients_contains_empty_list(self):
         email1 = "danielnazarian@outlook.com"
@@ -122,7 +116,7 @@ class TestBasicNotification(BaseModelTestCase):
             recipients=recipients, sender=self.base_email
         )
         self.assertEqual(self.notification.recipients, "")
-        self.assertEqual(self.notification.recipients_contains(email1), False)
+        self.assertFalse(self.notification.recipients_contains(email1))
 
     def test_recipients_contains_different_email(self):
         email1 = "danielnazarian@outlook.com"
@@ -131,7 +125,7 @@ class TestBasicNotification(BaseModelTestCase):
             recipients=recipients, sender=self.base_email
         )
         self.assertEqual(self.notification.recipients, recipients[0])
-        self.assertEqual(self.notification.recipients_contains(email1), False)
+        self.assertFalse(self.notification.recipients_contains(email1))
 
     def test_recipients_contains_email(self):
         email1 = "danielnazarian@outlook.com"
@@ -140,7 +134,7 @@ class TestBasicNotification(BaseModelTestCase):
             recipients=recipients, sender=self.base_email
         )
         self.assertEqual(self.notification.recipients, email1)
-        self.assertEqual(self.notification.recipients_contains(email1), True)
+        self.assertTrue(self.notification.recipients_contains(email1))
 
     def test_recipients_contains_email_when_many(self):
         email1 = "danielnazarian@outlook.com"
@@ -152,7 +146,7 @@ class TestBasicNotification(BaseModelTestCase):
         self.notification = self.model.objects.create(
             recipients=recipients, sender=self.base_email
         )
-        self.assertEqual(self.notification.recipients_contains(email1), True)
+        self.assertTrue(self.notification.recipients_contains(email1))
 
     def test_recipients_does_not_contain_email_when_many(self):
         email1 = "danielnazarian@outlook.com"
@@ -164,7 +158,7 @@ class TestBasicNotification(BaseModelTestCase):
         self.notification = self.model.objects.create(
             recipients=recipients, sender=self.base_email
         )
-        self.assertEqual(self.notification.recipients_contains(email1), False)
+        self.assertFalse(self.notification.recipients_contains(email1))
 
     #
     # RECIPIENTS CLEANUP
@@ -209,9 +203,9 @@ class TestBasicNotification(BaseModelTestCase):
             recipients=recipients, sender=self.base_email
         )
         res = self.notification.recipients_cleanup()
-        self.assertTrue(email1 in res)
-        self.assertTrue(email2 in res)
-        self.assertTrue(email3 in res)
+        self.assertIn(email1, res)
+        self.assertIn(email2, res)
+        self.assertIn(email3, res)
         self.assertEqual(len(res.split(",")), 3)
 
     def test_recipients_cleanup_many_email_list(self):
@@ -223,9 +217,9 @@ class TestBasicNotification(BaseModelTestCase):
             recipients=recipients, sender=self.base_email
         )
         res = self.notification.recipients_cleanup()
-        self.assertTrue(email1 in res)
-        self.assertTrue(email2 in res)
-        self.assertTrue(email3 in res)
+        self.assertIn(email1, res)
+        self.assertIn(email2, res)
+        self.assertIn(email3, res)
         self.assertEqual(len(res.split(",")), 3)
 
     def test_recipients_cleanup_many_email_list_str(self):
@@ -237,7 +231,7 @@ class TestBasicNotification(BaseModelTestCase):
             recipients=recipients, sender=self.base_email
         )
         res = self.notification.recipients_cleanup()
-        self.assertTrue(email1 in res)
-        self.assertTrue(email2 in res)
-        self.assertTrue(email3 in res)
+        self.assertIn(email1, res)
+        self.assertIn(email2, res)
+        self.assertIn(email3, res)
         self.assertEqual(len(res.split(",")), 3)
