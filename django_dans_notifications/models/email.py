@@ -189,7 +189,7 @@ class NotificationEmailManager(models.Manager):
                 pass  # don't send mail in tests
             else:
                 EmailThread().run(message.send, fail_silently=False)
-            notification_email.sent_successfully = True
+                notification_email.sent_successfully = True
         except (
             SMTPException,
             SMTPAuthenticationError,
