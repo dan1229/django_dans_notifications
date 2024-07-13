@@ -12,6 +12,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
+### [1.1.19] - 2024-07-12
+- Added support for lower Django versions
+
 
 ### [1.1.18] - 2024-07-04
 - Added support for Python 3.12 and Django 5.0
