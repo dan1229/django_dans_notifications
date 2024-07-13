@@ -86,6 +86,7 @@
 
 
 #### tests
+- model tests
 - post api tests
 - higher coverage overall (> 90%)
 
@@ -95,6 +96,10 @@
 ### [1.2.0] - 2024-07-DD
 - Improved logging and logger support
     -  No more `print`s either!
+- Improved tests and coverage!
+    - Improved model tests
+    - Improved API tests
+    - 90% coverage
 #### TODO
 
 -------------------------------------------------------

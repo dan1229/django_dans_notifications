@@ -1,6 +1,7 @@
 from django.core.files.uploadedfile import SimpleUploadedFile
 from ..base import BaseModelTestCase
 from ....models.email import NotificationEmail
+from ....logging import LOGGER
 
 """
 # ========================================================================= #
@@ -96,12 +97,19 @@ class TestNotificationEmailManager(BaseModelTestCase):
     def test_send_email_with_file_attachment(self):
         template = "django-dans-emails/default.html"
         file_attachment = SimpleUploadedFile("file.txt", b"file_content")
-        notification_email = NotificationEmail.objects.send_email(
-            template=template, file_attachment=file_attachment
-        )
+
+        # Capture logs
+        with self.assertLogs(LOGGER, level="DEBUG") as log:
+            notification_email = NotificationEmail.objects.send_email(
+                template=template, file_attachment=file_attachment
+            )
+
         self.assertIsNotNone(notification_email)
-        # Verify the attachment is added
-        self.assertTrue(notification_email.sent_successfully)
+
+        # Check that the attachment debug log is present
+        self.assertTrue(
+            any("File attachment successful." in message for message in log.output)
+        )
 
     def test_send_email_with_subject_and_sender(self):
         subject = "Custom Subject"

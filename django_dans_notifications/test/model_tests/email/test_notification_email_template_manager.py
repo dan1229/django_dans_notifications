@@ -1,4 +1,3 @@
-from django.template import TemplateDoesNotExist
 from ..base import BaseModelTestCase
 from ....models.email import NotificationEmailTemplate
 
@@ -64,7 +63,7 @@ class TestNotificationEmailTemplateManager(BaseModelTestCase):
         email_template = NotificationEmailTemplate.objects.find_email_template(
             f"django-dans-emails/{template}"
         )
-        self.assertEqual(email_template.path, f"emails/{template}")
+        self.assertEqual(email_template.path, f"django-dans-emails/{template}")
 
     def test_template_does_not_exist(self):
         template = "new_template.html"
