@@ -1,4 +1,3 @@
-import logging
 from django.core.files.uploadedfile import SimpleUploadedFile
 from ..base import BaseModelTestCase
 from ....models.email import NotificationEmail
