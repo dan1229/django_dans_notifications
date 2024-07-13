@@ -245,4 +245,4 @@ class NotificationEmail(NotificationBase):
     context = models.JSONField(null=True, blank=True)
 
     def __str__(self):
-        return f"Notification Email: {self.sender} -> {self
+        return f"Notification Email: {self.sender} -> {self}"
