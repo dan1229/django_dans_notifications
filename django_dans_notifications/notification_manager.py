@@ -1,6 +1,8 @@
 from django.db.models import Q
 
-from .models import NotificationEmail, NotificationBasic, NotificationPush
+from .models.email import NotificationEmail
+from .models.basic import NotificationBasic
+from .models.push import NotificationPush
 
 """
 ============================================================================================ #

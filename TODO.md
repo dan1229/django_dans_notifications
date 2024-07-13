@@ -86,10 +86,9 @@
 
 
 #### tests
-- model tests
 - api tests
     - post api tests
-- notification manager tests
+-
 - helpers?
 - threads?
 - higher coverage overall (> 90%)
