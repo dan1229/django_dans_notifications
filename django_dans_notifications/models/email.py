@@ -69,7 +69,7 @@ class NotificationEmailTemplateManager(models.Manager):
 
         # template not found by path or nickname - see if file exists or not
         try:
-            tmp = get_template(template)
+            get_template(template)
             return NotificationEmailTemplate.objects.get_or_create(
                 path=template, nickname=template
             )[0]
@@ -78,7 +78,7 @@ class NotificationEmailTemplateManager(models.Manager):
 
         # see if file exists at "django-dans-emails/"
         try:
-            tmp = get_template(f"django-dans-emails/{template}")
+            get_template(f"django-dans-emails/{template}")
             return NotificationEmailTemplate.objects.get_or_create(
                 path=template, nickname=template
             )[0]
@@ -87,7 +87,7 @@ class NotificationEmailTemplateManager(models.Manager):
 
         # see if file exists at "emails/"
         try:
-            tmp = get_template(f"emails/{template}")
+            get_template(f"emails/{template}")
             return NotificationEmailTemplate.objects.get_or_create(
                 path=template, nickname=template
             )[0]

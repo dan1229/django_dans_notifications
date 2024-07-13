@@ -1,4 +1,3 @@
-from django.template import TemplateDoesNotExist
 from ..base import BaseModelTestCase
 from ....models.email import NotificationEmailTemplate
 
