@@ -99,6 +99,7 @@ class TestNotificationEmailManager(BaseModelTestCase):
         notification_email = NotificationEmail.objects.send_email(
             template=template, file_attachment=file_attachment
         )
+        self.assertIsNotNone(notification_email)
         # Verify the attachment is added
         self.assertTrue(notification_email.sent_successfully)
 

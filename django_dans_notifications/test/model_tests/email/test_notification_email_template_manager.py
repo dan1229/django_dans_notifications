@@ -1,3 +1,4 @@
+from django.template import TemplateDoesNotExist
 from ..base import BaseModelTestCase
 from ....models.email import NotificationEmailTemplate
 
@@ -53,14 +54,19 @@ class TestNotificationEmailTemplateManager(BaseModelTestCase):
 
     def test_template_exists_in_emails_path(self):
         template = "default.html"
-        email_template = NotificationEmailTemplate.objects.find_email_template(template)
+        email_template = NotificationEmailTemplate.objects.find_email_template(
+            f"emails/{template}"
+        )
         self.assertEqual(email_template.path, f"emails/{template}")
 
-    def test_template_does_not_exist_and_is_created(self):
-        template = "new_template.html"
-        self.assertIsNone(
-            NotificationEmailTemplate.objects.find_email_template(template)
+    def test_template_exists_in_django_dans_path(self):
+        template = "default.html"
+        email_template = NotificationEmailTemplate.objects.find_email_template(
+            f"django-dans-emails/{template}"
         )
+        self.assertEqual(email_template.path, f"emails/{template}")
+
+    def test_template_does_not_exist(self):
+        template = "new_template.html"
         email_template = NotificationEmailTemplate.objects.find_email_template(template)
-        self.assertEqual(email_template.path, template)
-        self.assertEqual(email_template.nickname, template)
+        self.assertIsNone(email_template)
