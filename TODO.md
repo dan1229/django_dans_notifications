@@ -85,24 +85,31 @@
     - remove local code / serializers
 
 
+
+
 #### tests
 - api tests
     - post api tests
 -
 - helpers?
+    - dont ignore
 - threads?
+    - or ignore?
+- logging?
+    - or ignore?
+-
 - higher coverage overall (> 90%)
 
 
 
 
-### [1.2.0] - 2024-07-DD
+### [1.2.0] - 2024-07-13
 - Improved logging and logger support
     -  No more `print`s either!
 - Improved tests and coverage!
     - Improved model tests
     - Improved API tests
-    - 90% coverage
+    - 90% coverage!!!
 #### TODO
 
 -------------------------------------------------------
