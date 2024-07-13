@@ -22,22 +22,27 @@
 
 
 
-#### notification models
+#### notification models - add more fields
 - how to allow user to add extras fields?
+
+
+
+
+-----
+### 1.3.0
+
+
+
+#### improve api swagger docs
+- lots of api docs strings aren't showing up
+- need to add params and stuff
+
 
 
 
 -----
 
 ### 1.2.0
-
-
-    
-#### add type support / stubs
-- add mypy
-- add ci stage to check for types?
-- py.typed and thing in setup.cfg
-- update docs
 
 
 
@@ -49,11 +54,7 @@
     - https://pypi.org/project/django-admin-interface/
         - more inspo
 
-
-#### django dans api toolkit
-- add dep for it
-- remove local code
-
+    
 
 #### improve status codes/api responses
 - i.e., 201 on creation
@@ -61,10 +62,20 @@
 
 
 
-#### logging
-- switch from print statements
-- how to integrate with django logging?
-    - can we grab the default logger or something?
+#### add type support / stubs
+- add mypy
+- add ci stage to check for types?
+- py.typed and thing in setup.cfg
+- update docs
+
+
+
+#### improve deps / reqs
+- double check everything looks good
+-
+- django dans api toolkit
+    - add dep for it
+    - remove local code
 
 
 #### tests
@@ -72,9 +83,14 @@
 - higher coverage overall (> 90%)
 
 
-#### improve api swagger docs
-- lots of api docs strings aren't showing up
-- need to add params and stuff
+
+#### logging
+- switch from print statements
+- how to integrate with django logging?
+    - can we grab the default logger or something?
+    - use our own logger?
+    - allow option to set logger by name?
+
 
 
 ### [1.2.0] - 2024-MM-DD
