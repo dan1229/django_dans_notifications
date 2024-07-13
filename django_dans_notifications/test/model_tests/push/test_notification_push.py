@@ -1,6 +1,4 @@
-from ..base import (
-    BaseModelTestCase,
-)
+from ..base import BaseModelTestCase
 from ....models.push import NotificationPush
 
 """
@@ -21,16 +19,28 @@ class TestPushNotification(BaseModelTestCase):
     # =================================================================== #
 
     def test_str(self):
-        self.notification = self.model.objects.create(
+        notification = self.model.objects.create(
             recipients=self.base_email, sender=self.base_email
         )
-
-        self.assertNotEqual(str(self.notification), None)
+        self.assertEqual(str(notification), f"Notification Push: {self.base_email}")
 
     def test_with_message(self):
         message = "this is a test message"
-        self.notification = self.model.objects.create(
+        notification = self.model.objects.create(
             recipients=self.base_email, sender=self.base_email, message=message
         )
+        self.assertEqual(notification.message, message)
 
-        self.assertEqual(self.notification.message, message)
+    def test_recipients(self):
+        recipients = ["user1@example.com", "user2@example.com"]
+        notification = self.model.objects.create(
+            recipients=recipients, sender=self.base_email, message="Test Message"
+        )
+        self.assertEqual(notification.recipients, ",".join(recipients))
+
+    def test_sender(self):
+        sender = "sender@example.com"
+        notification = self.model.objects.create(
+            recipients=self.base_email, sender=sender, message="Test Message"
+        )
+        self.assertEqual(notification.sender, sender)

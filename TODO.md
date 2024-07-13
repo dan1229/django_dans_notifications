@@ -82,12 +82,13 @@
 -
 - django dans api toolkit
     - add dep for it
-    - remove local code
+    - remove local code / serializers
 
 
 #### tests
 - model tests
-- post api tests
+- api tests
+    - post api tests
 - higher coverage overall (> 90%)
 
 

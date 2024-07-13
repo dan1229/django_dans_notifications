@@ -44,9 +44,21 @@ class TestEmailNotificationTemplate(BaseModelTestCase):
         email_template = self.model.objects.create(
             nickname="template1", path="django-dans-emails/template.html"
         )
-        rendered_string = email_template.html_to_str({"key": "value"})
-        # Assuming the template content contains the context key's value
-        self.assertIn("value", rendered_string)
+        rendered_string = email_template.html_to_str({})
+        self.assertIn(
+            "CONTENT", rendered_string
+        )  # this is the content of the template template
+
+    def test_html_to_str_template_exists_context_irrelevant(self):
+        email_template = self.model.objects.create(
+            nickname="template1", path="django-dans-emails/template.html"
+        )
+        rendered_string = email_template.html_to_str(
+            {"key": "value"}
+        )  # shouldn't change anything
+        self.assertIn(
+            "CONTENT", rendered_string
+        )  # this is the content of the template template
 
     def test_html_to_str_template_does_not_exist(self):
         email_template = self.model.objects.create(nickname="template1", path="INVALID")
@@ -54,4 +66,4 @@ class TestEmailNotificationTemplate(BaseModelTestCase):
             rendered_string = email_template.html_to_str({"key": "value"})
             self.assertIn("Error rendering email template", log.output[0])
             # Ensure the default template is rendered in case of failure
-            self.assertIn("default.html", rendered_string)
+            self.assertIn("This is an email.", rendered_string)

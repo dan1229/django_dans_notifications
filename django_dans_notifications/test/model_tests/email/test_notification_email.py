@@ -72,4 +72,4 @@ class TestEmailNotification(BaseModelTestCase):
         notification = self.model.objects.create(
             template=self.email_template, recipients=recipients, sender=self.base_email
         )
-        self.assertEqual(notification.recipients, recipients)
+        self.assertEqual(notification.recipients, ",".join(recipients))
