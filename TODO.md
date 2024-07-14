@@ -93,14 +93,6 @@
 
 
 
-#### tests
-- apis
-    - check coverage - can i fill in any gaps?
--
-- higher coverage overall (> 90%)
-
-
-
 
 ### [1.2.0] - 2024-07-13
 - Improved logging and logger support
