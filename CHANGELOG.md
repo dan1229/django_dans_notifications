@@ -12,6 +12,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
+### [1.2.1] - 2024-07-14
+- Fixed `EmailThread` usage in `send_email` function
+
+
 ### [1.2.0] - 2024-07-13
 - Added type support!
     - `py.typed`

@@ -223,7 +223,7 @@ class NotificationEmailManager(models.Manager):  # type: ignore[type-arg]
             if hasattr(settings, "IN_TEST") and settings.IN_TEST:
                 pass  # don't send mail in tests
             else:
-                EmailThread().run(message.send, fail_silently=False)  # type: ignore
+                EmailThread(message.send).run()
                 notification_email.sent_successfully = True
         except (
             SMTPException,
