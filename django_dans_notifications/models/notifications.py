@@ -144,7 +144,7 @@ class NotificationEmailManager(models.Manager):  # type: ignore[type-arg]
         sender: Optional[str] = None,
         recipients: Optional[Union[str, List[str]]] = None,
         context: Optional[Dict[Any, Any]] = None,
-        file_attachment: Optional[File] = None,
+        file_attachment: Optional[File] = None,  # type: ignore[type-arg]
     ) -> "NotificationEmail":
         """
         Send email function - sends email, handles notification system and object creation and everything
