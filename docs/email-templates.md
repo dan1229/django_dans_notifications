@@ -1,7 +1,6 @@
 # Email Templates
 
-This file is intended to document and explain all the email templates in this project so you can use them properly. By default, this project will include a handful that are necessary for the app to
-work however as you add templates, please include them in this document.
+This file is intended to document and explain all the email templates in this project so you can use them properly. By default, this project will include a handful that are necessary for the app to work. However, as you add templates, please include them in this document.
 
 ## Adding Your Own
 
@@ -23,7 +22,7 @@ notification_email = NotificationEmail.objects.send_email(
 
 An `EmailTemplate` object will be automatically created for every HTML file and thus viewable in the admin.
 
-## Built in Templates
+## Built-in Templates
 
 For your convenience, a number of HTML templates have been included by default.
 
@@ -40,7 +39,7 @@ Used for contact style emails.
 
 ### default.html
 
-Default email template. You probably will never send this, it's primarily for errors.
+Default email template. You probably will never send this; it's primarily for errors.
 
 | Name        | Type | Required | Description                         |
 |-------------|------|----------|-------------------------------------|
@@ -48,7 +47,7 @@ Default email template. You probably will never send this, it's primarily for er
 
 ### empty.html
 
-Empty email template. Used for contact forms and messages where the 'message' or 'content' can be supplied
+Empty email template. Used for contact forms and messages where the 'message' or 'content' can be supplied.
 
 | Name        | Type | Required | Description                         |
 |-------------|------|----------|-------------------------------------|
@@ -57,7 +56,7 @@ Empty email template. Used for contact forms and messages where the 'message' or
 
 ### password_reset.html
 
-Email to send on a password reset request. Should include link for user to go to, to actually reset their password.
+Email to send on a password reset request. Should include a link for the user to reset their password.
 
 | Name                 | Type | Required | Description                         |
 |----------------------|------|----------|-------------------------------------|
@@ -67,5 +66,3 @@ Email to send on a password reset request. Should include link for user to go to
 ### template.html
 
 Template email. This just contains template HTML to fill in as you create new EmailTemplates. This will also probably never be explicitly sent.
-
-
