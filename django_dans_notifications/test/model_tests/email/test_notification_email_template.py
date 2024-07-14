@@ -12,7 +12,7 @@ class TestEmailNotificationTemplate(BaseModelTestCase):
     model = NotificationEmailTemplate
 
     def setUp(self) -> None:
-        super(TestEmailNotificationTemplate, self).setUp()  # type: ignore[no-untyped-call]
+        super(TestEmailNotificationTemplate, self).setUp()
 
     # =================================================================== #
     # BASIC TESTS ======================================================= #

@@ -20,7 +20,7 @@ class AbstractBaseModel(models.Model):
         abstract = True
         ordering = ["datetime_created"]
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "Abstract Base Model"
 
 
@@ -56,14 +56,14 @@ class NotificationBase(AbstractBaseModel):
     def __str__(self) -> str:
         return "Notification Base"
 
-    def save(self, **kwargs: Any) -> None:
+    def save(self, **kwargs: Any) -> Any:
         # cleanup 'recipients'
         self.recipients = self.recipients_cleanup()
         return super(NotificationBase, self).save(**kwargs)
 
     @property
     def recipients_list(self) -> List[Any]:
-        return self.recipients.split(",")
+        return self.recipients.split(",")  # type: ignore[no-any-return]
 
     def recipients_cleanup(self) -> str:
         # take in whatever is currently set as recipients

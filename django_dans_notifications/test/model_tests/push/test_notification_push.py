@@ -12,7 +12,7 @@ class TestPushNotification(BaseModelTestCase):
     model = NotificationPush
 
     def setUp(self) -> None:
-        super(TestPushNotification, self).setUp()  # type: ignore[no-untyped-call]
+        super(TestPushNotification, self).setUp()
 
     # =================================================================== #
     # BASIC TESTS ======================================================= #

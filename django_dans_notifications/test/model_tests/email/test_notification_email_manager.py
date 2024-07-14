@@ -18,7 +18,7 @@ class TestNotificationEmailManager(BaseModelTestCase):
     password: str = "password"
 
     def setUp(self) -> None:
-        super(TestNotificationEmailManager, self).setUp()  # type: ignore[no-untyped-call]
+        super(TestNotificationEmailManager, self).setUp()
 
     # =================================================================== #
     # BASIC TESTS ======================================================= #

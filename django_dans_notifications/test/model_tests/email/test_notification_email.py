@@ -17,7 +17,7 @@ class TestEmailNotification(BaseModelTestCase):
             nickname=self.email_template_nickname,
             path="django-dans-emails/template.html",
         )
-        super(TestEmailNotification, self).setUp()  # type: ignore[no-untyped-call]
+        super(TestEmailNotification, self).setUp()
 
     # =================================================================== #
     # BASIC TESTS ======================================================= #

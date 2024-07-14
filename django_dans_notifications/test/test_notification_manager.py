@@ -16,7 +16,7 @@ from ..notification_manager import NotificationManager
 
 class TestNotificationManager(BaseModelTestCase):
     def setUp(self) -> None:
-        super(TestNotificationManager, self).setUp()  # type: ignore[no-untyped-call]
+        super(TestNotificationManager, self).setUp()
         self.manager = NotificationManager()
 
         # Set up test data

@@ -42,7 +42,7 @@ class NotificationBasic(NotificationBase):
 #
 # NOTIFICATION EMAIL TEMPLATE MANAGER ================== #
 #
-class NotificationEmailTemplateManager(models.Manager):
+class NotificationEmailTemplateManager(models.Manager):  # type: ignore[type-arg]
     """
     NotificationEmailTemplateManager
 

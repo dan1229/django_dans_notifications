@@ -16,10 +16,19 @@ class BaseModelTestCase(TestCase):
     base_password = "12345"
 
     def setUp(self) -> None:
-        super(TestCase, self).setUp()  # type: ignore[no-untyped-call]
+        super(TestCase, self).setUp()
 
         # USER 1 ====================================== #
-        self.base_user = get_user_model().objects.create_user(
-            username=self.username, email=self.base_email, password=self.base_password
-        )
+        if hasattr(get_user_model().objects, "create_user"):
+            self.base_user = get_user_model().objects.create_user(
+                username=self.username,
+                email=self.base_email,
+                password=self.base_password,
+            )
+        else:
+            self.base_user = get_user_model().objects.create(
+                username=self.username,
+                email=self.base_email,
+                password=self.base_password,
+            )
         self.client.force_login(self.base_user)

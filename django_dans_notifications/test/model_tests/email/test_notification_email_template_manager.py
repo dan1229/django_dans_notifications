@@ -13,7 +13,7 @@ class TestNotificationEmailTemplateManager(BaseModelTestCase):
     password = "password"
 
     def setUp(self) -> None:
-        super(TestNotificationEmailTemplateManager, self).setUp()  # type: ignore[no-untyped-call]
+        super(TestNotificationEmailTemplateManager, self).setUp()
         # Create some templates to test with
         NotificationEmailTemplate.objects.create(
             path="django-dans-emails/default.html", nickname="default"
