@@ -3,19 +3,28 @@
 There are numerous API endpoints available for different front ends to interact with notifications.
 
 ## Emails
-- `/notifications/emails/`
-  - GET     - list
-  - GET     - retrieve (@param id)
+
+- `/api/notifications/email/`
+  - **GET** - List all email notifications associated with the user.
+  - **GET** - Retrieve a specific email notification by ID.
 
 ## Basic
-- `/notifications/basic/`
-  - GET     - list
-  - GET     - retrieve (@param id)
-  - POST    - create (@param message)
-  - PATCH   - partial_update (@param read)
+
+- `/api/notifications/basic/`
+  - **GET** - List all basic notifications associated with the user.
+  - **GET** - Retrieve a specific basic notification by ID.
+  - **POST** - Create a new basic notification.
+    - **Parameters**: 
+      - `message` (required)
+  - **PATCH** - Partially update a specific basic notification.
+    - **Parameters**:
+      - `read` (optional)
 
 ## Push
-- `/notifications/push/`
-  - GET     - list
-  - GET     - retrieve (@param id)
-  - POST    - create (@param message)
+
+- `/api/notifications/push/`
+  - **GET** - List all push notifications associated with the user.
+  - **GET** - Retrieve a specific push notification by ID.
+  - **POST** - Create a new push notification.
+    - **Parameters**: 
+      - `message` (required)
