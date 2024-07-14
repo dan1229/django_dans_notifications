@@ -1,5 +1,9 @@
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core.files import File
+from unittest.mock import patch
 from ..base import BaseModelTestCase
 from ....models.email import NotificationEmail
+from ....logging import LOGGER
 
 """
 # ========================================================================= #
@@ -20,20 +24,16 @@ class TestNotificationEmailManager(BaseModelTestCase):
     # =================================================================== #
 
     def test_send_email_template_doesnt_exist(self):
-        try:
-            notification_email = NotificationEmail.objects.send_email(
+        with self.assertRaises(ValueError):
+            NotificationEmail.objects.send_email(
                 template="INVALID",
             )
-            self.assertTrue(False)
-        except ValueError as e:
-            self.assertTrue(True)
 
     def test_send_email_template_does_exist(self):
         template = "django-dans-emails/default.html"
         notification_email = NotificationEmail.objects.send_email(
             template=template,
         )
-
         self.assertEqual(notification_email.template.path, template)
 
     def test_send_email_no_recipients(self):
@@ -42,27 +42,24 @@ class TestNotificationEmailManager(BaseModelTestCase):
         notification_email = NotificationEmail.objects.send_email(
             template=template, recipients=recipients
         )
-
         self.assertEqual(notification_email.recipients, "")
 
-    def test_send_email_with_one_recipients_list(self):
+    def test_send_email_with_one_recipient_list(self):
         email1 = "danielnazarian@outlook.com"
         template = "django-dans-emails/default.html"
         recipients = [email1]
         notification_email = NotificationEmail.objects.send_email(
             template=template, recipients=recipients
         )
-
         self.assertEqual(notification_email.recipients, email1)
 
-    def test_send_email_with_one_recipients_str(self):
+    def test_send_email_with_one_recipient_str(self):
         email1 = "danielnazarian@outlook.com"
         template = "django-dans-emails/default.html"
         recipients = str([email1])
         notification_email = NotificationEmail.objects.send_email(
             template=template, recipients=recipients
         )
-
         self.assertEqual(notification_email.recipients, email1)
 
     def test_send_email_with_many_recipients_list(self):
@@ -74,10 +71,9 @@ class TestNotificationEmailManager(BaseModelTestCase):
         notification_email = NotificationEmail.objects.send_email(
             template=template, recipients=recipients
         )
-
-        self.assertTrue(email1 in notification_email.recipients)
-        self.assertTrue(email2 in notification_email.recipients)
-        self.assertTrue(email3 in notification_email.recipients)
+        self.assertIn(email1, notification_email.recipients)
+        self.assertIn(email2, notification_email.recipients)
+        self.assertIn(email3, notification_email.recipients)
 
     def test_send_email_with_many_recipients_str(self):
         email1 = "danielnazarian@outlook.com"
@@ -88,10 +84,9 @@ class TestNotificationEmailManager(BaseModelTestCase):
         notification_email = NotificationEmail.objects.send_email(
             template=template, recipients=recipients
         )
-
-        self.assertTrue(email1 in notification_email.recipients)
-        self.assertTrue(email2 in notification_email.recipients)
-        self.assertTrue(email3 in notification_email.recipients)
+        self.assertIn(email1, notification_email.recipients)
+        self.assertIn(email2, notification_email.recipients)
+        self.assertIn(email3, notification_email.recipients)
 
     def test_send_email_with_context_dict(self):
         context = {"user": "2563468934986734986"}
@@ -99,5 +94,60 @@ class TestNotificationEmailManager(BaseModelTestCase):
         notification_email = NotificationEmail.objects.send_email(
             template=template, context=context
         )
-
         self.assertEqual(notification_email.context, context)
+
+    def test_send_email_with_file_attachment(self):
+        template = "django-dans-emails/default.html"
+        file_attachment = SimpleUploadedFile("file.txt", b"file_content")
+
+        # Capture logs
+        with self.assertLogs(LOGGER, level="DEBUG") as log:
+            notification_email = NotificationEmail.objects.send_email(
+                template=template, file_attachment=file_attachment
+            )
+            # Check that the attachment error log is present
+            self.assertTrue(
+                any("File attached to email" in message for message in log.output)
+            )
+            # Check that the attachment error log is NOT present
+            self.assertFalse(
+                any("Issue attaching to email" in message for message in log.output)
+            )
+
+        self.assertIsNotNone(notification_email)
+
+    def test_send_email_with_invalid_file_attachment(self):
+        template = "django-dans-emails/default.html"
+
+        # Create an invalid file object
+        invalid_file = SimpleUploadedFile("invalid_file.txt", b"")
+
+        # Mock the read method to raise an AttributeError
+        with patch.object(File, "read", side_effect=AttributeError("Invalid file")):
+            with self.assertLogs(LOGGER, level="ERROR") as log:
+                notification_email = NotificationEmail.objects.send_email(
+                    template=template, file_attachment=invalid_file
+                )
+                # Check that the attachment error log is present
+                self.assertTrue(
+                    any("Issue attaching to email" in message for message in log.output)
+                )
+
+            self.assertIsNotNone(notification_email)
+
+    def test_send_email_with_subject_and_sender(self):
+        subject = "Custom Subject"
+        sender = "customsender@example.com"
+        template = "django-dans-emails/default.html"
+        notification_email = NotificationEmail.objects.send_email(
+            subject=subject, template=template, sender=sender
+        )
+        self.assertEqual(notification_email.subject, subject)
+        self.assertEqual(notification_email.sender, sender)
+
+    def test_send_email_does_not_send_in_test_mode(self):
+        with self.settings(IN_TEST=True):
+            template = "django-dans-emails/default.html"
+            notification_email = NotificationEmail.objects.send_email(template=template)
+            # Ensure email is not marked as sent in test mode
+            self.assertFalse(notification_email.sent_successfully)

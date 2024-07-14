@@ -1,6 +1,5 @@
 import json
 import uuid
-
 from .base import BaseAPITestCase
 from ...models.basic import NotificationBasic
 from ...views.basic import NotificationBasicViewSet
@@ -17,6 +16,8 @@ class TestNotificationBasicViewSet(BaseAPITestCase):
         super(TestNotificationBasicViewSet, self).setUp()
         self.view_list = NotificationBasicViewSet.as_view({"get": "list"})
         self.view_retrieve = NotificationBasicViewSet.as_view({"get": "retrieve"})
+        self.view_create = NotificationBasicViewSet.as_view({"post": "create"})
+        self.view_update = NotificationBasicViewSet.as_view({"patch": "partial_update"})
 
     @staticmethod
     def get_url():
@@ -178,7 +179,7 @@ class TestNotificationBasicViewSet(BaseAPITestCase):
 
         # confirm status code and data
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(json_response["success"]["id"], str(pk))
+        self.assertEqual(json_response["data"]["id"], str(pk))
 
     def test_notification_basic_retrieve_pk_valid_multiple_notification_basic_not_recp(
         self,
@@ -218,7 +219,7 @@ class TestNotificationBasicViewSet(BaseAPITestCase):
 
         # confirm status code and data
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(json_response["success"]["id"], str(pk))
+        self.assertEqual(json_response["data"]["id"], str(pk))
 
     def test_notification_basic_retrieve_pk_invalid_uuid(self):
         # create notification(s)
@@ -255,5 +256,91 @@ class TestNotificationBasicViewSet(BaseAPITestCase):
         json_response = json.loads(response.content)
 
         # confirm status code and data
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(json_response["error"], "Notification not found.")
+
+    # ==================================================================================
+    # POST - CREATE ====================================================================
+    # ==================================================================================
+
+    def test_notification_basic_create(self):
+        data = {
+            "recipients": self.email,
+            "message": "Test message",
+        }
+        request = self.factory.post(
+            self.get_url(), data, HTTP_AUTHORIZATION=f"Token {self.user_token}"
+        )
+        response = self.view_create(request)
+        response.render()
+        json_response = json.loads(response.content)
+
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(json_response["data"]["recipients"], self.email)
+        self.assertEqual(json_response["data"]["message"], "Test message")
+        self.assertEqual(json_response["success"], "Success!")
+        self.assertEqual(json_response["message"], "Success!")
+
+    def test_notification_basic_create_missing_fields(self):
+        data = {}
+        request = self.factory.post(
+            self.get_url(), data, HTTP_AUTHORIZATION=f"Token {self.user_token}"
+        )
+        response = self.view_create(request)
+        response.render()
+        json_response = json.loads(response.content)
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(json_response["error"], "Recipients required.")
+        self.assertEqual(json_response["message"], "Recipients required.")
+
+    def test_notification_basic_create_missing_message(self):
+
+        data = {
+            "recipients": self.email,
+        }
+        request = self.factory.post(
+            self.get_url(), data, HTTP_AUTHORIZATION=f"Token {self.user_token}"
+        )
+        response = self.view_create(request)
+        response.render()
+        json_response = json.loads(response.content)
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(json_response["error"], "Message required.")
+        self.assertEqual(json_response["message"], "Message required.")
+
+    # ==================================================================================
+    # PATCH - PARTIAL UPDATE ===========================================================
+    # ==================================================================================
+
+    def test_notification_basic_partial_update(self):
+        notification = NotificationBasic.objects.create(
+            recipients=self.email, read=False
+        )
+        data = {"read": True}
+        request = self.factory.patch(
+            self.get_url_pk(notification.pk),
+            data,
+            HTTP_AUTHORIZATION=f"Token {self.user_token}",
+        )
+        response = self.view_update(request, pk=notification.pk)
+        response.render()
+        json_response = json.loads(response.content)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json_response["data"]["read"], True)
+
+    def test_notification_basic_partial_update_invalid_uuid(self):
+        data = {"read": True}
+        request = self.factory.patch(
+            self.get_url_pk("invalid"),
+            data,
+            HTTP_AUTHORIZATION=f"Token {self.user_token}",
+        )
+        response = self.view_update(request, pk="invalid")
+        response.render()
+        json_response = json.loads(response.content)
+
         self.assertEqual(response.status_code, 400)
         self.assertEqual(json_response["error"], "Notification not found.")

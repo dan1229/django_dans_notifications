@@ -39,6 +39,9 @@
 
 
 
+#### email api - post api
+- create and send emails via api
+
 
 -----
 
@@ -63,11 +66,6 @@
 
 
 
-#### improve status codes/api responses
-- i.e., 201 on creation
-- add 'message' to all responses
-
-
 
 #### add type support / stubs
 - add mypy
@@ -82,19 +80,36 @@
 -
 - django dans api toolkit
     - add dep for it
-    - remove local code
+    - remove local code / serializers
+    - update response handler functions
+-
+- improve status codes/api responses
+    - i.e., 201 on creation
+    - add 'message' to all responses
+    -
+    - standardize 'message' field and all that on returns
+-
+- tests for str_to_bool?
+
 
 
 #### tests
-- post api tests
+- apis
+    - check coverage - can i fill in any gaps?
+-
 - higher coverage overall (> 90%)
 
 
 
 
-### [1.2.0] - 2024-07-DD
+### [1.2.0] - 2024-07-13
 - Improved logging and logger support
     -  No more `print`s either!
+- Improved tests and coverage!
+    - Improved model tests
+    - Improved and added API tests
+    - All Python files now have tests
+    - 90% coverage!!!
 #### TODO
 
 -------------------------------------------------------

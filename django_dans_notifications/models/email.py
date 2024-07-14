@@ -69,7 +69,7 @@ class NotificationEmailTemplateManager(models.Manager):
 
         # template not found by path or nickname - see if file exists or not
         try:
-            tmp = get_template(template)
+            get_template(template)
             return NotificationEmailTemplate.objects.get_or_create(
                 path=template, nickname=template
             )[0]
@@ -78,7 +78,7 @@ class NotificationEmailTemplateManager(models.Manager):
 
         # see if file exists at "django-dans-emails/"
         try:
-            tmp = get_template(f"django-dans-emails/{template}")
+            get_template(f"django-dans-emails/{template}")
             return NotificationEmailTemplate.objects.get_or_create(
                 path=template, nickname=template
             )[0]
@@ -87,7 +87,7 @@ class NotificationEmailTemplateManager(models.Manager):
 
         # see if file exists at "emails/"
         try:
-            tmp = get_template(f"emails/{template}")
+            get_template(f"emails/{template}")
             return NotificationEmailTemplate.objects.get_or_create(
                 path=template, nickname=template
             )[0]
@@ -180,6 +180,10 @@ class NotificationEmailManager(models.Manager):
         try:
             if file_attachment is not None:  # attach file if applicable
                 message.attach(file_attachment.name, file_attachment.read())
+                name = None
+                if hasattr(file_attachment, "name"):
+                    name = file_attachment.name
+                LOGGER.debug(f"File attached to email: {name}")
         except AttributeError as e:
             LOGGER.error(f"Issue attaching to email: {type(e)} - {e}")
 
@@ -189,7 +193,7 @@ class NotificationEmailManager(models.Manager):
                 pass  # don't send mail in tests
             else:
                 EmailThread().run(message.send, fail_silently=False)
-            notification_email.sent_successfully = True
+                notification_email.sent_successfully = True
         except (
             SMTPException,
             SMTPAuthenticationError,

@@ -60,7 +60,7 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
         serializer = self.get_serializer_class()(
             notification_push, context={"request": request}
         )
-        return api_response_success(serializer.data)
+        return api_response_success(data=serializer.data)
 
     def create(self, request, *args, **kwargs):
         """
@@ -70,6 +70,12 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
         request_data_copy["sender"] = request.user.email
         request_data_copy["datetime_sent"] = timezone.now()
         request_data_copy["sent_successfully"] = True
+
+        # Check for required fields
+        if not request_data_copy.get("recipients"):
+            return api_response_error("Recipients required.")
+        if not request_data_copy.get("message"):
+            return api_response_error("Message required.")
 
         try:
             serializer_class = self.get_serializer_class()
@@ -81,6 +87,6 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
             )
 
         try:
-            return api_response_success(serializer.data)
+            return api_response_success(data=serializer.data, status=201)
         except (AttributeError,) as e:
             return api_response_error(e)

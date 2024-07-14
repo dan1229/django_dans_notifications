@@ -60,7 +60,7 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
         serializer = self.get_serializer_class()(
             notification_basic, context={"request": request}
         )
-        return api_response_success(serializer.data)
+        return api_response_success(data=serializer.data)
 
     def create(self, request, *args, **kwargs):
         """
@@ -71,17 +71,23 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
         request_data_copy["datetime_sent"] = timezone.now()
         request_data_copy["sent_successfully"] = True
 
+        # Check for required fields
+        if not request_data_copy.get("recipients"):
+            return api_response_error("Recipients required.")
+        if not request_data_copy.get("message"):
+            return api_response_error("Message required.")
+
         try:
             serializer_class = self.get_serializer_class()
             serializer = serializer_class(request_data_copy)
             NotificationBasic.objects.create(**serializer.data)
         except (ValidationError, TypeError) as e:
-            return self.response_handler.response_error(
-                message="Error creating notification. Please try again later.", error=e
+            return api_response_error(
+                "Error creating notification. Please try again later.", error=e
             )
 
         try:
-            return api_response_success(serializer.data)
+            return api_response_success(data=serializer.data, status=201)
         except (AttributeError,) as e:
             return api_response_error(e)
 
@@ -111,4 +117,4 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
         serializer = self.get_serializer_class()(
             notification_basic, context={"request": request}
         )
-        return api_response_success(serializer.data)
+        return api_response_success(data=serializer.data)
