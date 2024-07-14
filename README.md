@@ -9,7 +9,7 @@
 [![Django Versions](https://img.shields.io/pypi/djversions/django-dans-notifications?color=0C4B33&logo=django&logoColor=white&label=django)](https://www.djangoproject.com/)
 [![PyPI Version](https://img.shields.io/pypi/v/django_dans_notifications.svg?color=blue&logo=pypi&logoColor=white)](https://pypi.org/project/django-dans-notifications/)
 [![Downloads](https://static.pepy.tech/badge/django-dans-notifications/month)](https://pepy.tech/project/django-dans-notifications)
-[![GitHub stars](https://img.shields.io/github/stars/dan1229/django-dans-notifications?logo=github&style=flat)](https://github.com/dan1229/django-dans-notifications/stargazers)
+[![GitHub stars](https://img.shields.io/github/stars/dan1229/django-dans-notifications?logo=github&style=flat)](https://github.com/dan1229/django_dans_notifications/stargazers)
 [![License](https://img.shields.io/pypi/l/django-dans-notifications.svg?color=blue)](https://github.com/dan1229/django-dans-notifications/blob/main/LICENSE.txt)
 [![Codacy grade](https://img.shields.io/codacy/grade/21cb657283c04e70b56fb935277a1ad1?logo=codacy)](https://www.codacy.com/app/dan1229/django-dans-notifications)
 [![Code style](https://img.shields.io/badge/code%20style-black-000000.svg?logo=python&logoColor=black)](https://github.com/psf/black)
