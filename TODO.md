@@ -94,10 +94,11 @@
 
 
 #### tests
-- threads?
-    - or ignore?
 - logging?
     - or ignore?
+-
+- apis
+    - check coverage - can i fill in any gaps?
 -
 - higher coverage overall (> 90%)
 
@@ -110,6 +111,7 @@
 - Improved tests and coverage!
     - Improved model tests
     - Improved and added API tests
+    - All Python files now have tests
     - 90% coverage!!!
 #### TODO
 
