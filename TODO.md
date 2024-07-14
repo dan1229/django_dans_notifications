@@ -75,17 +75,6 @@
 
 
 
-#### improve deps / reqs
-- double check everything looks good
-- django dans api toolkit
-    - add dep for it
-    - remove local code / serializers
-    - update response handler functions
--
-- add 'message' to all responses
-- standardize 'message' field and 'data' fields all that on returns for existing apis
-
-
 
 ### [1.2.0] - 2024-07-13
 - Added dependency for `Django Dans API Toolkit`
