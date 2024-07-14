@@ -94,9 +94,6 @@
 
 
 #### tests
-- logging?
-    - or ignore?
--
 - apis
     - check coverage - can i fill in any gaps?
 -

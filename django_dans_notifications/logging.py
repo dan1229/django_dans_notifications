@@ -18,6 +18,5 @@ formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(messag
 # Add formatter to ch
 ch.setFormatter(formatter)
 
-# Add ch to logger if it doesn't have any handlers
-if not LOGGER.handlers:
-    LOGGER.addHandler(ch)
+# Add ch to logger
+LOGGER.addHandler(ch)
