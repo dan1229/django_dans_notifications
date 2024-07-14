@@ -77,6 +77,9 @@
 
 
 ### [1.2.0] - 2024-07-13
+- Added type support!
+    - `py.typed`
+    - MyPy - config and CI step
 - Added dependency for `Django Dans API Toolkit`
     - https://pypi.org/project/django-dans-api-toolkit/
     - Removed local code / serializers
