@@ -291,10 +291,24 @@ class TestNotificationBasicViewSet(BaseAPITestCase):
         json_response = json.loads(response.content)
 
         self.assertEqual(response.status_code, 400)
-        self.assertEqual(
-            json_response["error"]["message"],
-            "Error creating notification. Please try again later.",
+        self.assertEqual(json_response["error"], "Recipients required.")
+        self.assertEqual(json_response["message"], "Recipients required.")
+
+    def test_notification_basic_create_missing_message(self):
+
+        data = {
+            "recipients": self.email,
+        }
+        request = self.factory.post(
+            self.get_url(), data, HTTP_AUTHORIZATION=f"Token {self.user_token}"
         )
+        response = self.view_create(request)
+        response.render()
+        json_response = json.loads(response.content)
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(json_response["error"], "Message required.")
+        self.assertEqual(json_response["message"], "Message required.")
 
     # ==================================================================================
     # PATCH - PARTIAL UPDATE ===========================================================
