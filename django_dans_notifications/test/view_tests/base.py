@@ -16,7 +16,7 @@ class BaseAPITestCase(APITestCase):
     username = "api-test-user"
     password = "password"
 
-    def setUp(self):
+    def setUp(self) -> None:
         super(APITestCase, self).setUp()
 
         # store standard api factory

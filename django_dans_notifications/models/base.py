@@ -1,3 +1,4 @@
+from typing import Any
 import uuid
 
 from django.db import models
@@ -64,7 +65,7 @@ class NotificationBase(AbstractBaseModel):
     def recipients_list(self):
         return self.recipients.split(",")
 
-    def recipients_cleanup(self):
+    def recipients_cleanup(self) -> str:
         # take in whatever is currently set as recipients
         list_recipients = self.recipients
 
@@ -90,7 +91,7 @@ class NotificationBase(AbstractBaseModel):
         res = res.replace("'", "").replace('"', "")
         return res
 
-    def recipients_contains(self, user):
+    def recipients_contains(self, user: Any) -> bool:
         """
         Detect if 'user' is involved with this notification or not
         """
