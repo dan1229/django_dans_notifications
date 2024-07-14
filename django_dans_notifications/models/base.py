@@ -1,4 +1,4 @@
-from typing import Any, List, Optional
+from typing import Any, List
 import uuid
 
 from django.db import models
@@ -56,7 +56,7 @@ class NotificationBase(AbstractBaseModel):
     def __str__(self) -> str:
         return "Notification Base"
 
-    def save(self, **kwargs: Any) -> Any:
+    def save(self, **kwargs):  # type: ignore
         # cleanup 'recipients'
         self.recipients = self.recipients_cleanup()
         return super(NotificationBase, self).save(**kwargs)

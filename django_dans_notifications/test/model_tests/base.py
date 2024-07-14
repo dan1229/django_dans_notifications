@@ -20,7 +20,7 @@ class BaseModelTestCase(TestCase):
 
         # USER 1 ====================================== #
         if hasattr(get_user_model().objects, "create_user"):
-            self.base_user = get_user_model().objects.create_user(
+            self.base_user = get_user_model().objects.create_user(  # type: ignore[attr-defined]
                 username=self.username,
                 email=self.base_email,
                 password=self.base_password,

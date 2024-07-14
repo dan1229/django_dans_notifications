@@ -5,14 +5,14 @@ from ..threads import EmailThread
 
 
 class TestEmailThread(unittest.TestCase):
-    def test_email_thread_executes_function(self):
+    def test_email_thread_executes_function(self) -> None:
         mock_func = Mock()
         thread = EmailThread(mock_func)
         thread.start()
         thread.join()  # Wait for the thread to finish
         mock_func.assert_called_once()
 
-    def test_email_thread_passes_arguments(self):
+    def test_email_thread_passes_arguments(self) -> None:
         mock_func = Mock()
         args = (1, 2, 3)
         kwargs = {"a": "b", "c": "d"}
@@ -21,8 +21,8 @@ class TestEmailThread(unittest.TestCase):
         thread.join()  # Wait for the thread to finish
         mock_func.assert_called_once_with(*args, **kwargs)
 
-    def test_email_thread_handles_exception(self):
-        def func_that_raises():
+    def test_email_thread_handles_exception(self) -> None:
+        def func_that_raises() -> None:
             raise ValueError("Test exception")
 
         thread = EmailThread(func_that_raises)

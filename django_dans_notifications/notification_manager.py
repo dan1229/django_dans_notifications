@@ -85,4 +85,4 @@ class NotificationManager:
         :param bool read: mark read or not
         """
         notification_basic.read = read
-        notification_basic.save()
+        notification_basic.save()  # type: ignore[no-untyped-call]

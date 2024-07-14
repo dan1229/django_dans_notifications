@@ -72,7 +72,7 @@ class TestNotificationManager(BaseModelTestCase):
 
     def test_mark_notification_basic_unread(self) -> None:
         self.notification_basic.read = True
-        self.notification_basic.save()
+        self.notification_basic.save()  # type: ignore[no-untyped-call]
         self.manager.mark_notification_basic_read(self.notification_basic, read=False)
         self.notification_basic.refresh_from_db()
         self.assertFalse(self.notification_basic.read)

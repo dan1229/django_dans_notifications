@@ -1,5 +1,6 @@
 import threading
 import logging
+from typing import Callable, Any
 
 LOGGER = logging.getLogger(__name__)
 
@@ -13,13 +14,13 @@ class EmailThread(threading.Thread):
     Simply pass a function you want to run in a thread and any arguments.
     """
 
-    def __init__(self, func, *args, **kwargs):
+    def __init__(self, func: Callable[..., Any], *args: Any, **kwargs: Any) -> None:
         threading.Thread.__init__(self)
         self.func = func
         self.args = args
         self.kwargs = kwargs
 
-    def run(self):
+    def run(self) -> None:
         try:
             self.func(*self.args, **self.kwargs)
         except Exception as e:
