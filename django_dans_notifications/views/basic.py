@@ -131,7 +131,7 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
         if request.data.get("read"):
             notification_basic.read = str_to_bool(request.data.get("read"))
 
-        notification_basic.save()  # type: ignore[no-untyped-call]
+        notification_basic.save()
 
         # serializer and return
         serializer = self.get_serializer_class()(

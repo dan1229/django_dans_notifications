@@ -1,6 +1,8 @@
-from typing import List
+from typing import Dict, Optional
 from django.db.models import Q
 from django.db.models.query import QuerySet
+
+from .models.base import NotificationBase
 
 from .models.notifications import NotificationEmail, NotificationBasic, NotificationPush
 
@@ -55,7 +57,9 @@ class NotificationManager:
         """
         return NotificationPush.objects.filter(self.query_ownership(user_email))
 
-    def get_notifications_all(self, user_email: str) -> dict:
+    def get_notifications_all(
+        self, user_email: str
+    ) -> Dict[str, QuerySet[NotificationBase]]:
         """
         Get all the notifications associated with this user
         :param str user_email: user email to search
@@ -73,7 +77,7 @@ class NotificationManager:
     #
     @staticmethod
     def mark_notification_basic_read(
-        notification_basic: NotificationBasic, read=True
+        notification_basic: NotificationBasic, read: Optional[bool] = True
     ) -> None:
         """
         Mark a NotificationBasic as read
@@ -81,4 +85,4 @@ class NotificationManager:
         :param bool read: mark read or not
         """
         notification_basic.read = read
-        notification_basic.save()  # type: ignore[no-untyped-call]
+        notification_basic.save()

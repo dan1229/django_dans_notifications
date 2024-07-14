@@ -29,6 +29,8 @@ class TestNotificationEmailTemplateManager(BaseModelTestCase):
     def test_template_exists_by_path(self) -> None:
         template = "django-dans-emails/default.html"
         email_template = NotificationEmailTemplate.objects.find_email_template(template)
+        if email_template is None:
+            self.fail("Email template not found")
         self.assertEqual(email_template.path, template)
 
     def test_template_exists_by_path_without_emails(self) -> None:

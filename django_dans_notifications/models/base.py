@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, List, Optional
 import uuid
 
 from django.db import models
@@ -11,10 +11,10 @@ from django.db import models
 
 
 class AbstractBaseModel(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)  # type: ignore[var-annotated]
 
-    datetime_created = models.DateTimeField(auto_now_add=True, editable=False)
-    datetime_modified = models.DateTimeField(auto_now=True)
+    datetime_created = models.DateTimeField(auto_now_add=True, editable=False)  # type: ignore[var-annotated]
+    datetime_modified = models.DateTimeField(auto_now=True)  # type: ignore[var-annotated]
 
     class Meta:
         abstract = True
@@ -35,15 +35,15 @@ class AbstractBaseModel(models.Model):
 # NOTIFICATION BASE =================== #
 #
 class NotificationBase(AbstractBaseModel):
-    datetime_sent = models.DateTimeField(null=True, blank=True)
-    sent_successfully = models.BooleanField(default=False, null=False, blank=False)
-    sender = models.CharField(
+    datetime_sent = models.DateTimeField(null=True, blank=True)  # type: ignore[var-annotated]
+    sent_successfully = models.BooleanField(default=False, null=False, blank=False)  # type: ignore[var-annotated]
+    sender = models.CharField(  # type: ignore[var-annotated]
         max_length=300,
         null=False,
         blank=False,
         help_text="This should be the sending users email.",
     )
-    recipients = models.CharField(
+    recipients = models.CharField(  # type: ignore[var-annotated]
         max_length=900,
         null=False,
         blank=False,
@@ -53,16 +53,16 @@ class NotificationBase(AbstractBaseModel):
     class Meta:
         abstract = True
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "Notification Base"
 
-    def save(self, keep_deleted=False, **kwargs):
+    def save(self, **kwargs: Any) -> None:
         # cleanup 'recipients'
         self.recipients = self.recipients_cleanup()
         return super(NotificationBase, self).save(**kwargs)
 
     @property
-    def recipients_list(self):
+    def recipients_list(self) -> List[Any]:
         return self.recipients.split(",")
 
     def recipients_cleanup(self) -> str:

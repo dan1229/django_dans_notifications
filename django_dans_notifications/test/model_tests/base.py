@@ -15,8 +15,8 @@ class BaseModelTestCase(TestCase):
     base_email = "test@email.com"
     base_password = "12345"
 
-    def setUp(self):
-        super(TestCase, self).setUp()
+    def setUp(self) -> None:
+        super(TestCase, self).setUp()  # type: ignore[no-untyped-call]
 
         # USER 1 ====================================== #
         self.base_user = get_user_model().objects.create_user(
