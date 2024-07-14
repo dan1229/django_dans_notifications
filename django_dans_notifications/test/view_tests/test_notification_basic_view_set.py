@@ -1,7 +1,7 @@
 import json
 import uuid
 from .base import BaseAPITestCase
-from ...models.basic import NotificationBasic
+from ...models.notifications import NotificationBasic
 from ...views.basic import NotificationBasicViewSet
 
 """

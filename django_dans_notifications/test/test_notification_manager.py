@@ -1,7 +1,10 @@
 from .model_tests.base import BaseModelTestCase
-from ..models.email import NotificationEmail, NotificationEmailTemplate
-from ..models.basic import NotificationBasic
-from ..models.push import NotificationPush
+from ..models.notifications import (
+    NotificationEmail,
+    NotificationEmailTemplate,
+    NotificationBasic,
+    NotificationPush,
+)
 from ..notification_manager import NotificationManager
 
 """

@@ -1,5 +1,5 @@
 from ..base import BaseModelTestCase
-from ....models.basic import NotificationBasic
+from ....models.notifications import NotificationBasic
 
 """
 # ========================================================================= #

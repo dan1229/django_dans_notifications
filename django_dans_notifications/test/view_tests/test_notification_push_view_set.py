@@ -1,7 +1,7 @@
 import json
 import uuid
 from .base import BaseAPITestCase
-from ...models.push import NotificationPush
+from ...models.notifications import NotificationPush
 from ...views.push import NotificationPushViewSet
 
 """

@@ -77,8 +77,6 @@
 
 #### improve deps / reqs
 - double check everything looks good
-- combine some files again
--
 - django dans api toolkit
     - add dep for it
     - remove local code / serializers
@@ -101,7 +99,7 @@
     - Improved and added API tests
     - All Python files now have tests
     - 90% coverage!!!
-- File structure cleaned up
+- File structure cleaned up and consolidation
 #### TODO
 
 -------------------------------------------------------

@@ -81,7 +81,7 @@ class NotificationBase(AbstractBaseModel):
                 list_recipients.pop()
 
         # if a list, convert standardize as str 'recp1,recp2,recp3'
-        if type(list_recipients) == list:
+        if isinstance(list_recipients, list):
             res = ",".join(str(e) for e in list_recipients)
         else:  # probably a string, just return as is
             res = list_recipients

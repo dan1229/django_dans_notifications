@@ -1,7 +1,7 @@
 import json
 import uuid
 from .base import BaseAPITestCase
-from ...models.email import NotificationEmail, NotificationEmailTemplate
+from ...models.notifications import NotificationEmail, NotificationEmailTemplate
 from ...views.email import NotificationEmailViewSet
 
 """

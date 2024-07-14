@@ -4,8 +4,8 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
 from ..helpers import str_to_bool, api_response_error, api_response_success
-from ..models.basic import NotificationBasic
-from ..serializers.basic import NotificationBasicSerializer
+from ..models.notifications import NotificationBasic
+from ..serializers import NotificationBasicSerializer
 from django.db.models import Q
 
 """

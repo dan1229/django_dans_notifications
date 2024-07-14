@@ -1,9 +1,12 @@
-from django_dans_api_toolkit import BaseSerializer
+from django_dans_api_toolkit.serializers.base import BaseSerializer
 from rest_framework import serializers
 
-from .models.push import NotificationPush
-from .models.email import NotificationEmailTemplate, NotificationEmail
-from .models.basic import NotificationBasic
+from .models.notifications import (
+    NotificationPush,
+    NotificationEmailTemplate,
+    NotificationEmail,
+    NotificationBasic,
+)
 
 
 #

@@ -3,8 +3,8 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
 from ..helpers import api_response_success, api_response_error
-from ..models.email import NotificationEmail
-from ..serializers.email import NotificationEmailSerializer
+from ..models.notifications import NotificationEmail
+from ..serializers import NotificationEmailSerializer
 from django.db.models import Q
 
 """

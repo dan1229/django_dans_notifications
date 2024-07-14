@@ -4,8 +4,8 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
 from ..helpers import api_response_error, api_response_success
-from ..models.push import NotificationPush
-from ..serializers.push import NotificationPushSerializer
+from ..models.notifications import NotificationPush
+from ..serializers import NotificationPushSerializer
 from django.db.models import Q
 
 """

@@ -1,5 +1,5 @@
 from ..base import BaseModelTestCase
-from ....models.email import NotificationEmailTemplate
+from ....models.notifications import NotificationEmailTemplate
 
 """
 # ========================================================================= #
