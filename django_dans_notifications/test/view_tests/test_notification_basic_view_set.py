@@ -293,7 +293,6 @@ class TestNotificationBasicViewSet(BaseAPITestCase):
         self.assertEqual(json_response["message"], "Recipients required.")
 
     def test_notification_basic_create_missing_message(self):
-
         data = {
             "recipients": self.email,
         }

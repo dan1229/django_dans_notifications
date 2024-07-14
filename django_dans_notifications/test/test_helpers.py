@@ -3,7 +3,6 @@ from ..helpers import str_to_bool
 
 
 class TestStrToBool(TestCase):
-
     def test_true_values(self):
         true_values = ["yes", "true", "t", "1", "on", "YES", "True", "T", "1", "ON"]
         for value in true_values:
