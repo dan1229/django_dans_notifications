@@ -1,8 +1,11 @@
+from typing import Any, Dict
 from django_dans_api_toolkit.api_response_handler import ApiResponseHandler
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.request import Request
+from rest_framework.response import Response
 
 from ..helpers import str_to_bool
 from ..models.notifications import NotificationBasic
@@ -26,7 +29,7 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
     permission_classes = (IsAuthenticated,)
     response_handler = ApiResponseHandler()
 
-    def list(self, request, *args, **kwargs):
+    def list(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """
         Endpoint to list out Basic Notifications
         """
@@ -34,8 +37,8 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
         serializer = serializer_class(
             self.filter_queryset(
                 self.queryset.filter(
-                    Q(recipients__contains=request.user.email)
-                    | Q(recipients__contains=request.user.id)
+                    Q(recipients__contains=request.user.email)  # type: ignore[union-attr]
+                    | Q(recipients__contains=request.user.id)  # type: ignore[union-attr]
                 )
             ),
             many=True,
@@ -46,15 +49,15 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
             response=self.get_paginated_response(page)
         )
 
-    def retrieve(self, request, *args, **kwargs):
+    def retrieve(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """
         Endpoint to retrieve specific Basic Notification
 
         :param uuid pk: UUID of NotificationBasic to retrieve
         """
-        pk = self.kwargs.get("pk")
+        pk: str = str(self.kwargs.get("pk"))
         try:
-            notification_basic = NotificationBasic.objects.get(pk=pk)
+            notification_basic: NotificationBasic = NotificationBasic.objects.get(pk=pk)
             if not notification_basic.recipients_contains(request.user):
                 raise NotificationBasic.DoesNotExist
         except (NotificationBasic.DoesNotExist, ValidationError):
@@ -68,12 +71,19 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
         )
         return self.response_handler.response_success(results=serializer.data)
 
-    def create(self, request, *args, **kwargs):
+    def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """
         Endpoint to create Basic Notification
         """
-        request_data_copy = request.data.copy()
-        request_data_copy["sender"] = request.user.email
+        request_data_copy: Dict[str, Any] = request.data.copy()
+        if hasattr(request.user, "email"):
+            request_data_copy["sender"] = (
+                request.user.email
+            )  # Ensure sender is included
+        else:
+            return self.response_handler.response_error(
+                message="User email required to send notification."
+            )
         request_data_copy["datetime_sent"] = timezone.now()
         request_data_copy["sent_successfully"] = True
 
@@ -85,33 +95,28 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
 
         try:
             serializer_class = self.get_serializer_class()
-            serializer = serializer_class(request_data_copy)
-            NotificationBasic.objects.create(**serializer.data)
+            serializer = serializer_class(data=request_data_copy)
+            serializer.is_valid(raise_exception=True)
+            NotificationBasic.objects.create(**serializer.validated_data)
         except (ValidationError, TypeError) as e:
             return self.response_handler.response_error(
                 message="Error creating notification. Please try again later.", error=e
             )
+        return self.response_handler.response_success(
+            results=serializer.data, status=201
+        )
 
-        try:
-            return self.response_handler.response_success(
-                results=serializer.data, status=201
-            )
-        except (AttributeError,) as e:
-            return self.response_handler.response_error(
-                message="Error creating notification. Please try again later.", error=e
-            )
-
-    def partial_update(self, request, *args, **kwargs):
+    def partial_update(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """
         Endpoint to update specific Basic Notification
 
         :param uuid pk: UUID of NotificationBasic to update
 
-        :param (body, optional) bool read: mark NotificationBasic read or ont
+        :param (body, optional) bool read: mark NotificationBasic read or not
         """
-        pk = self.kwargs.get("pk")
+        pk: str = str(self.kwargs.get("pk"))
         try:
-            notification_basic = NotificationBasic.objects.get(pk=pk)
+            notification_basic: NotificationBasic = NotificationBasic.objects.get(pk=pk)
             if not notification_basic.recipients_contains(request.user):
                 raise NotificationBasic.DoesNotExist
         except (NotificationBasic.DoesNotExist, ValidationError) as e:
@@ -123,7 +128,7 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
         if request.data.get("read"):
             notification_basic.read = str_to_bool(request.data.get("read"))
 
-        notification_basic.save()
+        notification_basic.save()  # type: ignore[no-untyped-call]
 
         # serializer and return
         serializer = self.get_serializer_class()(

@@ -1,8 +1,11 @@
+from typing import Any, Dict
 from django_dans_api_toolkit.api_response_handler import ApiResponseHandler
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.request import Request
+from rest_framework.response import Response
 
 from ..models.notifications import NotificationPush
 from ..serializers import NotificationPushSerializer
@@ -25,7 +28,7 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
     permission_classes = (IsAuthenticated,)
     response_handler = ApiResponseHandler()
 
-    def list(self, request, *args, **kwargs):
+    def list(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """
         Endpoint to list out Push Notifications
         """
@@ -33,8 +36,8 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
         serializer = serializer_class(
             self.filter_queryset(
                 self.queryset.filter(
-                    Q(recipients__contains=request.user.email)
-                    | Q(recipients__contains=request.user.id)
+                    Q(recipients__contains=request.user.email)  # type: ignore[union-attr]
+                    | Q(recipients__contains=request.user.id)  # type: ignore[union-attr]
                 )
             ),
             many=True,
@@ -45,15 +48,15 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
             response=self.get_paginated_response(page)
         )
 
-    def retrieve(self, request, *args, **kwargs):
+    def retrieve(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """
         Endpoint to retrieve specific Push Notification
 
         :param uuid pk: UUID of NotificationPush to retrieve
         """
-        pk = self.kwargs.get("pk")
+        pk: str = str(self.kwargs.get("pk"))
         try:
-            notification_push = NotificationPush.objects.get(pk=pk)
+            notification_push: NotificationPush = NotificationPush.objects.get(pk=pk)
             if not notification_push.recipients_contains(request.user):
                 raise NotificationPush.DoesNotExist
         except (NotificationPush.DoesNotExist, ValidationError):
@@ -67,12 +70,17 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
         )
         return self.response_handler.response_success(results=serializer.data)
 
-    def create(self, request, *args, **kwargs):
+    def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """
         Endpoint to create Push Notification
         """
-        request_data_copy = request.data.copy()
-        request_data_copy["sender"] = request.user.email
+        request_data_copy: Dict[str, Any] = request.data.copy()
+        if hasattr(request.user, "email"):
+            request_data_copy["sender"] = request.user.email
+        else:
+            return self.response_handler.response_error(
+                message="User email required to send notification."
+            )
         request_data_copy["datetime_sent"] = timezone.now()
         request_data_copy["sent_successfully"] = True
 

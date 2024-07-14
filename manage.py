@@ -10,7 +10,7 @@ import sys
 # and other 'simpler' Django commands
 
 
-def main():
+def main() -> None:
     """Run administrative tasks."""
     os.environ.setdefault(
         "DJANGO_SETTINGS_MODULE", "django_dans_notifications.test.settings"

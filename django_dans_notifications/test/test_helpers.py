@@ -3,13 +3,13 @@ from ..helpers import str_to_bool
 
 
 class TestStrToBool(TestCase):
-    def test_true_values(self):
+    def test_true_values(self) -> None:
         true_values = ["yes", "true", "t", "1", "on", "YES", "True", "T", "1", "ON"]
         for value in true_values:
             with self.subTest(value=value):
                 self.assertTrue(str_to_bool(value))
 
-    def test_false_values(self):
+    def test_false_values(self) -> None:
         false_values = [
             "no",
             "false",

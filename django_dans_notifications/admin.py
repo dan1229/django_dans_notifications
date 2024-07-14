@@ -19,7 +19,7 @@ from .models.notifications import (
 # ====================================================== #
 
 
-class NotificationBasicAdmin(admin.ModelAdmin):
+class NotificationBasicAdmin(admin.ModelAdmin):  # type: ignore[type-arg]
     list_display = (
         "sender",
         "recipients",
@@ -45,7 +45,7 @@ class NotificationBasicAdmin(admin.ModelAdmin):
 # ====================================================== #
 
 
-class NotificationEmailTemplateAdmin(admin.ModelAdmin):
+class NotificationEmailTemplateAdmin(admin.ModelAdmin):  # type: ignore[type-arg]
     list_display = (
         "nickname",
         "path",
@@ -58,7 +58,7 @@ class NotificationEmailTemplateAdmin(admin.ModelAdmin):
     list_per_page = 100
 
 
-class NotificationEmailAdmin(admin.ModelAdmin):
+class NotificationEmailAdmin(admin.ModelAdmin):  # type: ignore[type-arg]
     list_display = (
         "sender",
         "recipients",
@@ -84,7 +84,7 @@ class NotificationEmailAdmin(admin.ModelAdmin):
 # ====================================================== #
 
 
-class NotificationPushAdmin(admin.ModelAdmin):
+class NotificationPushAdmin(admin.ModelAdmin):  # type: ignore[type-arg]
     list_display = (
         "sender",
         "recipients",

@@ -1,3 +1,4 @@
+from typing import Any, List
 import uuid
 
 from django.db import models
@@ -10,16 +11,16 @@ from django.db import models
 
 
 class AbstractBaseModel(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)  # type: ignore[var-annotated]
 
-    datetime_created = models.DateTimeField(auto_now_add=True, editable=False)
-    datetime_modified = models.DateTimeField(auto_now=True)
+    datetime_created = models.DateTimeField(auto_now_add=True, editable=False)  # type: ignore[var-annotated]
+    datetime_modified = models.DateTimeField(auto_now=True)  # type: ignore[var-annotated]
 
     class Meta:
         abstract = True
         ordering = ["datetime_created"]
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "Abstract Base Model"
 
 
@@ -34,15 +35,15 @@ class AbstractBaseModel(models.Model):
 # NOTIFICATION BASE =================== #
 #
 class NotificationBase(AbstractBaseModel):
-    datetime_sent = models.DateTimeField(null=True, blank=True)
-    sent_successfully = models.BooleanField(default=False, null=False, blank=False)
-    sender = models.CharField(
+    datetime_sent = models.DateTimeField(null=True, blank=True)  # type: ignore[var-annotated]
+    sent_successfully = models.BooleanField(default=False, null=False, blank=False)  # type: ignore[var-annotated]
+    sender = models.CharField(  # type: ignore[var-annotated]
         max_length=300,
         null=False,
         blank=False,
         help_text="This should be the sending users email.",
     )
-    recipients = models.CharField(
+    recipients = models.CharField(  # type: ignore[var-annotated]
         max_length=900,
         null=False,
         blank=False,
@@ -52,19 +53,19 @@ class NotificationBase(AbstractBaseModel):
     class Meta:
         abstract = True
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "Notification Base"
 
-    def save(self, keep_deleted=False, **kwargs):
+    def save(self, **kwargs):  # type: ignore
         # cleanup 'recipients'
         self.recipients = self.recipients_cleanup()
         return super(NotificationBase, self).save(**kwargs)
 
     @property
-    def recipients_list(self):
-        return self.recipients.split(",")
+    def recipients_list(self) -> List[Any]:
+        return self.recipients.split(",")  # type: ignore[no-any-return]
 
-    def recipients_cleanup(self):
+    def recipients_cleanup(self) -> str:
         # take in whatever is currently set as recipients
         list_recipients = self.recipients
 
@@ -90,7 +91,7 @@ class NotificationBase(AbstractBaseModel):
         res = res.replace("'", "").replace('"', "")
         return res
 
-    def recipients_contains(self, user):
+    def recipients_contains(self, user: Any) -> bool:
         """
         Detect if 'user' is involved with this notification or not
         """

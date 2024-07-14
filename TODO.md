@@ -43,6 +43,15 @@
 - create and send emails via api
 
 
+
+#### revisit threads.py?
+- is this working as expected?
+- is there a better solution?
+
+
+
+
+
 -----
 
 ### 1.2.0
@@ -60,23 +69,12 @@
     
 
 
-#### revisit threads.py?
-- is this working as expected?
-- is there a better solution?
-
-
-
-
-#### add type support / stubs
-- add mypy
-- add ci stage to check for types
-- py.typed and thing in setup.cfg
-- update docs
-
-
 
 
 ### [1.2.0] - 2024-07-13
+- Added type support!
+    - `py.typed`
+    - MyPy - config and CI step
 - Added dependency for `Django Dans API Toolkit`
     - https://pypi.org/project/django-dans-api-toolkit/
     - Removed local code / serializers

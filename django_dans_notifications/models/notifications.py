@@ -1,3 +1,4 @@
+from typing import Any, Dict, List, Optional, Union
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.db import models
@@ -10,6 +11,7 @@ from smtplib import SMTPAuthenticationError, SMTPException
 from .base import NotificationBase, AbstractBaseModel
 from django_dans_notifications.threads import EmailThread
 from django_dans_notifications.logging import LOGGER
+from django.core.files import File
 
 
 """
@@ -23,10 +25,10 @@ from django_dans_notifications.logging import LOGGER
 # NOTIFICATION BASIC ==================== #
 #
 class NotificationBasic(NotificationBase):
-    read = models.BooleanField(default=False, null=False, blank=False)
-    message = models.CharField(max_length=600, null=False, blank=False)
+    read = models.BooleanField(default=False, null=False, blank=False)  # type: ignore[var-annotated]
+    message = models.CharField(max_length=600, null=False, blank=False)  # type: ignore[var-annotated]
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"Basic Notification: {self.recipients}"
 
 
@@ -40,7 +42,7 @@ class NotificationBasic(NotificationBase):
 #
 # NOTIFICATION EMAIL TEMPLATE MANAGER ================== #
 #
-class NotificationEmailTemplateManager(models.Manager):
+class NotificationEmailTemplateManager(models.Manager):  # type: ignore[type-arg]
     """
     NotificationEmailTemplateManager
 
@@ -50,20 +52,20 @@ class NotificationEmailTemplateManager(models.Manager):
     use_in_migrations = True
 
     @staticmethod
-    def find_email_template(template):
+    def find_email_template(template: str) -> Optional["NotificationEmailTemplate"]:
         """
         get or create NotificationEmailTemplate object for the passed 'template'
 
         :param str template: Path of email template to use should be of this form 'django-dans-emails/<NAME>.html'. Can also be the templates 'nickname'.
         """
         try:
-            return NotificationEmailTemplate.objects.get(path=template)
+            return NotificationEmailTemplate.objects.get(path=template)  # type: ignore[no-any-return]
         except NotificationEmailTemplate.DoesNotExist:
             pass
 
         # see if file exists at path 'emails/'
         try:
-            return NotificationEmailTemplate.objects.get(
+            return NotificationEmailTemplate.objects.get(  # type: ignore[no-any-return]
                 path=f"django-dans-emails/{template}"
             )
         except NotificationEmailTemplate.DoesNotExist:
@@ -71,7 +73,7 @@ class NotificationEmailTemplateManager(models.Manager):
 
         # see if file exists at path 'emails/'
         try:
-            return NotificationEmailTemplate.objects.get(path=f"emails/{template}")
+            return NotificationEmailTemplate.objects.get(path=f"emails/{template}")  # type: ignore[no-any-return]
         except NotificationEmailTemplate.DoesNotExist:
             pass
 
@@ -88,27 +90,33 @@ class NotificationEmailTemplateManager(models.Manager):
         # template not found by path or nickname - see if file exists or not
         try:
             get_template(template)
-            return NotificationEmailTemplate.objects.get_or_create(
+            return NotificationEmailTemplate.objects.get_or_create(  # type: ignore[no-any-return]
                 path=template, nickname=template
-            )[0]
+            )[
+                0
+            ]
         except TemplateDoesNotExist:
             pass
 
         # see if file exists at "django-dans-emails/"
         try:
             get_template(f"django-dans-emails/{template}")
-            return NotificationEmailTemplate.objects.get_or_create(
+            return NotificationEmailTemplate.objects.get_or_create(  # type: ignore[no-any-return]
                 path=template, nickname=template
-            )[0]
+            )[
+                0
+            ]
         except TemplateDoesNotExist:
             pass
 
         # see if file exists at "emails/"
         try:
             get_template(f"emails/{template}")
-            return NotificationEmailTemplate.objects.get_or_create(
+            return NotificationEmailTemplate.objects.get_or_create(  # type: ignore[no-any-return]
                 path=template, nickname=template
-            )[0]
+            )[
+                0
+            ]
         except TemplateDoesNotExist:
             pass
 
@@ -118,7 +126,7 @@ class NotificationEmailTemplateManager(models.Manager):
 #
 # NOTIFICATION EMAIL MANAGER ================== #
 #
-class NotificationEmailManager(models.Manager):
+class NotificationEmailManager(models.Manager):  # type: ignore[type-arg]
     """
     NotificationEmailManager
 
@@ -131,26 +139,31 @@ class NotificationEmailManager(models.Manager):
 
     @staticmethod
     def send_email(
-        subject="Email from Dan's Backend",
-        template="django-dans-emails/default.html",
-        sender=settings.DEFAULT_FROM_EMAIL,
-        recipients=None,
-        context=None,
-        file_attachment=None,
-    ):
+        subject: Optional[str] = None,
+        template: Optional[str] = None,
+        sender: Optional[str] = None,
+        recipients: Optional[Union[str, List[str]]] = None,
+        context: Optional[Dict[Any, Any]] = None,
+        file_attachment: Optional[File] = None,  # type: ignore[type-arg]
+    ) -> "NotificationEmail":
         """
         Send email function - sends email, handles notification system and object creation and everything
         WILL NOT send in test mode - set via 'IN_TEST' in settings.py file.
-
-        :param str subject: Subject for email.
-        :param str template: Template file path or nickname.
-        :param str sender: From email.
-        :param str recipients: List of email(s) to send to.
-        :param dict context: Context dict for template.
-        :param file_attachment: File attachment to send with email.
         """
+        # default params
+        if subject is None:
+            if hasattr(settings, "TEAM_NAME"):
+                subject = f"Email from {settings.TEAM_NAME}"
+            else:
+                subject = "Hi there!"
+        if sender is None:
+            sender = settings.DEFAULT_FROM_EMAIL
+        if template is None:
+            template = "django-dans-emails/default.html"
         if recipients is None:
-            recipients = ""
+            recipients = settings.DEFAULT_FROM_EMAIL
+        if context is None:
+            context = {}
 
         # check if model exists for the .html file at the given path
         # if so, ensure that an EmailTemplate objects exists for it
@@ -192,7 +205,7 @@ class NotificationEmailManager(models.Manager):
             LOGGER.error(f"Error creating email message: {type(e)} - {e}")
             notification_email.sent_successfully = False
             notification_email.save()
-            return notification_email
+            return notification_email  # type: ignore[no-any-return]
 
         # attach file if applicable
         try:
@@ -210,7 +223,7 @@ class NotificationEmailManager(models.Manager):
             if hasattr(settings, "IN_TEST") and settings.IN_TEST:
                 pass  # don't send mail in tests
             else:
-                EmailThread().run(message.send, fail_silently=False)
+                EmailThread().run(message.send, fail_silently=False)  # type: ignore
                 notification_email.sent_successfully = True
         except (
             SMTPException,
@@ -222,7 +235,7 @@ class NotificationEmailManager(models.Manager):
         # save regardless of status
         notification_email.datetime_sent = timezone.now()
         notification_email.save()
-        return notification_email
+        return notification_email  # type: ignore[no-any-return]
 
 
 #
@@ -231,13 +244,13 @@ class NotificationEmailManager(models.Manager):
 class NotificationEmailTemplate(AbstractBaseModel):
     objects = NotificationEmailTemplateManager()
 
-    path = models.CharField(max_length=300, null=False, blank=False)
-    nickname = models.CharField(max_length=300, null=False, blank=False)
+    path = models.CharField(max_length=300, null=False, blank=False)  # type: ignore[var-annotated]
+    nickname = models.CharField(max_length=300, null=False, blank=False)  # type: ignore[var-annotated]
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "Email Template: " + str(self.nickname)
 
-    def html_to_str(self, context):
+    def html_to_str(self, context: Dict[Any, Any]) -> str:
         try:
             return render_to_string(self.path, context)
         except TemplateDoesNotExist as e:
@@ -245,10 +258,12 @@ class NotificationEmailTemplate(AbstractBaseModel):
             return render_to_string("django-dans-emails/default.html", context)
 
 
-def get_default_template():
-    return NotificationEmailTemplate.objects.get_or_create(
+def get_default_template() -> NotificationEmailTemplate:
+    return NotificationEmailTemplate.objects.get_or_create(  # type: ignore[no-any-return]
         path="django-dans-emails/default.html"
-    )[0]
+    )[
+        0
+    ]
 
 
 #
@@ -257,16 +272,16 @@ def get_default_template():
 class NotificationEmail(NotificationBase):
     objects = NotificationEmailManager()
 
-    template = models.ForeignKey(
+    template = models.ForeignKey(  # type: ignore[var-annotated]
         NotificationEmailTemplate,
         related_name="template",
         default=get_default_template,
         on_delete=models.DO_NOTHING,
     )
-    subject = models.CharField(max_length=300, null=False, blank=False)
+    subject = models.CharField(max_length=300, null=False, blank=False)  # type: ignore[var-annotated]
     context = models.JSONField(null=True, blank=True)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"Notification Email: {self.sender} -> {self.recipients}"
 
 
@@ -281,7 +296,7 @@ class NotificationEmail(NotificationBase):
 # NOTIFICATION PUSH ================== #
 #
 class NotificationPush(NotificationBase):
-    message = models.CharField(max_length=300, null=False, blank=False)
+    message = models.CharField(max_length=300, null=False, blank=False)  # type: ignore[var-annotated]
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"Notification Push: {self.recipients}"
