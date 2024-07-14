@@ -152,7 +152,10 @@ class NotificationEmailManager(models.Manager):  # type: ignore[type-arg]
         """
         # default params
         if subject is None:
-            subject = f"Email from {settings.TEAM_NAME}"
+            if hasattr(settings, "TEAM_NAME"):
+                subject = f"Email from {settings.TEAM_NAME}"
+            else:
+                subject = "Hi there!"
         if sender is None:
             sender = settings.DEFAULT_FROM_EMAIL
         if template is None:

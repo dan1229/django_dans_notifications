@@ -77,7 +77,9 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
         """
         request_data_copy: Dict[str, Any] = request.data.copy()
         if hasattr(request.user, "email"):
-            request_data_copy["recipients"] = request.user.email
+            request_data_copy["sender"] = (
+                request.user.email
+            )  # Ensure sender is included
         else:
             return self.response_handler.response_error(
                 message="User email required to send notification."
@@ -93,21 +95,16 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
 
         try:
             serializer_class = self.get_serializer_class()
-            serializer = serializer_class(request_data_copy)
-            NotificationBasic.objects.create(**serializer.data)
+            serializer = serializer_class(data=request_data_copy)
+            serializer.is_valid(raise_exception=True)
+            NotificationBasic.objects.create(**serializer.validated_data)
         except (ValidationError, TypeError) as e:
             return self.response_handler.response_error(
                 message="Error creating notification. Please try again later.", error=e
             )
-
-        try:
-            return self.response_handler.response_success(
-                results=serializer.data, status=201
-            )
-        except AttributeError as e:
-            return self.response_handler.response_error(
-                message="Error creating notification. Please try again later.", error=e
-            )
+        return self.response_handler.response_success(
+            results=serializer.data, status=201
+        )
 
     def partial_update(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """

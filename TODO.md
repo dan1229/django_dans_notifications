@@ -43,6 +43,15 @@
 - create and send emails via api
 
 
+
+#### revisit threads.py?
+- is this working as expected?
+- is there a better solution?
+
+
+
+
+
 -----
 
 ### 1.2.0
@@ -58,20 +67,6 @@
         - more inspo
 
     
-
-
-#### revisit threads.py?
-- is this working as expected?
-- is there a better solution?
-
-
-
-
-#### add type support / stubs
-- add mypy
-- add ci stage to check for types
-- py.typed and thing in setup.cfg
-- update docs
 
 
 
