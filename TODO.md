@@ -69,40 +69,18 @@
 
 #### add type support / stubs
 - add mypy
-- add ci stage to check for types?
+- add ci stage to check for types
 - py.typed and thing in setup.cfg
 - update docs
 
 
 
-#### improve deps / reqs
-- double check everything looks good
--
-- django dans api toolkit
-    - add dep for it
-    - remove local code / serializers
-    - update response handler functions
--
-- improve status codes/api responses
-    - i.e., 201 on creation
-    - add 'message' to all responses
-    -
-    - standardize 'message' field and all that on returns
--
-- tests for str_to_bool?
-
-
-
-#### tests
-- apis
-    - check coverage - can i fill in any gaps?
--
-- higher coverage overall (> 90%)
-
-
-
 
 ### [1.2.0] - 2024-07-13
+- Added dependency for `Django Dans API Toolkit`
+    - https://pypi.org/project/django-dans-api-toolkit/
+    - Removed local code / serializers
+    - Updated response handler functions
 - Improved logging and logger support
     -  No more `print`s either!
 - Improved tests and coverage!
@@ -110,6 +88,7 @@
     - Improved and added API tests
     - All Python files now have tests
     - 90% coverage!!!
+- File structure cleaned up and consolidation
 #### TODO
 
 -------------------------------------------------------

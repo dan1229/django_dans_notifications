@@ -5,7 +5,6 @@ from ..threads import EmailThread
 
 
 class TestEmailThread(unittest.TestCase):
-
     def test_email_thread_executes_function(self):
         mock_func = Mock()
         thread = EmailThread(mock_func)

@@ -1,7 +1,7 @@
 import json
 import uuid
 from .base import BaseAPITestCase
-from ...models.email import NotificationEmail, NotificationEmailTemplate
+from ...models.notifications import NotificationEmail, NotificationEmailTemplate
 from ...views.email import NotificationEmailViewSet
 
 """
@@ -217,7 +217,7 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
 
         # confirm status code and data
         self.assertEqual(response.status_code, 400)
-        self.assertEqual(json_response["error"], "Notification not found.")
+        self.assertEqual(json_response["message"], "Notification not found.")
 
     def test_notification_email_retrieve_pk_valid(self):
         # create notification(s)
@@ -239,7 +239,7 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
 
         # confirm status code and data
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(json_response["data"]["id"], str(pk))
+        self.assertEqual(json_response["results"]["id"], str(pk))
 
     def test_notification_email_retrieve_pk_valid_multiple_notification_email_not_recp(
         self,
@@ -272,7 +272,7 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
 
         # confirm status code and data
         self.assertEqual(response.status_code, 400)
-        self.assertEqual(json_response["error"], "Notification not found.")
+        self.assertEqual(json_response["message"], "Notification not found.")
 
     def test_notification_email_retrieve_pk_valid_multiple_notification_email(self):
         # create notification(s)
@@ -303,7 +303,7 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
 
         # confirm status code and data
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(json_response["data"]["id"], str(pk))
+        self.assertEqual(json_response["results"]["id"], str(pk))
 
     def test_notification_email_retrieve_pk_invalid_uuid(self):
         # create notification(s)
@@ -334,7 +334,7 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
 
         # confirm status code and data
         self.assertEqual(response.status_code, 400)
-        self.assertEqual(json_response["error"], "Notification not found.")
+        self.assertEqual(json_response["message"], "Notification not found.")
 
     def test_notification_email_retrieve_pk_missing(self):
         # create notification(s)
@@ -365,4 +365,4 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
 
         # confirm status code and data
         self.assertEqual(response.status_code, 400)
-        self.assertEqual(json_response["error"], "Notification not found.")
+        self.assertEqual(json_response["message"], "Notification not found.")

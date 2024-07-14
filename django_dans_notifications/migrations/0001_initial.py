@@ -5,7 +5,7 @@ import uuid
 import django.db.models.deletion
 from django.db import migrations, models
 
-import django_dans_notifications.models.email
+import django_dans_notifications.models.notifications
 
 
 class Migration(migrations.Migration):
@@ -74,7 +74,7 @@ class Migration(migrations.Migration):
             managers=[
                 (
                     "objects",
-                    django_dans_notifications.models.email.NotificationEmailTemplateManager(),
+                    django_dans_notifications.models.notifications.NotificationEmailTemplateManager(),
                 ),
             ],
         ),
@@ -149,7 +149,7 @@ class Migration(migrations.Migration):
                 (
                     "template",
                     models.ForeignKey(
-                        default=django_dans_notifications.models.email.get_default_template,
+                        default=django_dans_notifications.models.notifications.get_default_template,
                         on_delete=django.db.models.deletion.DO_NOTHING,
                         related_name="template",
                         to="django_dans_notifications.notificationemailtemplate",
@@ -162,7 +162,7 @@ class Migration(migrations.Migration):
             managers=[
                 (
                     "objects",
-                    django_dans_notifications.models.email.NotificationEmailManager(),
+                    django_dans_notifications.models.notifications.NotificationEmailManager(),
                 ),
             ],
         ),

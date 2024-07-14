@@ -1,11 +1,12 @@
+from django_dans_api_toolkit.api_response_handler import ApiResponseHandler
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
-from ..helpers import str_to_bool, api_response_error, api_response_success
-from ..models.basic import NotificationBasic
-from ..serializers.basic import NotificationBasicSerializer
+from ..helpers import str_to_bool
+from ..models.notifications import NotificationBasic
+from ..serializers import NotificationBasicSerializer
 from django.db.models import Q
 
 """
@@ -23,6 +24,7 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
     queryset = NotificationBasic.objects.all()
     serializer_class = NotificationBasicSerializer
     permission_classes = (IsAuthenticated,)
+    response_handler = ApiResponseHandler()
 
     def list(self, request, *args, **kwargs):
         """
@@ -40,7 +42,9 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
             context={"request": request},
         )
         page = self.paginate_queryset(serializer.data)
-        return self.get_paginated_response(page)
+        return self.response_handler.response_success(
+            response=self.get_paginated_response(page)
+        )
 
     def retrieve(self, request, *args, **kwargs):
         """
@@ -54,13 +58,15 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
             if not notification_basic.recipients_contains(request.user):
                 raise NotificationBasic.DoesNotExist
         except (NotificationBasic.DoesNotExist, ValidationError):
-            return api_response_error("Notification not found.")
+            return self.response_handler.response_error(
+                message="Notification not found."
+            )
 
         # serializer and return
         serializer = self.get_serializer_class()(
             notification_basic, context={"request": request}
         )
-        return api_response_success(data=serializer.data)
+        return self.response_handler.response_success(results=serializer.data)
 
     def create(self, request, *args, **kwargs):
         """
@@ -73,23 +79,27 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
 
         # Check for required fields
         if not request_data_copy.get("recipients"):
-            return api_response_error("Recipients required.")
+            return self.response_handler.response_error(message="Recipients required.")
         if not request_data_copy.get("message"):
-            return api_response_error("Message required.")
+            return self.response_handler.response_error(message="Message required.")
 
         try:
             serializer_class = self.get_serializer_class()
             serializer = serializer_class(request_data_copy)
             NotificationBasic.objects.create(**serializer.data)
         except (ValidationError, TypeError) as e:
-            return api_response_error(
-                "Error creating notification. Please try again later.", error=e
+            return self.response_handler.response_error(
+                message="Error creating notification. Please try again later.", error=e
             )
 
         try:
-            return api_response_success(data=serializer.data, status=201)
+            return self.response_handler.response_success(
+                results=serializer.data, status=201
+            )
         except (AttributeError,) as e:
-            return api_response_error(e)
+            return self.response_handler.response_error(
+                message="Error creating notification. Please try again later.", error=e
+            )
 
     def partial_update(self, request, *args, **kwargs):
         """
@@ -104,8 +114,10 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
             notification_basic = NotificationBasic.objects.get(pk=pk)
             if not notification_basic.recipients_contains(request.user):
                 raise NotificationBasic.DoesNotExist
-        except (NotificationBasic.DoesNotExist, ValidationError):
-            return api_response_error("Notification not found.")
+        except (NotificationBasic.DoesNotExist, ValidationError) as e:
+            return self.response_handler.response_error(
+                message="Notification not found.", error=e
+            )
 
         # update object
         if request.data.get("read"):
@@ -117,4 +129,4 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
         serializer = self.get_serializer_class()(
             notification_basic, context={"request": request}
         )
-        return api_response_success(data=serializer.data)
+        return self.response_handler.response_success(results=serializer.data)

@@ -2,7 +2,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.files import File
 from unittest.mock import patch
 from ..base import BaseModelTestCase
-from ....models.email import NotificationEmail
+from ....models.notifications import NotificationEmail
 from ....logging import LOGGER
 
 """

@@ -1,10 +1,10 @@
-name: Test Python
+name: Python - Test
 
 on:
   push:
 
 jobs:
-  test_python:
+  python_test:
     name: Test on Python ${{ matrix.python_version }} and Django ${{ matrix.django_version }}
     runs-on: ubuntu-latest
     strategy:
@@ -34,6 +34,7 @@ jobs:
         pip install -e .
         pip install -U Django==${{ matrix.django_version }}
         pip install -r requirements.txt
+        pip install -r requirements-dev.txt
 
     - name: Run tests
       run: python -m coverage run runtests.py

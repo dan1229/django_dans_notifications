@@ -1,0 +1,10 @@
+coverage==6.4
+mypy==1.0.0
+types-setuptools==65.5.0.3
+django-stubs==5.0.2
+types-requests==2.28.11
+types-pytz==2022.1.0
+types-python-dateutil==2.8.19
+djangorestframework-types==0.8.0
+flake8==7.1.0
+black==24.4.2
