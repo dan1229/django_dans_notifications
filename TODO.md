@@ -83,18 +83,16 @@
     - remove local code / serializers
     - update response handler functions
 -
-- improve status codes/api responses
-    - i.e., 201 on creation
-    - add 'message' to all responses
-    -
-    - standardize 'message' field and all that on returns
--
-- tests for str_to_bool?
-
+- add 'message' to all responses
+- standardize 'message' field and 'data' fields all that on returns for existing apis
 
 
 
 ### [1.2.0] - 2024-07-13
+- Added dependency for `Django Dans API Toolkit`
+    - https://pypi.org/project/django-dans-api-toolkit/
+    - Removed local code / serializers
+    - Updated response handler functions
 - Improved logging and logger support
     -  No more `print`s either!
 - Improved tests and coverage!
