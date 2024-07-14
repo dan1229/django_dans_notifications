@@ -39,6 +39,9 @@
 
 
 
+#### email api - post api
+- create and send emails via api
+
 
 -----
 

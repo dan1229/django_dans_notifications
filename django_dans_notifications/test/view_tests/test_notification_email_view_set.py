@@ -1,8 +1,7 @@
 import json
 import uuid
-
 from .base import BaseAPITestCase
-from ...models.email import NotificationEmail
+from ...models.email import NotificationEmail, NotificationEmailTemplate
 from ...views.email import NotificationEmailViewSet
 
 """
@@ -17,6 +16,10 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
         super(TestNotificationEmailViewSet, self).setUp()
         self.view_list = NotificationEmailViewSet.as_view({"get": "list"})
         self.view_retrieve = NotificationEmailViewSet.as_view({"get": "retrieve"})
+
+        self.email_template = NotificationEmailTemplate.objects.create(
+            nickname="default", path="django-dans-emails/default.html"
+        )
 
     @staticmethod
     def get_url():
@@ -48,7 +51,11 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
 
     def test_notification_email_list_one_not_recp(self):
         # create notification(s)
-        notification1 = NotificationEmail.objects.create()
+        notification1 = NotificationEmail.objects.create(
+            subject="Test Subject",
+            context={"key": "value"},
+            template=self.email_template,
+        )
 
         # make api request
         request = self.factory.get(
@@ -66,7 +73,12 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
 
     def test_notification_email_list_one(self):
         # create notification(s)
-        notification1 = NotificationEmail.objects.create(recipients=self.email)
+        notification1 = NotificationEmail.objects.create(
+            recipients=self.email,
+            subject="Test Subject",
+            context={"key": "value"},
+            template=self.email_template,
+        )
 
         # make api request
         request = self.factory.get(
@@ -82,11 +94,23 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
         self.assertEqual(json_response["next"], None)
         self.assertEqual(json_response["previous"], None)
 
-    def test_notification_email_list_man_not_recp(self):
+    def test_notification_email_list_many_not_recp(self):
         # create notification(s)
-        notification1 = NotificationEmail.objects.create()
-        notification2 = NotificationEmail.objects.create()
-        notification3 = NotificationEmail.objects.create()
+        notification1 = NotificationEmail.objects.create(
+            subject="Test Subject",
+            context={"key": "value"},
+            template=self.email_template,
+        )
+        notification2 = NotificationEmail.objects.create(
+            subject="Test Subject 2",
+            context={"key": "value"},
+            template=self.email_template,
+        )
+        notification3 = NotificationEmail.objects.create(
+            subject="Test Subject 3",
+            context={"key": "value"},
+            template=self.email_template,
+        )
 
         # make api request
         request = self.factory.get(
@@ -102,11 +126,24 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
         self.assertEqual(json_response["next"], None)
         self.assertEqual(json_response["previous"], None)
 
-    def test_notification_email_list_man_one_recp(self):
+    def test_notification_email_list_many_one_recp(self):
         # create notification(s)
-        notification1 = NotificationEmail.objects.create(recipients=self.email)
-        notification2 = NotificationEmail.objects.create()
-        notification3 = NotificationEmail.objects.create()
+        notification1 = NotificationEmail.objects.create(
+            recipients=self.email,
+            subject="Test Subject",
+            context={"key": "value"},
+            template=self.email_template,
+        )
+        notification2 = NotificationEmail.objects.create(
+            subject="Test Subject 2",
+            context={"key": "value"},
+            template=self.email_template,
+        )
+        notification3 = NotificationEmail.objects.create(
+            subject="Test Subject 3",
+            context={"key": "value"},
+            template=self.email_template,
+        )
 
         # make api request
         request = self.factory.get(
@@ -122,11 +159,26 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
         self.assertEqual(json_response["next"], None)
         self.assertEqual(json_response["previous"], None)
 
-    def test_notification_email_list_man_three_recp(self):
+    def test_notification_email_list_many_recp(self):
         # create notification(s)
-        notification1 = NotificationEmail.objects.create(recipients=self.email)
-        notification2 = NotificationEmail.objects.create(recipients=self.email)
-        notification3 = NotificationEmail.objects.create(recipients=self.email)
+        notification1 = NotificationEmail.objects.create(
+            recipients=self.email,
+            subject="Test Subject",
+            context={"key": "value"},
+            template=self.email_template,
+        )
+        notification2 = NotificationEmail.objects.create(
+            recipients=self.email,
+            subject="Test Subject 2",
+            context={"key": "value"},
+            template=self.email_template,
+        )
+        notification3 = NotificationEmail.objects.create(
+            recipients=self.email,
+            subject="Test Subject 3",
+            context={"key": "value"},
+            template=self.email_template,
+        )
 
         # make api request
         request = self.factory.get(
@@ -148,7 +200,11 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
 
     def test_notification_email_retrieve_pk_valid_not_recp(self):
         # create notification(s)
-        notification1 = NotificationEmail.objects.create()
+        notification1 = NotificationEmail.objects.create(
+            subject="Test Subject",
+            context={"key": "value"},
+            template=self.email_template,
+        )
         pk = notification1.pk
 
         # make api request
@@ -165,7 +221,12 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
 
     def test_notification_email_retrieve_pk_valid(self):
         # create notification(s)
-        notification1 = NotificationEmail.objects.create(recipients=self.email)
+        notification1 = NotificationEmail.objects.create(
+            recipients=self.email,
+            subject="Test Subject",
+            context={"key": "value"},
+            template=self.email_template,
+        )
         pk = notification1.pk
 
         # make api request
@@ -184,9 +245,21 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
         self,
     ):
         # create notification(s)
-        notification1 = NotificationEmail.objects.create()
-        notification2 = NotificationEmail.objects.create()
-        notification3 = NotificationEmail.objects.create()
+        notification1 = NotificationEmail.objects.create(
+            subject="Test Subject",
+            context={"key": "value"},
+            template=self.email_template,
+        )
+        notification2 = NotificationEmail.objects.create(
+            subject="Test Subject 2",
+            context={"key": "value"},
+            template=self.email_template,
+        )
+        notification3 = NotificationEmail.objects.create(
+            subject="Test Subject 3",
+            context={"key": "value"},
+            template=self.email_template,
+        )
         pk = notification1.pk
 
         # make api request
@@ -203,11 +276,23 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
 
     def test_notification_email_retrieve_pk_valid_multiple_notification_email(self):
         # create notification(s)
-        notification1 = NotificationEmail.objects.create(recipients=self.email)
-        notification2 = NotificationEmail.objects.create()
-        notification3 = NotificationEmail.objects.create()
+        notification1 = NotificationEmail.objects.create(
+            recipients=self.email,
+            subject="Test Subject",
+            context={"key": "value"},
+            template=self.email_template,
+        )
+        notification2 = NotificationEmail.objects.create(
+            subject="Test Subject 2",
+            context={"key": "value"},
+            template=self.email_template,
+        )
+        notification3 = NotificationEmail.objects.create(
+            subject="Test Subject 3",
+            context={"key": "value"},
+            template=self.email_template,
+        )
         pk = notification1.pk
-
         # make api request
         request = self.factory.get(
             self.get_url_pk(pk=pk), HTTP_AUTHORIZATION=f"Token {self.user_token}"
@@ -222,9 +307,21 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
 
     def test_notification_email_retrieve_pk_invalid_uuid(self):
         # create notification(s)
-        notification1 = NotificationEmail.objects.create()
-        notification2 = NotificationEmail.objects.create()
-        notification3 = NotificationEmail.objects.create()
+        notification1 = NotificationEmail.objects.create(
+            subject="Test Subject",
+            context={"key": "value"},
+            template=self.email_template,
+        )
+        notification2 = NotificationEmail.objects.create(
+            subject="Test Subject 2",
+            context={"key": "value"},
+            template=self.email_template,
+        )
+        notification3 = NotificationEmail.objects.create(
+            subject="Test Subject 3",
+            context={"key": "value"},
+            template=self.email_template,
+        )
         pk = "invalid"
 
         # make api request
@@ -241,9 +338,21 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
 
     def test_notification_email_retrieve_pk_missing(self):
         # create notification(s)
-        notification1 = NotificationEmail.objects.create()
-        notification2 = NotificationEmail.objects.create()
-        notification3 = NotificationEmail.objects.create()
+        notification1 = NotificationEmail.objects.create(
+            subject="Test Subject",
+            context={"key": "value"},
+            template=self.email_template,
+        )
+        notification2 = NotificationEmail.objects.create(
+            subject="Test Subject 2",
+            context={"key": "value"},
+            template=self.email_template,
+        )
+        notification3 = NotificationEmail.objects.create(
+            subject="Test Subject 3",
+            context={"key": "value"},
+            template=self.email_template,
+        )
         pk = uuid.uuid4()
 
         # make api request
