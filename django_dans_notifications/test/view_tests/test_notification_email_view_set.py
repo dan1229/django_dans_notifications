@@ -1,4 +1,5 @@
 import json
+from typing import Any
 import uuid
 from .base import BaseAPITestCase
 from ...models.notifications import NotificationEmail, NotificationEmailTemplate
@@ -12,7 +13,7 @@ from ...views.email import NotificationEmailViewSet
 
 
 class TestNotificationEmailViewSet(BaseAPITestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         super(TestNotificationEmailViewSet, self).setUp()
         self.view_list = NotificationEmailViewSet.as_view({"get": "list"})
         self.view_retrieve = NotificationEmailViewSet.as_view({"get": "retrieve"})
@@ -22,24 +23,24 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
         )
 
     @staticmethod
-    def get_url():
+    def get_url() -> str:
         return "/api/notifications/email/"
 
     @staticmethod
-    def get_url_pk(pk):
-        return f"/api/notifications/email/{pk}/"
+    def get_url_pk(pk: Any) -> str:
+        return f"/api/notifications/email/{str(pk)}/"
 
     # ==================================================================================
     # GET - LIST =======================================================================
     # ==================================================================================
 
-    def test_notifications_email_list_none(self):
+    def test_notifications_email_list_none(self) -> None:
         # make api request
         request = self.factory.get(
             self.get_url(), HTTP_AUTHORIZATION=f"Token {self.user_token}"
         )
         response = self.view_list(request)
-        response.render()
+        response.render()  # type: ignore[attr-defined]
         json_response = json.loads(response.content)
 
         # confirm status code and data
@@ -49,7 +50,7 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
         self.assertEqual(json_response["previous"], None)
         self.assertEqual(json_response["results"], [])
 
-    def test_notification_email_list_one_not_recp(self):
+    def test_notification_email_list_one_not_recp(self) -> None:
         # create notification(s)
         notification1 = NotificationEmail.objects.create(
             subject="Test Subject",
@@ -62,7 +63,7 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
             self.get_url(), HTTP_AUTHORIZATION=f"Token {self.user_token}"
         )
         response = self.view_list(request)
-        response.render()
+        response.render()  # type: ignore[attr-defined]
         json_response = json.loads(response.content)
 
         # confirm status code and data
@@ -71,7 +72,7 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
         self.assertEqual(json_response["next"], None)
         self.assertEqual(json_response["previous"], None)
 
-    def test_notification_email_list_one(self):
+    def test_notification_email_list_one(self) -> None:
         # create notification(s)
         notification1 = NotificationEmail.objects.create(
             recipients=self.email,
@@ -85,7 +86,7 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
             self.get_url(), HTTP_AUTHORIZATION=f"Token {self.user_token}"
         )
         response = self.view_list(request)
-        response.render()
+        response.render()  # type: ignore[attr-defined]
         json_response = json.loads(response.content)
 
         # confirm status code and data
@@ -94,7 +95,7 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
         self.assertEqual(json_response["next"], None)
         self.assertEqual(json_response["previous"], None)
 
-    def test_notification_email_list_many_not_recp(self):
+    def test_notification_email_list_many_not_recp(self) -> None:
         # create notification(s)
         notification1 = NotificationEmail.objects.create(
             subject="Test Subject",
@@ -117,7 +118,7 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
             self.get_url(), HTTP_AUTHORIZATION=f"Token {self.user_token}"
         )
         response = self.view_list(request)
-        response.render()
+        response.render()  # type: ignore[attr-defined]
         json_response = json.loads(response.content)
 
         # confirm status code and data
@@ -126,7 +127,7 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
         self.assertEqual(json_response["next"], None)
         self.assertEqual(json_response["previous"], None)
 
-    def test_notification_email_list_many_one_recp(self):
+    def test_notification_email_list_many_one_recp(self) -> None:
         # create notification(s)
         notification1 = NotificationEmail.objects.create(
             recipients=self.email,
@@ -150,7 +151,7 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
             self.get_url(), HTTP_AUTHORIZATION=f"Token {self.user_token}"
         )
         response = self.view_list(request)
-        response.render()
+        response.render()  # type: ignore[attr-defined]
         json_response = json.loads(response.content)
 
         # confirm status code and data
@@ -159,7 +160,7 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
         self.assertEqual(json_response["next"], None)
         self.assertEqual(json_response["previous"], None)
 
-    def test_notification_email_list_many_recp(self):
+    def test_notification_email_list_many_recp(self) -> None:
         # create notification(s)
         notification1 = NotificationEmail.objects.create(
             recipients=self.email,
@@ -185,7 +186,7 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
             self.get_url(), HTTP_AUTHORIZATION=f"Token {self.user_token}"
         )
         response = self.view_list(request)
-        response.render()
+        response.render()  # type: ignore[attr-defined]
         json_response = json.loads(response.content)
 
         # confirm status code and data
@@ -198,7 +199,7 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
     # GET - RETRIEVE ===================================================================
     # ==================================================================================
 
-    def test_notification_email_retrieve_pk_valid_not_recp(self):
+    def test_notification_email_retrieve_pk_valid_not_recp(self) -> None:
         # create notification(s)
         notification1 = NotificationEmail.objects.create(
             subject="Test Subject",
@@ -212,14 +213,14 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
             self.get_url_pk(pk=pk), HTTP_AUTHORIZATION=f"Token {self.user_token}"
         )
         response = self.view_retrieve(request, pk=pk)
-        response.render()
+        response.render()  # type: ignore[attr-defined]
         json_response = json.loads(response.content)
 
         # confirm status code and data
         self.assertEqual(response.status_code, 400)
         self.assertEqual(json_response["message"], "Notification not found.")
 
-    def test_notification_email_retrieve_pk_valid(self):
+    def test_notification_email_retrieve_pk_valid(self) -> None:
         # create notification(s)
         notification1 = NotificationEmail.objects.create(
             recipients=self.email,
@@ -234,7 +235,7 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
             self.get_url_pk(pk=pk), HTTP_AUTHORIZATION=f"Token {self.user_token}"
         )
         response = self.view_retrieve(request, pk=pk)
-        response.render()
+        response.render()  # type: ignore[attr-defined]
         json_response = json.loads(response.content)
 
         # confirm status code and data
@@ -243,7 +244,7 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
 
     def test_notification_email_retrieve_pk_valid_multiple_notification_email_not_recp(
         self,
-    ):
+    ) -> None:
         # create notification(s)
         notification1 = NotificationEmail.objects.create(
             subject="Test Subject",
@@ -267,14 +268,16 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
             self.get_url_pk(pk=pk), HTTP_AUTHORIZATION=f"Token {self.user_token}"
         )
         response = self.view_retrieve(request, pk=pk)
-        response.render()
+        response.render()  # type: ignore[attr-defined]
         json_response = json.loads(response.content)
 
         # confirm status code and data
         self.assertEqual(response.status_code, 400)
         self.assertEqual(json_response["message"], "Notification not found.")
 
-    def test_notification_email_retrieve_pk_valid_multiple_notification_email(self):
+    def test_notification_email_retrieve_pk_valid_multiple_notification_email(
+        self,
+    ) -> None:
         # create notification(s)
         notification1 = NotificationEmail.objects.create(
             recipients=self.email,
@@ -298,14 +301,14 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
             self.get_url_pk(pk=pk), HTTP_AUTHORIZATION=f"Token {self.user_token}"
         )
         response = self.view_retrieve(request, pk=pk)
-        response.render()
+        response.render()  # type: ignore[attr-defined]
         json_response = json.loads(response.content)
 
         # confirm status code and data
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json_response["results"]["id"], str(pk))
 
-    def test_notification_email_retrieve_pk_invalid_uuid(self):
+    def test_notification_email_retrieve_pk_invalid_uuid(self) -> None:
         # create notification(s)
         notification1 = NotificationEmail.objects.create(
             subject="Test Subject",
@@ -329,14 +332,14 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
             self.get_url_pk(pk=pk), HTTP_AUTHORIZATION=f"Token {self.user_token}"
         )
         response = self.view_retrieve(request, pk=pk)
-        response.render()
+        response.render()  # type: ignore[attr-defined]
         json_response = json.loads(response.content)
 
         # confirm status code and data
         self.assertEqual(response.status_code, 400)
         self.assertEqual(json_response["message"], "Notification not found.")
 
-    def test_notification_email_retrieve_pk_missing(self):
+    def test_notification_email_retrieve_pk_missing(self) -> None:
         # create notification(s)
         notification1 = NotificationEmail.objects.create(
             subject="Test Subject",
@@ -360,7 +363,7 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
             self.get_url_pk(pk=pk), HTTP_AUTHORIZATION=f"Token {self.user_token}"
         )
         response = self.view_retrieve(request, pk=pk)
-        response.render()
+        response.render()  # type: ignore[attr-defined]
         json_response = json.loads(response.content)
 
         # confirm status code and data

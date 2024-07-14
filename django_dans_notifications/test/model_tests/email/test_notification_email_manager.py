@@ -18,7 +18,7 @@ class TestNotificationEmailManager(BaseModelTestCase):
     password: str = "password"
 
     def setUp(self) -> None:
-        super(TestNotificationEmailManager, self).setUp()
+        super(TestNotificationEmailManager, self).setUp()  # type: ignore[no-untyped-call]
 
     # =================================================================== #
     # BASIC TESTS ======================================================= #
@@ -27,12 +27,14 @@ class TestNotificationEmailManager(BaseModelTestCase):
     def test_send_email_template_doesnt_exist(self) -> None:
         with self.assertRaises(ValueError):
             NotificationEmail.objects.send_email(
+                "",
                 template="INVALID",
             )
 
     def test_send_email_template_does_exist(self) -> None:
         template: str = "django-dans-emails/default.html"
         notification_email: NotificationEmail = NotificationEmail.objects.send_email(
+            "",
             template=template,
         )
         self.assertEqual(notification_email.template.path, template)
@@ -70,7 +72,7 @@ class TestNotificationEmailManager(BaseModelTestCase):
         template: str = "django-dans-emails/default.html"
         recipients: List[str] = [email1, email2, email3]
         notification_email: NotificationEmail = NotificationEmail.objects.send_email(
-            template=template, recipients=recipients
+            recipients=recipients, template=template
         )
         self.assertIn(email1, notification_email.recipients)
         self.assertIn(email2, notification_email.recipients)
@@ -130,11 +132,11 @@ class TestNotificationEmailManager(BaseModelTestCase):
         # Mock the read method to raise an AttributeError
         with patch.object(File, "read", side_effect=AttributeError("Invalid file")):
             with self.assertLogs(LOGGER, level="ERROR") as log:
-                notification_email: NotificationEmail = (
+                notification_email = (
                     NotificationEmail.objects.send_email(
                         template=template, file_attachment=invalid_file
-                    )
-                )
+                    ),
+                )[0]
                 # Check that the attachment error log is present
                 self.assertTrue(
                     any("Issue attaching to email" in message for message in log.output)

@@ -1,3 +1,4 @@
+from typing import Any, Dict, List, Optional, Union
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.db import models
@@ -10,6 +11,7 @@ from smtplib import SMTPAuthenticationError, SMTPException
 from .base import NotificationBase, AbstractBaseModel
 from django_dans_notifications.threads import EmailThread
 from django_dans_notifications.logging import LOGGER
+from django.core.files import File
 
 
 """
@@ -50,7 +52,7 @@ class NotificationEmailTemplateManager(models.Manager):
     use_in_migrations = True
 
     @staticmethod
-    def find_email_template(template):
+    def find_email_template(template: str) -> Optional["NotificationEmailTemplate"]:
         """
         get or create NotificationEmailTemplate object for the passed 'template'
 
@@ -131,26 +133,17 @@ class NotificationEmailManager(models.Manager):
 
     @staticmethod
     def send_email(
-        subject="Email from Dan's Backend",
-        template="django-dans-emails/default.html",
-        sender=settings.DEFAULT_FROM_EMAIL,
-        recipients=None,
-        context=None,
-        file_attachment=None,
+        subject: Optional[str] = f"Email from {settings.TEAM_NAME}",
+        template: Optional[str] = "django-dans-emails/default.html",
+        sender: Optional[str] = settings.DEFAULT_FROM_EMAIL,
+        recipients: Optional[Union[str, List[str]]] = settings.DEFAULT_FROM_EMAIL,
+        context: Optional[Dict[Any, Any]] = None,
+        file_attachment: Optional[File] = None,
     ):
         """
         Send email function - sends email, handles notification system and object creation and everything
         WILL NOT send in test mode - set via 'IN_TEST' in settings.py file.
-
-        :param str subject: Subject for email.
-        :param str template: Template file path or nickname.
-        :param str sender: From email.
-        :param str recipients: List of email(s) to send to.
-        :param dict context: Context dict for template.
-        :param file_attachment: File attachment to send with email.
         """
-        if recipients is None:
-            recipients = ""
 
         # check if model exists for the .html file at the given path
         # if so, ensure that an EmailTemplate objects exists for it
@@ -234,10 +227,10 @@ class NotificationEmailTemplate(AbstractBaseModel):
     path = models.CharField(max_length=300, null=False, blank=False)
     nickname = models.CharField(max_length=300, null=False, blank=False)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "Email Template: " + str(self.nickname)
 
-    def html_to_str(self, context):
+    def html_to_str(self, context: Dict[Any, Any]) -> str:
         try:
             return render_to_string(self.path, context)
         except TemplateDoesNotExist as e:
@@ -266,7 +259,7 @@ class NotificationEmail(NotificationBase):
     subject = models.CharField(max_length=300, null=False, blank=False)
     context = models.JSONField(null=True, blank=True)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"Notification Email: {self.sender} -> {self.recipients}"
 
 
@@ -283,5 +276,5 @@ class NotificationEmail(NotificationBase):
 class NotificationPush(NotificationBase):
     message = models.CharField(max_length=300, null=False, blank=False)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"Notification Push: {self.recipients}"

@@ -1,7 +1,10 @@
+from typing import Any
 from django_dans_api_toolkit.api_response_handler import ApiResponseHandler
 from django.core.exceptions import ValidationError
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.request import Request
+from rest_framework.response import Response
 
 from ..models.notifications import NotificationEmail
 from ..serializers import NotificationEmailSerializer
@@ -24,7 +27,7 @@ class NotificationEmailViewSet(viewsets.GenericViewSet):
     permission_classes = (IsAuthenticated,)
     response_handler = ApiResponseHandler()
 
-    def list(self, request, *args, **kwargs):
+    def list(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """
         Endpoint to list out Email Notifications
         """
@@ -32,8 +35,8 @@ class NotificationEmailViewSet(viewsets.GenericViewSet):
         serializer = serializer_class(
             self.filter_queryset(
                 self.queryset.filter(
-                    Q(recipients__contains=request.user.email)
-                    | Q(recipients__contains=request.user.id)
+                    Q(recipients__contains=request.user.email)  # type: ignore[union-attr]
+                    | Q(recipients__contains=request.user.id)  # type: ignore[union-attr]
                 )
             ),
             many=True,
@@ -44,15 +47,15 @@ class NotificationEmailViewSet(viewsets.GenericViewSet):
             response=self.get_paginated_response(page)
         )
 
-    def retrieve(self, request, *args, **kwargs):
+    def retrieve(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """
         Endpoint to retrieve specific Email Notification
 
         :param uuid pk: UUID of NotificationEmail to retrieve
         """
-        pk = self.kwargs.get("pk")
+        pk: str = str(self.kwargs.get("pk"))
         try:
-            notification_email = NotificationEmail.objects.get(pk=pk)
+            notification_email: NotificationEmail = NotificationEmail.objects.get(pk=pk)
             if not notification_email.recipients_contains(request.user):
                 raise NotificationEmail.DoesNotExist
         except (NotificationEmail.DoesNotExist, ValidationError):

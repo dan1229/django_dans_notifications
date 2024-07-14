@@ -75,8 +75,8 @@ class NotificationEmailSerializer(BaseSerializer):
         )
 
     @staticmethod
-    def get_content(obj):
-        return obj.template.html_to_str(obj.context)
+    def get_content(obj: NotificationEmail) -> str:
+        return str(obj.template.html_to_str(obj.context))
 
 
 #

@@ -11,19 +11,19 @@ from ....models.notifications import NotificationEmail, NotificationEmailTemplat
 class TestEmailNotification(BaseModelTestCase):
     model = NotificationEmail
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.email_template_nickname = "template1"
         self.email_template = NotificationEmailTemplate.objects.create(
             nickname=self.email_template_nickname,
             path="django-dans-emails/template.html",
         )
-        super(TestEmailNotification, self).setUp()
+        super(TestEmailNotification, self).setUp()  # type: ignore[no-untyped-call]
 
     # =================================================================== #
     # BASIC TESTS ======================================================= #
     # =================================================================== #
 
-    def test_str(self):
+    def test_str(self) -> None:
         notification = self.model.objects.create(
             template=self.email_template,
             recipients=self.base_email,
@@ -34,7 +34,7 @@ class TestEmailNotification(BaseModelTestCase):
             f"Notification Email: {self.base_email} -> {self.base_email}",
         )
 
-    def test_with_subject(self):
+    def test_with_subject(self) -> None:
         subject = "this is a test subject"
         notification = self.model.objects.create(
             template=self.email_template,
@@ -44,7 +44,7 @@ class TestEmailNotification(BaseModelTestCase):
         )
         self.assertEqual(notification.subject, subject)
 
-    def test_with_context(self):
+    def test_with_context(self) -> None:
         context = {"user": "213542465346"}
         notification = self.model.objects.create(
             template=self.email_template,
@@ -54,7 +54,7 @@ class TestEmailNotification(BaseModelTestCase):
         )
         self.assertEqual(notification.context, context)
 
-    def test_with_no_template(self):
+    def test_with_no_template(self) -> None:
         notification = self.model.objects.create(
             recipients=self.base_email,
             sender=self.base_email,
@@ -67,7 +67,7 @@ class TestEmailNotification(BaseModelTestCase):
             ),
         )
 
-    def test_with_recipients(self):
+    def test_with_recipients(self) -> None:
         recipients = ["user1@example.com", "user2@example.com"]
         notification = self.model.objects.create(
             template=self.email_template, recipients=recipients, sender=self.base_email
