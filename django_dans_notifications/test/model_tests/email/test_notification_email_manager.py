@@ -1,6 +1,5 @@
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.files import File
-from io import BytesIO
 from unittest.mock import patch
 from ..base import BaseModelTestCase
 from ....models.email import NotificationEmail

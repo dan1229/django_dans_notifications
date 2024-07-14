@@ -1,6 +1,5 @@
 from rest_framework import status as statuses
 from rest_framework.response import Response
-from rest_framework.response import Response
 
 """
 # ===============================================================================
