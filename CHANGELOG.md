@@ -12,6 +12,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
+### [1.2.0] - 2024-07-13
+- Added type support!
+    - `py.typed`
+    - MyPy - config and CI step
+- Added dependency for `Django Dans API Toolkit`
+    - https://pypi.org/project/django-dans-api-toolkit/
+    - Removed local code / serializers
+    - Updated response handler functions
+- Improved logging and logger support
+    -  No more `print`s either!
+- Improved tests and coverage!
+    - Improved model tests
+    - Improved and added API tests
+    - All Python files now have tests
+    - 90% coverage!!!
+- File structure cleaned up and consolidation
+
+
 ### [1.1.19] - 2024-07-12
 - Added support for lower Django versions
 

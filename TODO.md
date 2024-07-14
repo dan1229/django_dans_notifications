@@ -52,42 +52,9 @@
 
 
 
------
 
-### 1.2.0
-
-
-
-#### improve docs
-- improve readme
-- revisit other docs
-- more badges
-    - python/django versions
-    - https://pypi.org/project/django-admin-interface/
-        - more inspo
-
-    
-
-
-
-
-### [1.2.0] - 2024-07-13
-- Added type support!
-    - `py.typed`
-    - MyPy - config and CI step
-- Added dependency for `Django Dans API Toolkit`
-    - https://pypi.org/project/django-dans-api-toolkit/
-    - Removed local code / serializers
-    - Updated response handler functions
-- Improved logging and logger support
-    -  No more `print`s either!
-- Improved tests and coverage!
-    - Improved model tests
-    - Improved and added API tests
-    - All Python files now have tests
-    - 90% coverage!!!
-- File structure cleaned up and consolidation
-#### TODO
+### [1.3.0] - 2024-MM-DD
+- TODO
 
 -------------------------------------------------------
 
