@@ -106,21 +106,6 @@ IN_TEST = True
 - **NotificationManager**: Exposes common functionality and maintains object permissions.
   - Methods: `get_notifications_push/email/basic/all`, `mark_notification_basic_read`.
 
-### Type Hints and Mypy
-
-- Comprehensive type annotations have been added to ensure type safety.
-- Mypy configuration is included to enforce type checking.
-
-### Testing
-
-- Extensive unit tests have been added for models, managers, and viewsets.
-- Tests include validation for creating, retrieving, listing, and updating notifications.
-- Mypy types are validated in tests.
-
-### Logging
-
-- Logging is integrated to capture errors and debug information during email sending and other operations.
-
 ## Usage
 
 The main way to interact with this app is to create and use the appropriate models and their managers' methods as needed.
