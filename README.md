@@ -7,7 +7,7 @@
 
 [![Python Versions](https://img.shields.io/pypi/pyversions/django-dans-notifications.svg?color=3776AB&logo=python&logoColor=white)](https://www.python.org/)
 [![Django Versions](https://img.shields.io/pypi/djversions/django-dans-notifications?color=0C4B33&logo=django&logoColor=white&label=django)](https://www.djangoproject.com/)
-[![PyPI Version](https://img.shields.io/pypi/v/django-dans-notifications.svg?color=blue&logo=pypi&logoColor=white)](https://pypi.org/project/django-dans-notifications/)
+[![PyPI Version](https://img.shields.io/pypi/v/django_dans_notifications.svg?color=blue&logo=pypi&logoColor=white)](https://pypi.org/project/django-dans-notifications/)
 [![Downloads](https://static.pepy.tech/badge/django-dans-notifications/month)](https://pepy.tech/project/django-dans-notifications)
 [![GitHub stars](https://img.shields.io/github/stars/dan1229/django-dans-notifications?logo=github&style=flat)](https://github.com/dan1229/django-dans-notifications/stargazers)
 [![License](https://img.shields.io/pypi/l/django-dans-notifications.svg?color=blue)](https://github.com/dan1229/django-dans-notifications/blob/main/LICENSE.txt)
