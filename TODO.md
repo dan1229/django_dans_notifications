@@ -88,16 +88,12 @@
     - add 'message' to all responses
     -
     - standardize 'message' field and all that on returns
-
+-
+- tests for str_to_bool?
 
 
 
 #### tests
-- api tests
-    - post api tests
--
--
-- helpers?
 - threads?
     - or ignore?
 - logging?
@@ -113,7 +109,7 @@
     -  No more `print`s either!
 - Improved tests and coverage!
     - Improved model tests
-    - Improved API tests
+    - Improved and added API tests
     - 90% coverage!!!
 #### TODO
 

@@ -71,6 +71,7 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
         request_data_copy["datetime_sent"] = timezone.now()
         request_data_copy["sent_successfully"] = True
 
+        # Check for required fields
         if not request_data_copy.get("recipients"):
             return api_response_error("Recipients required.")
         if not request_data_copy.get("message"):
