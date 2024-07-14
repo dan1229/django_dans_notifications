@@ -63,11 +63,6 @@
 
 
 
-#### improve status codes/api responses
-- i.e., 201 on creation
-- add 'message' to all responses
-
-
 
 #### add type support / stubs
 - add mypy
@@ -83,6 +78,13 @@
 - django dans api toolkit
     - add dep for it
     - remove local code / serializers
+    - update response handler functions
+-
+- improve status codes/api responses
+    - i.e., 201 on creation
+    - add 'message' to all responses
+    -
+    - standardize 'message' field and all that on returns
 
 
 
@@ -93,7 +95,6 @@
 -
 -
 - helpers?
-    - dont ignore
 - threads?
     - or ignore?
 - logging?

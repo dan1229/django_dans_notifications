@@ -60,7 +60,7 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
         serializer = self.get_serializer_class()(
             notification_push, context={"request": request}
         )
-        return api_response_success(serializer.data)
+        return api_response_success(data=serializer.data)
 
     def create(self, request, *args, **kwargs):
         """
@@ -81,6 +81,6 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
             )
 
         try:
-            return api_response_success(serializer.data)
+            return api_response_success(data=serializer.data)
         except (AttributeError,) as e:
             return api_response_error(e)

@@ -59,4 +59,4 @@ class NotificationEmailViewSet(viewsets.GenericViewSet):
         serializer = self.get_serializer_class()(
             notification_email, context={"request": request}
         )
-        return api_response_success(serializer.data)
+        return api_response_success(data=serializer.data)
