@@ -38,6 +38,13 @@
 - need to add params and stuff
 
 
+#### notification basic api 'recipients' field
+- only taking 1 recipient as a string - is this valid?
+- if so add more docs - i.e., add docstrings to apis and stuff
+
+
+
+
 
 #### email api - post api
 - create and send emails via api
@@ -47,6 +54,20 @@
 #### revisit threads.py?
 - is this working as expected?
 - is there a better solution?
+
+
+
+
+
+#### add `metadata` field to base notification model
+- add a field to the base notification model that can store extra data
+- e.g.,:
+    - `metadata = JSONField(blank=True, null=True)`
+    - this will allow users to store extra data in the notification
+    - e.g.,:
+        - `{"meeting_id": "1234", "meeting_time": "2024-01-01 12:00:00"}`
+-
+- add to serializers and api docs
 
 
 #### error fields being weird?
@@ -63,10 +84,6 @@ why is 'recipients' a top level key?
 ```
 - add it to the 'error_fields' key
 
-
-#### notification basic api 'recipients' field
-- only taking 1 recipient as a string - is this valid?
-- if so add more docs - i.e., add docstrings to apis and stuff
 
 
 
