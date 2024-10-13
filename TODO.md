@@ -64,6 +64,11 @@ why is 'recipients' a top level key?
 - add it to the 'error_fields' key
 
 
+#### notification basic api 'recipients' field
+- only taking 1 recipient as a string - is this valid?
+- if so add more docs - i.e., add docstrings to apis and stuff
+
+
 
 ### [1.3.0] - 2024-MM-DD
 - TODO
