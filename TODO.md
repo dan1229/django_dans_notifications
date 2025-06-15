@@ -87,6 +87,12 @@ why is 'recipients' a top level key?
 
 
 
+#### improve base email templates
+- improve it to make it look better
+    - contact email is shit
+- maybe add an .env var or something to set the base template?
+
+
 ### [1.3.0] - 2024-MM-DD
 - TODO
 
