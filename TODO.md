@@ -27,7 +27,6 @@
 
 
 
-
 -----
 ### 1.3.0
 
@@ -45,15 +44,23 @@
 
 
 
-
 #### email api - post api
 - create and send emails via api
+    - need some way for user to set the permissions for it
+        - allowall, isauth or any class
+
+
+
+
+
 
 
 
 #### revisit threads.py?
 - is this working as expected?
 - is there a better solution?
+
+
 
 
 
