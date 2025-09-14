@@ -70,6 +70,10 @@
 - add to serializers and api docs
 
 
+
+
+
+
 #### error fields being weird?
 - e.g.,:
 ```
@@ -91,6 +95,15 @@ why is 'recipients' a top level key?
 - improve it to make it look better
     - contact email is shit
 - maybe add an .env var or something to set the base template?
+
+
+
+
+#### fix admin usability
+- most stuff should probably sort by date added
+- some better controls / filters in general
+
+
 
 
 ### [1.3.0] - 2024-MM-DD
