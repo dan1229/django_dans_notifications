@@ -8,6 +8,53 @@
 
 
 
+
+-----
+### 1.4.0
+
+
+
+#### add `metadata` field to base notification model
+- add a field to the base notification model that can store extra data
+- e.g.,:
+    - `metadata = JSONField(blank=True, null=True)`
+    - this will allow users to store extra data in the notification
+    - e.g.,:
+        - `{"meeting_id": "1234", "meeting_time": "2024-01-01 12:00:00"}`
+-
+- add to serializers and api docs
+
+#### notification models - add more fields
+- how to allow user to add extras fields?
+
+
+
+---
+
+
+
+
+#### notification basic api 'recipients' field
+- only taking 1 recipient as a string - is this valid?
+- if so add more docs - i.e., add docstrings to apis and stuff
+
+
+
+#### email api - post api
+- create and send emails via api
+    - need some way for user to set the permissions for it
+        - allowall, isauth or any class
+
+
+
+
+
+-----
+### 1.3.0
+
+
+
+
 #### docs
 - getting started
     - move out of readme
@@ -22,34 +69,12 @@
 
 
 
-#### notification models - add more fields
-- how to allow user to add extras fields?
-
-
-
------
-### 1.3.0
 
 
 
 #### improve api swagger docs
 - lots of api docs strings aren't showing up
 - need to add params and stuff
-
-
-#### notification basic api 'recipients' field
-- only taking 1 recipient as a string - is this valid?
-- if so add more docs - i.e., add docstrings to apis and stuff
-
-
-
-
-#### email api - post api
-- create and send emails via api
-    - need some way for user to set the permissions for it
-        - allowall, isauth or any class
-
-
 
 
 
@@ -59,22 +84,6 @@
 #### revisit threads.py?
 - is this working as expected?
 - is there a better solution?
-
-
-
-
-
-
-
-#### add `metadata` field to base notification model
-- add a field to the base notification model that can store extra data
-- e.g.,:
-    - `metadata = JSONField(blank=True, null=True)`
-    - this will allow users to store extra data in the notification
-    - e.g.,:
-        - `{"meeting_id": "1234", "meeting_time": "2024-01-01 12:00:00"}`
--
-- add to serializers and api docs
 
 
 
@@ -99,9 +108,15 @@ why is 'recipients' a top level key?
 
 
 #### improve base email templates
+- base emails should look better
 - improve it to make it look better
     - contact email is shit
-- maybe add an .env var or something to set the base template?
+- add a good base
+    - make professional and stylish
+-
+- need to have a way to allow users to customize
+    - maybe add an .env var or something to set the base template?
+    - existing system may already be good enough to support this
 
 
 
@@ -109,11 +124,11 @@ why is 'recipients' a top level key?
 #### fix admin usability
 - most stuff should probably sort by date added
 - some better controls / filters in general
+- generally just make better / more robust
 
 
 
-
-### [1.3.0] - 2024-MM-DD
+### [1.3.0] - 2026-MM-DD
 - TODO
 
 -------------------------------------------------------
