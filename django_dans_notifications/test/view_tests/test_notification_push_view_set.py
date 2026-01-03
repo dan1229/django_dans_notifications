@@ -349,10 +349,12 @@ class TestNotificationPushViewSet(BaseAPITestCase):
         self.assertEqual(json_response["message"], "Error creating notification. Please try again later.")
 
     def test_notification_push_create_multiple_validation_errors(self) -> None:
-        """Test that multiple validation errors all appear in error_fields key"""
+        """Test that validation error with extra long message appears in error_fields key"""
+        # Create a message that exceeds the model's max_length of 600 chars
+        long_message = "x" * 601
         data = {
             "recipients": ["not_a_string"],  # This should trigger a validation error
-            "message": 123,  # This should also trigger a validation error
+            "message": long_message,  # This should trigger max length validation error
         }
         request = self.factory.post(
             self.get_url(),
