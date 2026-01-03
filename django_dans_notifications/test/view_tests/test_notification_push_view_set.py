@@ -333,8 +333,8 @@ class TestNotificationPushViewSet(BaseAPITestCase):
         request = self.factory.post(
             self.get_url(),
             json.dumps(data),
-            content_type='application/json',
-            HTTP_AUTHORIZATION=f"Token {self.user_token}"
+            content_type="application/json",
+            HTTP_AUTHORIZATION=f"Token {self.user_token}",
         )
         response = self.view_create(request)
         response.render()  # type: ignore[attr-defined]
@@ -345,8 +345,13 @@ class TestNotificationPushViewSet(BaseAPITestCase):
         self.assertIn("error_fields", json_response)
         self.assertIn("recipients", json_response["error_fields"])
         # Ensure recipients error is not at top level
-        self.assertNotIn("recipients", [k for k in json_response.keys() if k != "error_fields"])
-        self.assertEqual(json_response["message"], "Error creating notification. Please try again later.")
+        self.assertNotIn(
+            "recipients", [k for k in json_response.keys() if k != "error_fields"]
+        )
+        self.assertEqual(
+            json_response["message"],
+            "Error creating notification. Please try again later.",
+        )
 
     def test_notification_push_create_multiple_validation_errors(self) -> None:
         """Test that validation error with extra long message appears in error_fields key"""
@@ -359,8 +364,8 @@ class TestNotificationPushViewSet(BaseAPITestCase):
         request = self.factory.post(
             self.get_url(),
             json.dumps(data),
-            content_type='application/json',
-            HTTP_AUTHORIZATION=f"Token {self.user_token}"
+            content_type="application/json",
+            HTTP_AUTHORIZATION=f"Token {self.user_token}",
         )
         response = self.view_create(request)
         response.render()  # type: ignore[attr-defined]
@@ -373,4 +378,6 @@ class TestNotificationPushViewSet(BaseAPITestCase):
         self.assertIn("recipients", json_response["error_fields"])
         self.assertIn("message", json_response["error_fields"])
         # Ensure recipients error is not at top level
-        self.assertNotIn("recipients", [k for k in json_response.keys() if k != "error_fields"])
+        self.assertNotIn(
+            "recipients", [k for k in json_response.keys() if k != "error_fields"]
+        )

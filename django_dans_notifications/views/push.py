@@ -95,7 +95,7 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
         if not serializer.is_valid():
             return self.response_handler.response_error(
                 message="Error creating notification. Please try again later.",
-                error_fields=serializer.errors
+                error_fields=serializer.errors,
             )
         try:
             NotificationPush.objects.create(**serializer.validated_data)

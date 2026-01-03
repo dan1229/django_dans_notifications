@@ -309,7 +309,9 @@ class TestNotificationBasicViewSet(BaseAPITestCase):
         self.assertEqual(response.status_code, 400)
         self.assertEqual(json_response["message"], "Message required.")
 
-    def test_notification_basic_create_invalid_recipients_validation_error(self) -> None:
+    def test_notification_basic_create_invalid_recipients_validation_error(
+        self,
+    ) -> None:
         """Test that validation errors appear in error_fields key, not at top level"""
         data = {
             "recipients": ["not_a_string"],  # This should trigger a validation error
@@ -318,8 +320,8 @@ class TestNotificationBasicViewSet(BaseAPITestCase):
         request = self.factory.post(
             self.get_url(),
             json.dumps(data),
-            content_type='application/json',
-            HTTP_AUTHORIZATION=f"Token {self.user_token}"
+            content_type="application/json",
+            HTTP_AUTHORIZATION=f"Token {self.user_token}",
         )
         response = self.view_create(request)
         response.render()  # type: ignore[attr-defined]
@@ -330,8 +332,13 @@ class TestNotificationBasicViewSet(BaseAPITestCase):
         self.assertIn("error_fields", json_response)
         self.assertIn("recipients", json_response["error_fields"])
         # Ensure recipients error is not at top level
-        self.assertNotIn("recipients", [k for k in json_response.keys() if k != "error_fields"])
-        self.assertEqual(json_response["message"], "Error creating notification. Please try again later.")
+        self.assertNotIn(
+            "recipients", [k for k in json_response.keys() if k != "error_fields"]
+        )
+        self.assertEqual(
+            json_response["message"],
+            "Error creating notification. Please try again later.",
+        )
 
     def test_notification_basic_create_multiple_validation_errors(self) -> None:
         """Test that validation error with extra long message appears in error_fields key"""
@@ -344,8 +351,8 @@ class TestNotificationBasicViewSet(BaseAPITestCase):
         request = self.factory.post(
             self.get_url(),
             json.dumps(data),
-            content_type='application/json',
-            HTTP_AUTHORIZATION=f"Token {self.user_token}"
+            content_type="application/json",
+            HTTP_AUTHORIZATION=f"Token {self.user_token}",
         )
         response = self.view_create(request)
         response.render()  # type: ignore[attr-defined]
@@ -358,7 +365,9 @@ class TestNotificationBasicViewSet(BaseAPITestCase):
         self.assertIn("recipients", json_response["error_fields"])
         self.assertIn("message", json_response["error_fields"])
         # Ensure recipients error is not at top level
-        self.assertNotIn("recipients", [k for k in json_response.keys() if k != "error_fields"])
+        self.assertNotIn(
+            "recipients", [k for k in json_response.keys() if k != "error_fields"]
+        )
 
     # ==================================================================================
     # PATCH - PARTIAL UPDATE ===========================================================
