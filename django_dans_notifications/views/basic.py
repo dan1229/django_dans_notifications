@@ -93,10 +93,14 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
         if not request_data_copy.get("message"):
             return self.response_handler.response_error(message="Message required.")
 
+        serializer_class = self.get_serializer_class()
+        serializer = serializer_class(data=request_data_copy)
+        if not serializer.is_valid():
+            return self.response_handler.response_error(
+                message="Error creating notification. Please try again later.",
+                error_fields=serializer.errors
+            )
         try:
-            serializer_class = self.get_serializer_class()
-            serializer = serializer_class(data=request_data_copy)
-            serializer.is_valid(raise_exception=True)
             NotificationBasic.objects.create(**serializer.validated_data)
         except (ValidationError, TypeError) as e:
             return self.response_handler.response_error(
