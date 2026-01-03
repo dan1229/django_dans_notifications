@@ -71,14 +71,31 @@ REST_FRAMEWORK = {
 Currently all available settings are optional:
 
 - `TEAM_NAME` - Default team name to use for emails, can be added to message context manually as well still.
-- `IN_TEST` - Whether running in tests or not. Used to determine whether to actually send email.
+- `IN_TEST` - Whether running in tests or not. Used to determine whether to actually send email (when True, emails are not sent).
+
+#### Email Threading Settings (Optional)
+The app now uses an improved threading system for sending emails asynchronously with the following optional settings:
+
+- `EMAIL_MAX_WORKERS` - Maximum number of concurrent threads for sending emails. Default: `3`
+- `EMAIL_MAX_RETRIES` - Number of retry attempts for failed email sends. Default: `3`
+- `EMAIL_RETRY_DELAY` - Base delay in seconds between retry attempts (uses exponential backoff). Default: `1.0`
+- `EMAIL_SYNC_MODE` - Set to `True` to disable threading entirely (useful for debugging). Default: `False`
 
 Add these to your `settings.py` file to customize the app's behavior like so:
 
 ```python
+# Basic settings
 TEAM_NAME = "My Team"
-IN_TEST = True
+IN_TEST = True  # Emails won't be sent when True
+
+# Optional: Email threading configuration
+EMAIL_MAX_WORKERS = 5  # Allow up to 5 concurrent email threads
+EMAIL_MAX_RETRIES = 5  # Try up to 5 times for failed sends
+EMAIL_RETRY_DELAY = 2.0  # Start with 2 second delay between retries
+EMAIL_SYNC_MODE = False  # Use async mode (set True for synchronous sending)
 ```
+
+**Note:** The email threading system is fully backward compatible. If you don't specify these settings, sensible defaults will be used.
 
 ## Features
 
@@ -139,6 +156,8 @@ email_notification = NotificationEmail.objects.send_email(
 #### [API docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/apis.md).
 
 #### [Email Template docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/email-templates.md).
+
+#### [Email Threading docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/email-threading.md).
 
 -------------------------------------------------------
 

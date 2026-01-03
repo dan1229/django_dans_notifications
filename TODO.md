@@ -81,12 +81,9 @@
 
 
 
-#### revisit threads.py?
-- is this working as expected?
-- is there a better solution?
+#### ✅ DONE: revisit threads.py?
 
-
-
+test / review
 
 
 
@@ -102,7 +99,13 @@
 - Admin usability improvements
     - Better sorting and searching
     - More relevant columns
-- Fixed issue with keys being put at top leveol instead of `error_fields`
+- Improved email threading system with `EmailSender` class
+  - Thread pool executor with configurable max workers (default: 3)
+  - Automatic retry logic with exponential backoff for failed sends
+  - Proper asynchronous execution (fixes previous .run() vs .start() bug)
+  - Graceful shutdown on application exit
+  - Optional synchronous mode for testing/debugging
+- Fixed issue with keys being put at top level instead of `error_fields`
 
 -------------------------------------------------------
 

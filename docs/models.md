@@ -19,7 +19,8 @@ ALL notifications inherit from `NotificationBase` and thus all have the followin
   - Admin editable templates and emails
 - `send_email` function to actually send emails and handle object creation.
   - `NotificationEmail.objects.send_email(...)`
-
+    - **Enhanced Email Delivery**: Emails are sent asynchronously using a thread pool with automatic retry logic for improved reliability. 
+    
 ## `NotificationBasic`
 
 - Meant to model a generic notification stack internal to the application, i.e., a notification stack in your application.
