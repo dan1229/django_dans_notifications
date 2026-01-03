@@ -128,8 +128,10 @@ why is 'recipients' a top level key?
 
 
 
-### [1.3.0] - 2026-MM-DD
-- TODO
+### [1.3.0] - 2026-01-DD
+- Admin usability improvements
+    - Better sorting and searching
+    - More relevant columns
 
 -------------------------------------------------------
 
