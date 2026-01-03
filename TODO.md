@@ -90,24 +90,7 @@
 
 
 
-#### error fields being weird?
-- e.g.,:
-```
-POST
-	http://127.0.0.1:8000/api/notifications/basic/
-    {"message":"Daniel Nazarian (Entrepreneur2) is interested in your profile. Consider scheduling a meeting with them!","sender":"204c256f-e5bb-48d4-b512-510963b35e6e","recipients":["950997f1-4333-4aaa-baf4-48112440ba63"]}
-
-{"recipients":["Not a valid string."],"message":"Error. Please try again later.","results":null,"error_fields":null}
-
-
-why is 'recipients' a top level key?
-```
-- add it to the 'error_fields' key
--
-- we may have broken this in the last few updates
-    - lets add tests to fix it too
-
-
+ 
 
 ### [1.3.0] - 2026-01-DD
 - Improved base / default email templates
@@ -119,6 +102,7 @@ why is 'recipients' a top level key?
 - Admin usability improvements
     - Better sorting and searching
     - More relevant columns
+- Fixed issue with keys being put at top leveol instead of `error_fields`
 
 -------------------------------------------------------
 
