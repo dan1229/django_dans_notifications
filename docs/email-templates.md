@@ -2,6 +2,8 @@
 
 This file is intended to document and explain all the email templates in this project so you can use them properly. By default, this project will include a handful that are necessary for the app to work. However, as you add templates, please include them in this document.
 
+**Note: The email templates have been updated with modern, responsive styling while maintaining full backwards compatibility.**
+
 ## Adding Your Own
 
 To add your own email template, simply add your `.html` files to your local templates folder. You can also place it in `<TEMPLATES_DIRECTORY>/emails` and it will be picked up automatically. These can be written as [Django Templates](https://docs.djangoproject.com/en/3.2/ref/templates/language/) and passed context variables from the `send_email` function.
@@ -66,3 +68,13 @@ Email to send on a password reset request. Should include a link for the user to
 ### template.html
 
 Template email. This just contains template HTML to fill in as you create new EmailTemplates. This will also probably never be explicitly sent.
+
+## Template Features
+
+All templates now include:
+- **Responsive design** for mobile and desktop devices
+- **Professional styling** with better typography and spacing
+- **Email client compatibility** tested across major email clients
+- **Team branding support** via the `team_name` context variable
+
+The templates maintain the same context variables and usage patterns as before while providing a much more professional appearance.

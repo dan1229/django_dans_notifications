@@ -103,32 +103,19 @@ POST
 why is 'recipients' a top level key?
 ```
 - add it to the 'error_fields' key
-
-
-
-
-#### improve base email templates
-- base emails should look better
-- improve it to make it look better
-    - contact email is shit
-- add a good base
-    - make professional and stylish
 -
-- need to have a way to allow users to customize
-    - maybe add an .env var or something to set the base template?
-    - existing system may already be good enough to support this
-
-
-
-
-#### fix admin usability
-- most stuff should probably sort by date added
-- some better controls / filters in general
-- generally just make better / more robust
+- we may have broken this in the last few updates
+    - lets add tests to fix it too
 
 
 
 ### [1.3.0] - 2026-01-DD
+- Improved base / default email templates
+    - Enhanced `base.html` template with modern, responsive design
+    - Professional styling with better typography and spacing
+    - Mobile-friendly layout with email client compatibility
+    - Improved `contact.html` template with cleaner information display
+    - All changes are backwards compatible - no configuration required
 - Admin usability improvements
     - Better sorting and searching
     - More relevant columns

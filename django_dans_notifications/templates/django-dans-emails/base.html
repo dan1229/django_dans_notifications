@@ -1,43 +1,83 @@
-{# HEADER #}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	<title></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>{{ subject|default:"Email Notification" }}</title>
+	<!--[if !mso]><!-->
+	<style type="text/css">
+		@media only screen and (max-width: 600px) {
+			.email-container {
+				width: 100% !important;
+				margin: 0 10px !important;
+			}
+			.content-padding {
+				padding: 30px 20px !important;
+			}
+		}
+	</style>
+	<!--<![endif]-->
 </head>
 
-{# BODY #}
-
-<body style="margin: 0; padding: 0;">
-<table align="center" border="0" cellpadding="0" cellspacing="0" width="320" style="border: none; border-collapse: collapse; font-family:  Arial, sans-serif; font-size: 14px; line-height: 1.5;">
-
-	<tr>
-		<td><br/></td>
-	</tr>
-	{# INTRO #}
-	<tr>
-		<td>Hi there,</td>
-	</tr>
-	<tr>
-		<td><br/></td>
-	</tr>
-	{% block content %}
-	{% endblock %}
-	{# FOOTER #}
-	<tr>
-		<td><br/></td>
-	</tr>
-	{% if team_name %}
+<body style="margin: 0; padding: 0; background-color: #f4f7fa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">
+	<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse: collapse; background-color: #f4f7fa;">
 		<tr>
-			<td>Yours Truly,</td>
+			<td align="center" style="padding: 40px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+				<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" class="email-container" style="border-collapse: collapse; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); max-width: 600px;">
+
+					{# Header with logo/company name #}
+					{% if team_name %}
+					<tr>
+						<td align="center" style="padding: 40px 20px 20px 20px; border-bottom: 1px solid #e5e7eb; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+							<h1 style="margin: 0; color: #111827; font-size: 24px; font-weight: 600; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">{{ team_name }}</h1>
+						</td>
+					</tr>
+					{% endif %}
+
+					{# Main content area #}
+					<tr>
+						<td class="content-padding" style="padding: 40px 50px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+
+							{# Greeting #}
+							<p style="margin: 0 0 24px 0; color: #111827; font-size: 16px; font-weight: 500; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.5;">
+								Hi there,
+							</p>
+
+							{# Content block #}
+							<div style="color: #4b5563; font-size: 16px; line-height: 1.6; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+								{% block content %}
+								{% endblock %}
+							</div>
+
+							{# Signature #}
+							<div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid #e5e7eb;">
+								<p style="margin: 0 0 8px 0; color: #4b5563; font-size: 16px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.5;">
+									Best regards,
+								</p>
+								<p style="margin: 0; color: #111827; font-size: 16px; font-weight: 600; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.5;">
+									{% if team_name %}The {{ team_name }} Team{% else %}The Team{% endif %}
+								</p>
+							</div>
+
+						</td>
+					</tr>
+
+					{# Footer #}
+					<tr>
+						<td style="padding: 20px 50px; background-color: #f9fafb; border-top: 1px solid #e5e7eb; border-radius: 0 0 8px 8px; text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+							<p style="margin: 0; color: #6b7280; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.5;">
+								{% if team_name %}
+									© {% now "Y" %} {{ team_name }}. All rights reserved.
+								{% else %}
+									Thank you for using our service!
+								{% endif %}
+							</p>
+						</td>
+					</tr>
+
+				</table>
+			</td>
 		</tr>
-		<tr>
-			<td>The team at {{ team_name }}</td>
-		</tr>
-	{% else %}
-		<td>Thank you for using our site!</td>
-	{% endif %}
-</table>
+	</table>
 </body>
 </html>
