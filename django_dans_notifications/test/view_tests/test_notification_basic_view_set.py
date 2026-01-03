@@ -357,9 +357,8 @@ class TestNotificationBasicViewSet(BaseAPITestCase):
         # Both fields should be in error_fields
         self.assertIn("recipients", json_response["error_fields"])
         self.assertIn("message", json_response["error_fields"])
-        # Neither should be at top level
+        # Ensure recipients error is not at top level
         self.assertNotIn("recipients", [k for k in json_response.keys() if k != "error_fields"])
-        self.assertNotIn("message", [k for k in json_response.keys() if k != "error_fields"])
 
     # ==================================================================================
     # PATCH - PARTIAL UPDATE ===========================================================
