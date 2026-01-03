@@ -1,32 +1,44 @@
 {% extends "django-dans-emails/base.html" %}
 
 {% block content %}
-	<tr>
+	<div style="background-color: #f0f9ff; border-left: 4px solid #3b82f6; padding: 16px; margin-bottom: 24px; border-radius: 4px;">
+		<h2 style="margin: 0; color: #1e40af; font-size: 18px; font-weight: 600;">
+			New Contact Form Submission
+		</h2>
 		{% if team_name %}
-			<td>This is a contact email from {{ team_name }}.</td>
-		{% else %}
-			<td>This is a contact email.</td>
+		<p style="margin: 4px 0 0 0; color: #64748b; font-size: 14px;">
+			Received via {{ team_name }} contact form
+		</p>
 		{% endif %}
-	</tr>
-	<tr>
-		<td><br/></td>
-	</tr>
-	<tr>
-		<td>NAME: {{ name }}</td>
-	</tr>
-	<tr>
-		<td>EMAIL: {{ email }}</td>
-	</tr>
-	<tr>
-		<td>=========================</td>
-	</tr>
-	<tr>
-		<td>{{ message|linebreaksbr }}</td>
-	</tr>
-	<tr>
-		<td><br/></td>
-	</tr>
-	<tr>
-		<td>Have a great day!</td>
-	</tr>
+	</div>
+
+	<div style="background-color: #f9fafb; padding: 20px; border-radius: 6px; margin-bottom: 20px;">
+		<h3 style="margin: 0 0 16px 0; color: #374151; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+			Contact Details
+		</h3>
+
+		<p style="margin: 8px 0; color: #111827; font-size: 15px;">
+			<span style="color: #6b7280; font-weight: 500; display: inline-block; min-width: 60px;">Name:</span>
+			<strong>{{ name }}</strong>
+		</p>
+		<p style="margin: 8px 0; color: #111827; font-size: 15px;">
+			<span style="color: #6b7280; font-weight: 500; display: inline-block; min-width: 60px;">Email:</span>
+			<a href="mailto:{{ email }}" style="color: #3b82f6; text-decoration: none; font-weight: 600;">{{ email }}</a>
+		</p>
+		{% if phone %}
+		<p style="margin: 8px 0; color: #111827; font-size: 15px;">
+			<span style="color: #6b7280; font-weight: 500; display: inline-block; min-width: 60px;">Phone:</span>
+			<strong>{{ phone }}</strong>
+		</p>
+		{% endif %}
+	</div>
+
+	<div>
+		<h3 style="margin: 0 0 12px 0; color: #374151; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+			Message
+		</h3>
+		<div style="background-color: #ffffff; border: 1px solid #e5e7eb; padding: 16px; border-radius: 6px;">
+			<p style="margin: 0; color: #374151; font-size: 15px; line-height: 1.6; white-space: pre-wrap;">{{ message|linebreaksbr }}</p>
+		</div>
+	</div>
 {% endblock %}
