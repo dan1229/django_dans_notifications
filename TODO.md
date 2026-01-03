@@ -129,7 +129,8 @@ why is 'recipients' a top level key?
 
 
 ### [1.3.0] - 2026-MM-DD
-- TODO
+- Admin usability improvements
+    - Better sorting and searching
 
 -------------------------------------------------------
 
