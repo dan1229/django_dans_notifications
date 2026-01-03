@@ -1,0 +1,97 @@
+{% extends "django-dans-emails/base_improved.html" %}
+
+{% block preheader %}
+    <div class="preheader">New contact message from {{ name }}</div>
+{% endblock %}
+
+{% block content %}
+    <!-- Message Type Header -->
+    <div style="background-color: #f0f9ff; border-left: 4px solid #3b82f6; padding: 16px; margin-bottom: 24px; border-radius: 4px;">
+        <h2 style="margin: 0; color: #1e40af; font-size: 20px; font-weight: 600;">
+            New Contact Form Submission
+        </h2>
+        {% if team_name %}
+        <p style="margin: 4px 0 0 0; color: #64748b; font-size: 14px;">
+            Received via {{ team_name }} contact form
+        </p>
+        {% endif %}
+    </div>
+
+    <!-- Sender Information -->
+    <div style="background-color: #f9fafb; padding: 20px; border-radius: 6px; margin-bottom: 24px;">
+        <h3 style="margin: 0 0 16px 0; color: #374151; font-size: 16px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+            Contact Details
+        </h3>
+
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tr>
+                <td style="padding: 8px 0;">
+                    <span style="color: #6b7280; font-size: 14px; font-weight: 500; display: inline-block; min-width: 80px;">Name:</span>
+                    <span style="color: #111827; font-size: 15px; font-weight: 600;">{{ name }}</span>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 8px 0;">
+                    <span style="color: #6b7280; font-size: 14px; font-weight: 500; display: inline-block; min-width: 80px;">Email:</span>
+                    <a href="mailto:{{ email }}" style="color: #3b82f6; font-size: 15px; font-weight: 600; text-decoration: none;">{{ email }}</a>
+                </td>
+            </tr>
+            {% if phone %}
+            <tr>
+                <td style="padding: 8px 0;">
+                    <span style="color: #6b7280; font-size: 14px; font-weight: 500; display: inline-block; min-width: 80px;">Phone:</span>
+                    <span style="color: #111827; font-size: 15px; font-weight: 600;">{{ phone }}</span>
+                </td>
+            </tr>
+            {% endif %}
+            {% if subject %}
+            <tr>
+                <td style="padding: 8px 0;">
+                    <span style="color: #6b7280; font-size: 14px; font-weight: 500; display: inline-block; min-width: 80px;">Subject:</span>
+                    <span style="color: #111827; font-size: 15px; font-weight: 600;">{{ subject }}</span>
+                </td>
+            </tr>
+            {% endif %}
+        </table>
+    </div>
+
+    <!-- Message Content -->
+    <div style="margin-bottom: 24px;">
+        <h3 style="margin: 0 0 16px 0; color: #374151; font-size: 16px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+            Message
+        </h3>
+        <div style="background-color: #ffffff; border: 1px solid #e5e7eb; padding: 20px; border-radius: 6px;">
+            <p style="margin: 0; color: #374151; font-size: 15px; line-height: 1.8; white-space: pre-wrap;">{{ message|linebreaksbr }}</p>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    {% block cta %}
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 32px 0;">
+        <tr>
+            <td align="center">
+                <a href="mailto:{{ email }}" style="display: inline-block; padding: 12px 28px; background-color: #3b82f6; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 15px; margin-right: 12px;">
+                    Reply to {{ name }}
+                </a>
+                {% if admin_url %}
+                <a href="{{ admin_url }}" style="display: inline-block; padding: 12px 28px; background-color: #f3f4f6; color: #374151; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 15px; border: 1px solid #d1d5db;">
+                    View in Admin
+                </a>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+    {% endblock %}
+
+    <!-- Additional Info -->
+    <div style="background-color: #fef3c7; border: 1px solid #fcd34d; padding: 16px; border-radius: 6px; margin-top: 24px;">
+        <p style="margin: 0; color: #92400e; font-size: 14px; line-height: 1.5;">
+            <strong>Note:</strong> This message was submitted on {% now "F j, Y \a\t g:i A" %}
+            {% if ip_address %}from IP address {{ ip_address }}{% endif %}.
+        </p>
+    </div>
+{% endblock %}
+
+{% block signature %}
+    <!-- No signature for contact form submissions -->
+{% endblock %}

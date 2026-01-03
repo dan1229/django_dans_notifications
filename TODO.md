@@ -121,14 +121,9 @@ why is 'recipients' a top level key?
 
 
 
-#### fix admin usability
-- most stuff should probably sort by date added
-- some better controls / filters in general
-- generally just make better / more robust
-
-
-
 ### [1.3.0] - 2026-01-DD
+- Improved base / default email templates
+    - TODO
 - Admin usability improvements
     - Better sorting and searching
     - More relevant columns

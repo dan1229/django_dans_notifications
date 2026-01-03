@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="x-apple-disable-message-reformatting" />
+    <title>{{ subject|default:"Email Notification" }}</title>
+    <!--[if mso]>
+    <noscript>
+        <xml>
+            <o:OfficeDocumentSettings>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+    </noscript>
+    <![endif]-->
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            width: 100% !important;
+            min-width: 100%;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7fa;
+        }
+        table {
+            border-collapse: collapse;
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+        img {
+            outline: none;
+            text-decoration: none;
+            -ms-interpolation-mode: bicubic;
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+        a {
+            text-decoration: none;
+        }
+        .preheader {
+            display: none !important;
+            visibility: hidden;
+            mso-hide: all;
+            font-size: 1px;
+            line-height: 1px;
+            max-height: 0;
+            max-width: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: {{ primary_color|default:"#4F46E5" }};
+            color: #ffffff !important;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        .button:hover {
+            background-color: {{ primary_color_hover|default:"#4338CA" }};
+        }
+        @media only screen and (max-width: 600px) {
+            .container {
+                width: 100% !important;
+                padding: 0 20px !important;
+            }
+            .content-padding {
+                padding: 30px 20px !important;
+            }
+        }
+    </style>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f4f7fa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
+
+    <!-- Preheader Text -->
+    {% block preheader %}
+    <div class="preheader" style="display: none !important; visibility: hidden; mso-hide: all; font-size: 1px; line-height: 1px; max-height: 0; max-width: 0; opacity: 0; overflow: hidden;">
+        {{ preheader_text|default:"" }}
+    </div>
+    {% endblock %}
+
+    <!-- Email Container -->
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #f4f7fa;">
+        <tr>
+            <td align="center" style="padding: 40px 20px;">
+
+                <!-- Main Content Container -->
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" class="container" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+
+                    <!-- Header -->
+                    {% block header %}
+                    {% if logo_url or team_name %}
+                    <tr>
+                        <td align="center" style="padding: 40px 20px; border-bottom: 1px solid #e5e7eb;">
+                            {% if logo_url %}
+                                <img src="{{ logo_url }}" alt="{{ team_name|default:'Logo' }}" style="max-width: 200px; height: auto;" />
+                            {% elif team_name %}
+                                <h1 style="margin: 0; color: #111827; font-size: 28px; font-weight: 700;">{{ team_name }}</h1>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endblock %}
+
+                    <!-- Main Content -->
+                    <tr>
+                        <td class="content-padding" style="padding: 40px 50px;">
+
+                            <!-- Greeting -->
+                            {% block greeting %}
+                            {% if recipient_name %}
+                            <p style="margin: 0 0 24px 0; color: #111827; font-size: 18px; font-weight: 500; line-height: 1.5;">
+                                Hi {{ recipient_name }},
+                            </p>
+                            {% else %}
+                            <p style="margin: 0 0 24px 0; color: #111827; font-size: 18px; font-weight: 500; line-height: 1.5;">
+                                Hi there,
+                            </p>
+                            {% endif %}
+                            {% endblock %}
+
+                            <!-- Content Block -->
+                            {% block content %}
+                            <div style="color: #4b5563; font-size: 16px; line-height: 1.6;">
+                                <!-- Main email content goes here -->
+                            </div>
+                            {% endblock %}
+
+                            <!-- Call to Action -->
+                            {% block cta %}
+                            {% if cta_url and cta_text %}
+                            <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 32px 0;">
+                                <tr>
+                                    <td align="center">
+                                        <a href="{{ cta_url }}" class="button" style="display: inline-block; padding: 14px 32px; background-color: {{ primary_color|default:'#4F46E5' }}; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 16px;">
+                                            {{ cta_text }}
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                            {% endif %}
+                            {% endblock %}
+
+                            <!-- Signature -->
+                            {% block signature %}
+                            <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid #e5e7eb;">
+                                <p style="margin: 0 0 8px 0; color: #4b5563; font-size: 16px; line-height: 1.5;">
+                                    {% if signature_greeting %}{{ signature_greeting }}{% else %}Best regards,{% endif %}
+                                </p>
+                                <p style="margin: 0; color: #111827; font-size: 16px; font-weight: 600; line-height: 1.5;">
+                                    {% if team_name %}The {{ team_name }} Team{% else %}The Team{% endif %}
+                                </p>
+                            </div>
+                            {% endblock %}
+
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    {% block footer %}
+                    <tr>
+                        <td style="padding: 30px 50px; background-color: #f9fafb; border-top: 1px solid #e5e7eb; border-radius: 0 0 8px 8px;">
+                            <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+
+                                <!-- Social Links -->
+                                {% block social %}
+                                {% if social_links %}
+                                <tr>
+                                    <td align="center" style="padding-bottom: 20px;">
+                                        {% for link in social_links %}
+                                        <a href="{{ link.url }}" style="display: inline-block; margin: 0 8px;">
+                                            <img src="{{ link.icon }}" alt="{{ link.name }}" width="24" height="24" />
+                                        </a>
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                                {% endif %}
+                                {% endblock %}
+
+                                <!-- Company Info -->
+                                <tr>
+                                    <td align="center">
+                                        <p style="margin: 0 0 8px 0; color: #6b7280; font-size: 14px; line-height: 1.5;">
+                                            {% if company_address %}{{ company_address }}{% endif %}
+                                        </p>
+                                        <p style="margin: 0 0 8px 0; color: #6b7280; font-size: 14px; line-height: 1.5;">
+                                            {% if support_email %}
+                                            Questions? Contact us at <a href="mailto:{{ support_email }}" style="color: {{ primary_color|default:'#4F46E5' }}; text-decoration: underline;">{{ support_email }}</a>
+                                            {% endif %}
+                                        </p>
+                                    </td>
+                                </tr>
+
+                                <!-- Legal/Unsubscribe -->
+                                {% block legal %}
+                                <tr>
+                                    <td align="center" style="padding-top: 20px;">
+                                        <p style="margin: 0; color: #9ca3af; font-size: 12px; line-height: 1.5;">
+                                            {% if privacy_url %}
+                                            <a href="{{ privacy_url }}" style="color: #9ca3af; text-decoration: underline;">Privacy Policy</a>
+                                            {% endif %}
+                                            {% if privacy_url and terms_url %} | {% endif %}
+                                            {% if terms_url %}
+                                            <a href="{{ terms_url }}" style="color: #9ca3af; text-decoration: underline;">Terms of Service</a>
+                                            {% endif %}
+                                            {% if unsubscribe_url %}
+                                            {% if privacy_url or terms_url %} | {% endif %}
+                                            <a href="{{ unsubscribe_url }}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a>
+                                            {% endif %}
+                                        </p>
+                                        {% if copyright_text %}
+                                        <p style="margin: 8px 0 0 0; color: #9ca3af; font-size: 12px; line-height: 1.5;">
+                                            {{ copyright_text }}
+                                        </p>
+                                        {% else %}
+                                        <p style="margin: 8px 0 0 0; color: #9ca3af; font-size: 12px; line-height: 1.5;">
+                                            © {% now "Y" %} {% if team_name %}{{ team_name }}{% else %}Your Company{% endif %}. All rights reserved.
+                                        </p>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endblock %}
+
+                            </table>
+                        </td>
+                    </tr>
+                    {% endblock %}
+
+                </table>
+
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>
