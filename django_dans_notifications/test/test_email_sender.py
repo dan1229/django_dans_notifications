@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import Mock, patch, MagicMock
+from unittest.mock import Mock, patch
 import time
 from concurrent.futures import Future
 import os
@@ -12,7 +12,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 class TestEmailSender(unittest.TestCase):
     def setUp(self):
         # Mock Django settings for testing
-        self.settings_patcher = patch('django_dans_notifications.email_sender.settings')
+        self.settings_patcher = patch("django_dans_notifications.email_sender.settings")
         self.mock_settings = self.settings_patcher.start()
 
         # Set default settings
@@ -24,12 +24,14 @@ class TestEmailSender(unittest.TestCase):
 
         # Import after patching
         from ..email_sender import EmailSender
+
         # Reset singleton between tests
         EmailSender._instance = None
         EmailSender._executor = None
 
     def tearDown(self):
         from ..email_sender import EmailSender
+
         # Ensure cleanup after each test
         if EmailSender._instance and EmailSender._instance._executor:
             EmailSender._instance.shutdown(wait=False)
@@ -114,7 +116,7 @@ class TestEmailSender(unittest.TestCase):
         exceptions = [
             ValueError("First error"),
             TypeError("Second error"),
-            RuntimeError("Final error")
+            RuntimeError("Final error"),
         ]
         mock_func = Mock(side_effect=exceptions)
 
@@ -164,8 +166,8 @@ class TestEmailSender(unittest.TestCase):
         sender = EmailSender()
         stats = sender.get_stats()
 
-        self.assertEqual(stats['async_enabled'], False)
-        self.assertEqual(stats['pending_tasks'], 0)
+        self.assertEqual(stats["async_enabled"], False)
+        self.assertEqual(stats["pending_tasks"], 0)
 
     def test_get_stats_async_mode(self):
         """Test stats in asynchronous mode."""
@@ -177,8 +179,8 @@ class TestEmailSender(unittest.TestCase):
         sender = EmailSender()
         stats = sender.get_stats()
 
-        self.assertEqual(stats['async_enabled'], True)
-        self.assertEqual(stats['max_workers'], 5)
+        self.assertEqual(stats["async_enabled"], True)
+        self.assertEqual(stats["max_workers"], 5)
 
     def test_send_email_async_convenience_function(self):
         """Test the convenience function for backward compatibility."""

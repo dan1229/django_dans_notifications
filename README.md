@@ -157,8 +157,6 @@ email_notification = NotificationEmail.objects.send_email(
 
 #### [Email Template docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/email-templates.md).
 
-#### [Email Threading docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/email-threading.md).
-
 -------------------------------------------------------
 
 ##### [https://danielnazarian.com](https://danielnazarian.com)
