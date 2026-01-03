@@ -59,18 +59,17 @@ class EmailSender:
 
     def send_with_retry(
         self, func: Callable[..., Any], *args: Any, **kwargs: Any
-    ) -> Optional[Future[Any]]:
+    ) -> Any:  # Returns Future[Any] in async mode, or the result directly in sync mode
         """
         Send email with retry logic.
 
         Returns:
             - Future object if async (can be used to check status)
-            - None if synchronous
+            - Result directly if synchronous
         """
         if not self.async_enabled:
-            # Synchronous mode for testing
-            self._execute_with_retry(func, *args, **kwargs)
-            return None
+            # Synchronous mode for testing - return result directly
+            return self._execute_with_retry(func, *args, **kwargs)
 
         # Async mode
         if self._executor is None:
@@ -154,9 +153,7 @@ class EmailSender:
 
 
 # Convenience function for backward compatibility
-def send_email_async(
-    func: Callable[..., Any], *args: Any, **kwargs: Any
-) -> Optional[Future[Any]]:
+def send_email_async(func: Callable[..., Any], *args: Any, **kwargs: Any) -> Any:
     """
     Send email asynchronously using the singleton EmailSender.
 

@@ -8,6 +8,24 @@ import sys
 # Add parent directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+# Configure Django settings before importing anything else
+from django.conf import settings  # noqa: E402
+
+if not settings.configured:
+    settings.configure(
+        DEBUG=True,
+        DATABASES={
+            "default": {
+                "ENGINE": "django.db.backends.sqlite3",
+                "NAME": ":memory:",
+            }
+        },
+        INSTALLED_APPS=[
+            "django_dans_notifications",
+        ],
+        SECRET_KEY="test-secret-key",
+    )
+
 
 class TestEmailSender(unittest.TestCase):
     def setUp(self):
