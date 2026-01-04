@@ -1,6 +1,8 @@
 from typing import Any
 from django_dans_api_toolkit.api_response_handler import ApiResponseHandler
 from django.core.exceptions import ValidationError
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
@@ -27,9 +29,57 @@ class NotificationEmailViewSet(viewsets.GenericViewSet):
     permission_classes = (IsAuthenticated,)
     response_handler = ApiResponseHandler()
 
+    @swagger_auto_schema(  # type: ignore[misc]
+        operation_description="List email notifications for the authenticated user",
+        operation_summary="List Email Notifications",
+        tags=["Email Notifications"],
+        manual_parameters=[
+            openapi.Parameter(
+                "page",
+                openapi.IN_QUERY,
+                description="Page number (default pagination: 20 items per page)",
+                type=openapi.TYPE_INTEGER,
+                default=1,
+                required=False,
+            ),
+        ],
+        responses={
+            200: openapi.Response(
+                description="Paginated list of email notifications (default: 20 items per page)",
+                schema=openapi.Schema(
+                    type=openapi.TYPE_OBJECT,
+                    properties={
+                        "count": openapi.Schema(
+                            type=openapi.TYPE_INTEGER,
+                            description="Total number of notifications",
+                        ),
+                        "next": openapi.Schema(
+                            type=openapi.TYPE_STRING,
+                            format=openapi.FORMAT_URI,
+                            description="Next page URL",
+                            nullable=True,
+                        ),
+                        "previous": openapi.Schema(
+                            type=openapi.TYPE_STRING,
+                            format=openapi.FORMAT_URI,
+                            description="Previous page URL",
+                            nullable=True,
+                        ),
+                        "results": openapi.Schema(
+                            type=openapi.TYPE_ARRAY,
+                            items=NotificationEmailSerializer(),
+                            description="Array of email notifications for current page",
+                        ),
+                    },
+                ),
+            ),
+            401: openapi.Response(description="Authentication required"),
+        },
+    )
     def list(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """
-        Endpoint to list out Email Notifications
+        Retrieve a paginated list of email notifications for the authenticated user.
+        Only returns notifications where the user is a recipient.
         """
         serializer_class = self.get_serializer_class()
         serializer = serializer_class(
@@ -43,15 +93,36 @@ class NotificationEmailViewSet(viewsets.GenericViewSet):
             context={"request": request},
         )
         page = self.paginate_queryset(serializer.data)
-        return self.response_handler.response_success(
-            response=self.get_paginated_response(page)
-        )
+        return self.get_paginated_response(page)
 
+    @swagger_auto_schema(  # type: ignore[misc]
+        operation_description="Retrieve a specific email notification by ID",
+        operation_summary="Retrieve Email Notification",
+        tags=["Email Notifications"],
+        manual_parameters=[
+            openapi.Parameter(
+                "pk",
+                openapi.IN_PATH,
+                description="UUID of the email notification to retrieve",
+                type=openapi.TYPE_STRING,
+                format=openapi.FORMAT_UUID,
+                required=True,
+            )
+        ],
+        responses={
+            200: openapi.Response(
+                description="Email notification details including rendered content",
+                schema=NotificationEmailSerializer(),
+            ),
+            404: openapi.Response(description="Notification not found"),
+            401: openapi.Response(description="Authentication required"),
+        },
+    )
     def retrieve(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """
-        Endpoint to retrieve specific Email Notification
-
-        :param uuid pk: UUID of NotificationEmail to retrieve
+        Retrieve a specific email notification by its UUID.
+        Returns the notification details including the rendered HTML content.
+        Only accessible if the authenticated user is a recipient of the notification.
         """
         pk: str = str(self.kwargs.get("pk"))
         try:

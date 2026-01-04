@@ -2,6 +2,8 @@ from typing import Any, Dict
 from django_dans_api_toolkit.api_response_handler import ApiResponseHandler
 from django.core.exceptions import ValidationError
 from django.utils import timezone
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
@@ -29,9 +31,57 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
     permission_classes = (IsAuthenticated,)
     response_handler = ApiResponseHandler()
 
+    @swagger_auto_schema(  # type: ignore[misc]
+        operation_description="List basic notifications for the authenticated user",
+        operation_summary="List Basic Notifications",
+        tags=["Basic Notifications"],
+        manual_parameters=[
+            openapi.Parameter(
+                "page",
+                openapi.IN_QUERY,
+                description="Page number (default pagination: 20 items per page)",
+                type=openapi.TYPE_INTEGER,
+                default=1,
+                required=False,
+            ),
+        ],
+        responses={
+            200: openapi.Response(
+                description="Paginated list of basic notifications (default: 20 items per page)",
+                schema=openapi.Schema(
+                    type=openapi.TYPE_OBJECT,
+                    properties={
+                        "count": openapi.Schema(
+                            type=openapi.TYPE_INTEGER,
+                            description="Total number of notifications",
+                        ),
+                        "next": openapi.Schema(
+                            type=openapi.TYPE_STRING,
+                            format=openapi.FORMAT_URI,
+                            description="Next page URL",
+                            nullable=True,
+                        ),
+                        "previous": openapi.Schema(
+                            type=openapi.TYPE_STRING,
+                            format=openapi.FORMAT_URI,
+                            description="Previous page URL",
+                            nullable=True,
+                        ),
+                        "results": openapi.Schema(
+                            type=openapi.TYPE_ARRAY,
+                            items=NotificationBasicSerializer(),
+                            description="Array of basic notifications for current page",
+                        ),
+                    },
+                ),
+            ),
+            401: openapi.Response(description="Authentication required"),
+        },
+    )
     def list(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """
-        Endpoint to list out Basic Notifications
+        Retrieve a paginated list of basic notifications for the authenticated user.
+        Only returns notifications where the user is a recipient.
         """
         serializer_class = self.get_serializer_class()
         serializer = serializer_class(
@@ -45,15 +95,35 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
             context={"request": request},
         )
         page = self.paginate_queryset(serializer.data)
-        return self.response_handler.response_success(
-            response=self.get_paginated_response(page)
-        )
+        return self.get_paginated_response(page)
 
+    @swagger_auto_schema(  # type: ignore[misc]
+        operation_description="Retrieve a specific basic notification by ID",
+        operation_summary="Retrieve Basic Notification",
+        tags=["Basic Notifications"],
+        manual_parameters=[
+            openapi.Parameter(
+                "pk",
+                openapi.IN_PATH,
+                description="UUID of the notification to retrieve",
+                type=openapi.TYPE_STRING,
+                format=openapi.FORMAT_UUID,
+                required=True,
+            )
+        ],
+        responses={
+            200: openapi.Response(
+                description="Basic notification details",
+                schema=NotificationBasicSerializer(),
+            ),
+            404: openapi.Response(description="Notification not found"),
+            401: openapi.Response(description="Authentication required"),
+        },
+    )
     def retrieve(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """
-        Endpoint to retrieve specific Basic Notification
-
-        :param uuid pk: UUID of NotificationBasic to retrieve
+        Retrieve a specific basic notification by its UUID.
+        Only accessible if the authenticated user is a recipient of the notification.
         """
         pk: str = str(self.kwargs.get("pk"))
         try:
@@ -71,9 +141,47 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
         )
         return self.response_handler.response_success(results=serializer.data)
 
+    @swagger_auto_schema(  # type: ignore[misc]
+        operation_description="Create a new basic notification",
+        operation_summary="Create Basic Notification",
+        tags=["Basic Notifications"],
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=["recipients", "message"],
+            properties={
+                "recipients": openapi.Schema(
+                    type=openapi.TYPE_ARRAY,
+                    items=openapi.Schema(
+                        type=openapi.TYPE_STRING,
+                        pattern=r"^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|\d+)$",
+                        description="Email address, UUID, or user ID",
+                    ),
+                    description="List of recipient emails, UUIDs, or user IDs",
+                    example=[
+                        "user@example.com",
+                        "123e4567-e89b-12d3-a456-426614174000",
+                        "123",
+                    ],
+                    min_items=1,
+                ),
+                "message": openapi.Schema(
+                    type=openapi.TYPE_STRING, description="Notification message content"
+                ),
+            },
+        ),
+        responses={
+            201: openapi.Response(
+                description="Basic notification created successfully",
+                schema=NotificationBasicSerializer(),
+            ),
+            400: openapi.Response(description="Invalid input data"),
+            401: openapi.Response(description="Authentication required"),
+        },
+    )
     def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """
-        Endpoint to create Basic Notification
+        Create a new basic notification.
+        The sender is automatically set to the authenticated user's email.
         """
         request_data_copy: Dict[str, Any] = request.data.copy()
         if hasattr(request.user, "email"):
@@ -110,13 +218,42 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
             results=serializer.data, status=201
         )
 
+    @swagger_auto_schema(  # type: ignore[misc]
+        operation_description="Mark a basic notification as read or unread",
+        operation_summary="Update Basic Notification Read Status",
+        tags=["Basic Notifications"],
+        manual_parameters=[
+            openapi.Parameter(
+                "pk",
+                openapi.IN_PATH,
+                description="UUID of the notification to update",
+                type=openapi.TYPE_STRING,
+                format=openapi.FORMAT_UUID,
+                required=True,
+            )
+        ],
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "read": openapi.Schema(
+                    type=openapi.TYPE_BOOLEAN,
+                    description="Mark notification as read (true) or unread (false)",
+                )
+            },
+        ),
+        responses={
+            200: openapi.Response(
+                description="Basic notification updated successfully",
+                schema=NotificationBasicSerializer(),
+            ),
+            404: openapi.Response(description="Notification not found"),
+            401: openapi.Response(description="Authentication required"),
+        },
+    )
     def partial_update(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """
-        Endpoint to update specific Basic Notification
-
-        :param uuid pk: UUID of NotificationBasic to update
-
-        :param (body, optional) bool read: mark NotificationBasic read or not
+        Update the read status of a specific basic notification.
+        Only accessible if the authenticated user is a recipient of the notification.
         """
         pk: str = str(self.kwargs.get("pk"))
         try:

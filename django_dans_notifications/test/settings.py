@@ -44,6 +44,8 @@ INSTALLED_APPS = (
     # rest framework
     "rest_framework",
     "rest_framework.authtoken",
+    # swagger docs
+    "drf_yasg",
     "django_dans_notifications",
 )
 
