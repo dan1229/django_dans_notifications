@@ -73,11 +73,8 @@
 
 
 #### improve api swagger docs
-- lots of api docs strings aren't showing up
-- need to add params and stuff
-
-
-
+review
+- triple check params / body / etc are right
 
 
  
@@ -100,6 +97,7 @@
   - Optional synchronous mode for testing/debugging
 - Fixed issue with keys being put at top level instead of `error_fields`
 - Improved Swagger API docs
+    - Specifically compatible with drf-yasg
 
 -------------------------------------------------------
 
