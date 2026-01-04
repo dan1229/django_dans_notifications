@@ -28,7 +28,7 @@ if not settings.configured:
 
 
 class TestEmailSender(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         # Mock Django settings for testing
         self.settings_patcher = patch("django_dans_notifications.email_sender.settings")
         self.mock_settings = self.settings_patcher.start()
@@ -47,7 +47,7 @@ class TestEmailSender(unittest.TestCase):
         EmailSender._instance = None
         EmailSender._executor = None
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         from ..email_sender import EmailSender
 
         # Ensure cleanup after each test
@@ -56,7 +56,7 @@ class TestEmailSender(unittest.TestCase):
         EmailSender._instance = None
         self.settings_patcher.stop()
 
-    def test_synchronous_mode(self):
+    def test_synchronous_mode(self) -> None:
         """Test that synchronous mode works correctly."""
         from ..email_sender import EmailSender
 
@@ -70,7 +70,7 @@ class TestEmailSender(unittest.TestCase):
         mock_func.assert_called_once_with("arg1", kwarg1="value1")
         self.assertEqual(result, "success")
 
-    def test_asynchronous_mode(self):
+    def test_asynchronous_mode(self) -> None:
         """Test that asynchronous mode returns a Future."""
         from ..email_sender import EmailSender
 
@@ -90,7 +90,7 @@ class TestEmailSender(unittest.TestCase):
         mock_func.assert_called_once_with("arg1")
         self.assertEqual(result, "async_success")
 
-    def test_retry_logic_success_on_second_attempt(self):
+    def test_retry_logic_success_on_second_attempt(self) -> None:
         """Test that retry logic works when function succeeds on second attempt."""
         from ..email_sender import EmailSender
 
@@ -106,7 +106,7 @@ class TestEmailSender(unittest.TestCase):
         self.assertEqual(mock_func.call_count, 2)
         self.assertEqual(result, "success")
 
-    def test_retry_logic_all_attempts_fail(self):
+    def test_retry_logic_all_attempts_fail(self) -> None:
         """Test that exception is raised after all retries fail."""
         from ..email_sender import EmailSender
 
@@ -123,7 +123,7 @@ class TestEmailSender(unittest.TestCase):
         self.assertEqual(mock_func.call_count, 3)
         self.assertEqual(str(context.exception), "Always fails")
 
-    def test_retry_with_different_exceptions(self):
+    def test_retry_with_different_exceptions(self) -> None:
         """Test retry logic with different exception types."""
         from ..email_sender import EmailSender
 
@@ -144,7 +144,7 @@ class TestEmailSender(unittest.TestCase):
         self.assertEqual(mock_func.call_count, 3)
         self.assertEqual(str(context.exception), "Final error")
 
-    def test_test_mode_disables_async(self):
+    def test_test_mode_disables_async(self) -> None:
         """Test that IN_TEST setting disables async mode."""
         from ..email_sender import EmailSender
 
@@ -154,7 +154,7 @@ class TestEmailSender(unittest.TestCase):
         sender = EmailSender()
         self.assertFalse(sender.async_enabled)
 
-    def test_singleton_pattern(self):
+    def test_singleton_pattern(self) -> None:
         """Test that EmailSender follows singleton pattern."""
         from ..email_sender import EmailSender
 
@@ -162,7 +162,7 @@ class TestEmailSender(unittest.TestCase):
         sender2 = EmailSender()
         self.assertIs(sender1, sender2)
 
-    def test_shutdown(self):
+    def test_shutdown(self) -> None:
         """Test graceful shutdown of thread pool."""
         from ..email_sender import EmailSender
 
@@ -175,7 +175,7 @@ class TestEmailSender(unittest.TestCase):
         sender.shutdown()
         self.assertIsNone(sender._executor)
 
-    def test_get_stats_sync_mode(self):
+    def test_get_stats_sync_mode(self) -> None:
         """Test stats in synchronous mode."""
         from ..email_sender import EmailSender
 
@@ -187,7 +187,7 @@ class TestEmailSender(unittest.TestCase):
         self.assertEqual(stats["async_enabled"], False)
         self.assertEqual(stats["pending_tasks"], 0)
 
-    def test_get_stats_async_mode(self):
+    def test_get_stats_async_mode(self) -> None:
         """Test stats in asynchronous mode."""
         from ..email_sender import EmailSender
 
@@ -200,7 +200,7 @@ class TestEmailSender(unittest.TestCase):
         self.assertEqual(stats["async_enabled"], True)
         self.assertEqual(stats["max_workers"], 5)
 
-    def test_send_email_async_convenience_function(self):
+    def test_send_email_async_convenience_function(self) -> None:
         """Test the convenience function for backward compatibility."""
         from ..email_sender import send_email_async
 
@@ -212,7 +212,7 @@ class TestEmailSender(unittest.TestCase):
         mock_func.assert_called_once_with("arg1", kwarg1="value1")
         self.assertEqual(result, "convenience_result")
 
-    def test_multiple_async_sends(self):
+    def test_multiple_async_sends(self) -> None:
         """Test that multiple async sends work correctly."""
         from ..email_sender import EmailSender
 
@@ -234,7 +234,7 @@ class TestEmailSender(unittest.TestCase):
 
         self.assertEqual(mock_func.call_count, 3)
 
-    def test_exponential_backoff(self):
+    def test_exponential_backoff(self) -> None:
         """Test that exponential backoff is applied between retries."""
         from ..email_sender import EmailSender
 
@@ -246,7 +246,7 @@ class TestEmailSender(unittest.TestCase):
         # Track time between calls
         call_times = []
 
-        def track_time(*args, **kwargs):
+        def track_time(*args: object, **kwargs: object) -> str:
             call_times.append(time.time())
             if len(call_times) < 3:
                 raise Exception("Fail")

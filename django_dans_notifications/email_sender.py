@@ -1,5 +1,6 @@
 import logging
 import time
+import threading
 from concurrent.futures import ThreadPoolExecutor, Future
 from typing import Callable, Any, Optional, Dict
 import atexit
@@ -23,11 +24,15 @@ class EmailSender:
     _instance: Optional["EmailSender"] = None
     _executor: Optional[ThreadPoolExecutor] = None
     _initialized: bool = False
+    _lock = threading.Lock()
 
     def __new__(cls) -> "EmailSender":
         if cls._instance is None:
-            cls._instance = super().__new__(cls)
-            cls._instance._initialized = False
+            with cls._lock:
+                # Double-check pattern for thread safety
+                if cls._instance is None:
+                    cls._instance = super().__new__(cls)
+                    cls._instance._initialized = False
         return cls._instance
 
     def __init__(self) -> None:
@@ -130,9 +135,13 @@ class EmailSender:
             wait: If True, wait for all pending tasks to complete
         """
         if self._executor is not None:
-            LOGGER.info("Shutting down email sender thread pool")
-            self._executor.shutdown(wait=wait)
-            self._executor = None
+            try:
+                LOGGER.info("Shutting down email sender thread pool")
+                self._executor.shutdown(wait=wait)
+            except Exception as e:
+                LOGGER.error(f"Error during email sender shutdown: {e}")
+            finally:
+                self._executor = None
 
     def get_stats(self) -> Dict[str, Any]:
         """Get current stats about the email sender."""
