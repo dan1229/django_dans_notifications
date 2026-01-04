@@ -9,7 +9,7 @@ from django.utils.html import strip_tags
 from smtplib import SMTPAuthenticationError, SMTPException
 
 from .base import NotificationBase, AbstractBaseModel
-from django_dans_notifications.threads import EmailThread
+from django_dans_notifications.email_sender import send_email_async
 from django_dans_notifications.logging import LOGGER
 from django.core.files import File
 
@@ -223,7 +223,8 @@ class NotificationEmailManager(models.Manager):  # type: ignore[type-arg]
             if hasattr(settings, "IN_TEST") and settings.IN_TEST:
                 pass  # don't send mail in tests
             else:
-                EmailThread(message.send).run()
+                # Use the new email sender with retry logic and thread pooling
+                send_email_async(message.send)
                 notification_email.sent_successfully = True
         except (
             SMTPException,
