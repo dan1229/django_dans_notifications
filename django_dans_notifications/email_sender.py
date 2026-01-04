@@ -2,7 +2,7 @@ import logging
 import time
 import threading
 from concurrent.futures import ThreadPoolExecutor, Future
-from typing import Callable, Any, Optional, Dict
+from typing import Callable, Any, Optional, Dict, Union
 import atexit
 from django.conf import settings
 
@@ -45,6 +45,14 @@ class EmailSender:
         self.max_retries = getattr(settings, "EMAIL_MAX_RETRIES", 3)
         self.retry_delay = getattr(settings, "EMAIL_RETRY_DELAY", 1.0)
 
+        # Validate settings
+        if self.max_workers < 1:
+            raise ValueError("EMAIL_MAX_WORKERS must be >= 1")
+        if self.max_retries < 1:
+            raise ValueError("EMAIL_MAX_RETRIES must be >= 1")
+        if self.retry_delay < 0:
+            raise ValueError("EMAIL_RETRY_DELAY must be >= 0")
+
         # Use synchronous mode in tests or when explicitly configured
         self.async_enabled = not getattr(settings, "EMAIL_SYNC_MODE", False)
         if getattr(settings, "IN_TEST", False):
@@ -64,7 +72,7 @@ class EmailSender:
 
     def send_with_retry(
         self, func: Callable[..., Any], *args: Any, **kwargs: Any
-    ) -> Any:  # Returns Future[Any] in async mode, or the result directly in sync mode
+    ) -> Union[Future[Any], Any]:
         """
         Send email with retry logic.
 
@@ -162,7 +170,7 @@ class EmailSender:
 
 
 # Convenience function for backward compatibility
-def send_email_async(func: Callable[..., Any], *args: Any, **kwargs: Any) -> Any:
+def send_email_async(func: Callable[..., Any], *args: Any, **kwargs: Any) -> Union[Future[Any], Any]:
     """
     Send email asynchronously using the singleton EmailSender.
 

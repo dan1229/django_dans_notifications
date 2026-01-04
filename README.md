@@ -97,6 +97,16 @@ EMAIL_SYNC_MODE = False  # Use async mode (set True for synchronous sending)
 
 **Note:** The email threading system is fully backward compatible. If you don't specify these settings, sensible defaults will be used.
 
+### Troubleshooting Email Issues
+
+If you encounter problems with email delivery:
+
+- **Enable synchronous mode for debugging**: Set `EMAIL_SYNC_MODE = True` to disable threading and make errors more visible
+- **Check the logs**: Look for retry attempts and error messages from the email sender
+- **Verify SMTP settings**: If emails consistently fail all retry attempts, verify your Django email backend configuration
+- **Test with fewer workers**: Reduce `EMAIL_MAX_WORKERS` if you suspect resource constraints
+- **Adjust retry settings**: Increase `EMAIL_MAX_RETRIES` and `EMAIL_RETRY_DELAY` for unreliable network conditions
+
 ## Features
 
 ### Models
