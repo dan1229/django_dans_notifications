@@ -21,91 +21,36 @@ Support for basic notifications, push notifications, and email notifications.
 
 [Available on PyPi](https://pypi.org/project/django-dans-notifications/)
 
-## Quick start
-
-1. Install the package via pip:
+## Quick Start
 
 ```bash
 pip install django-dans-notifications
 ```
 
-2. Add "django_dans_notifications" to your INSTALLED_APPS setting like this:
-
-```python
-INSTALLED_APPS = [
-	...
-	'django_dans_notifications',
-]
-```
-
-3. Include the URL configs in your project `urls.py` for the REST API endpoints like this:
-
-```python
-path("api/notifications/", include("django_dans_notifications.urls")),
-```
-
-4. Run `python manage.py migrate` to update your database schema.
-
-5. Use the API endpoints, in code or your Django admin portal.
+See the [Getting Started Guide](https://github.com/dan1229/django_dans_notifications/tree/main/docs/getting-started.md) for detailed installation and configuration instructions.
 
 ### Requirements
 
 - Python 3.8 or higher
 - Django 3.1 or higher
-- Django Rest Framework
-  - **NOTE:** not only must you have this installed, you must have set `DEFAULT_AUTHENTICATION_CLASSES` and `DEFAULT_PAGINATION_CLASS` in your `settings.py` to work with the APIs properly. An example config would be:
+- Django Rest Framework (with authentication configured)
+
+### Basic Usage
 
 ```python
-REST_FRAMEWORK = {
-    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
-    "PAGE_SIZE": 20,
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework.authentication.TokenAuthentication",
-    ),
-}
+from django_dans_notifications.models.notifications import NotificationEmail
+
+# Send an email notification
+notification = NotificationEmail.objects.send_email(
+    subject="Welcome",
+    template="django-dans-emails/default.html",
+    sender="noreply@example.com",
+    recipients=["user@example.com"],
+    context={"team_name": "My Team"}
+)
 ```
 
-
-### Available Settings
-
-Currently all available settings are optional:
-
-- `TEAM_NAME` - Default team name to use for emails, can be added to message context manually as well still.
-- `IN_TEST` - Whether running in tests or not. Used to determine whether to actually send email (when True, emails are not sent).
-
-#### Email Threading Settings (Optional)
-The app now uses an improved threading system for sending emails asynchronously with the following optional settings:
-
-- `EMAIL_MAX_WORKERS` - Maximum number of concurrent threads for sending emails. Default: `3`
-- `EMAIL_MAX_RETRIES` - Number of retry attempts for failed email sends. Default: `3`
-- `EMAIL_RETRY_DELAY` - Base delay in seconds between retry attempts (uses exponential backoff). Default: `1.0`
-- `EMAIL_SYNC_MODE` - Set to `True` to disable threading entirely (useful for debugging). Default: `False`
-
-Add these to your `settings.py` file to customize the app's behavior like so:
-
-```python
-# Basic settings
-TEAM_NAME = "My Team"
-IN_TEST = True  # Emails won't be sent when True
-
-# Optional: Email threading configuration
-EMAIL_MAX_WORKERS = 5  # Allow up to 5 concurrent email threads
-EMAIL_MAX_RETRIES = 5  # Try up to 5 times for failed sends
-EMAIL_RETRY_DELAY = 2.0  # Start with 2 second delay between retries
-EMAIL_SYNC_MODE = False  # Use async mode (set True for synchronous sending)
-```
-
-**Note:** The email threading system is fully backward compatible. If you don't specify these settings, sensible defaults will be used.
-
-### Troubleshooting Email Issues
-
-If you encounter problems with email delivery:
-
-- **Enable synchronous mode for debugging**: Set `EMAIL_SYNC_MODE = True` to disable threading and make errors more visible
-- **Check the logs**: Look for retry attempts and error messages from the email sender
-- **Verify SMTP settings**: If emails consistently fail all retry attempts, verify your Django email backend configuration
-- **Test with fewer workers**: Reduce `EMAIL_MAX_WORKERS` if you suspect resource constraints
-- **Adjust retry settings**: Increase `EMAIL_MAX_RETRIES` and `EMAIL_RETRY_DELAY` for unreliable network conditions
+See the [Usage Guide](https://github.com/dan1229/django_dans_notifications/tree/main/docs/usage.md) for more examples and advanced usage.
 
 ## Features
 
@@ -132,40 +77,17 @@ If you encounter problems with email delivery:
 - **NotificationManager**: Exposes common functionality and maintains object permissions.
   - Methods: `get_notifications_push/email/basic/all`, `mark_notification_basic_read`.
 
-## Usage
+## Documentation
 
-The main way to interact with this app is to create and use the appropriate models and their managers' methods as needed.
+- **[Getting Started](https://github.com/dan1229/django_dans_notifications/tree/main/docs/getting-started.md)** - Installation and configuration
+- **[Usage Guide](https://github.com/dan1229/django_dans_notifications/tree/main/docs/usage.md)** - How to send notifications and use the app
+- **[API Documentation](https://github.com/dan1229/django_dans_notifications/tree/main/docs/apis.md)** - REST API endpoints reference
+- **[Model Documentation](https://github.com/dan1229/django_dans_notifications/tree/main/docs/models.md)** - Detailed model information
+- **[Email Templates](https://github.com/dan1229/django_dans_notifications/tree/main/docs/email-templates.md)** - Template system and customization
 
-Also included is the `NotificationManager` class to expose some common functionality and maintain object permissions.
+## Support
 
-Some of its methods currently are:
-
-- `get_notifications_push/email/basic/all`
-    - Enforce object ownership and notification 'direction'
-- `mark_notification_basic_read`
-
-You can also interact directly, so for example to send an email notification:
-
-```python
-from django_dans_notifications.models.notifications import NotificationEmail
-
-email_notification = NotificationEmail.objects.send_email(
-    subject="Hello",
-    template="django-dans-emails/default.html",
-    sender="sender@example.com",
-    recipients=["recipient@example.com"],
-    context={"user": "John Doe"},
-    file_attachment=None
-)
-```
-
-## Docs
-
-#### [Model docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/models.md).
-
-#### [API docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/apis.md).
-
-#### [Email Template docs](https://github.com/dan1229/django_dans_notifications/tree/main/docs/email-templates.md).
+For issues, questions, or contributions, please visit the [GitHub repository](https://github.com/dan1229/django_dans_notifications).
 
 -------------------------------------------------------
 

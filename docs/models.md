@@ -1,31 +1,101 @@
-# Models
+# Model Documentation
 
-To use this package, simply utilize the models included as well as their properties/helper methods. This document is meant to help illustrate the differences between the different types of notifications.
+## Base Model: `NotificationBase`
 
-## `NotificationBase`
+All notification models inherit from this base class.
 
-ALL notifications inherit from `NotificationBase` and thus all have the following properties:
+### Fields
 
-- `recipients` - comma-separated list of emails the notification was sent to.
-- `sender` - email of the sending user.
-- `datetime_sent` - date and time the notification was sent.
-- `sent_successfully` - whether the notification was processed correctly.
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `recipients` | CharField | Yes | Comma-separated list of recipient emails |
+| `sender` | EmailField | Yes | Sender email address |
+| `datetime_sent` | DateTimeField | Auto | Timestamp (auto-set on creation) |
+| `sent_successfully` | BooleanField | No | Whether successfully processed (default: False) |
 
 ## `NotificationEmail`
 
-- Meant to track emails sent.
-- Email templates included, editable via context variables
-  - `NotificationEmailTemplate` model - see `email-templates.md` for more info.
-  - Admin editable templates and emails
-- `send_email` function to actually send emails and handle object creation.
-  - `NotificationEmail.objects.send_email(...)`
-    - **Enhanced Email Delivery**: Emails are sent asynchronously using a thread pool with automatic retry logic for improved reliability. 
-    
+For email notifications with template support.
+
+### Additional Fields
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `subject` | CharField | Yes | Email subject (max 255 chars) |
+| `content` | TextField | No | Email body (HTML supported) |
+| `template_used` | CharField | No | Template file path |
+| `context` | JSONField | No | Template context variables |
+| `file_attachment` | FileField | No | File attachment |
+
+### Manager Method
+
+`send_email(subject, template, sender, recipients, context={}, file_attachment=None)`
+- Sends email asynchronously with retry logic
+- Auto-creates EmailTemplate objects
+- Returns NotificationEmail instance
+
 ## `NotificationBasic`
 
-- Meant to model a generic notification stack internal to the application, i.e., a notification stack in your application.
-- Has a 'read' property.
+For in-app notifications.
+
+### Additional Fields
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `message` | TextField | Yes | Notification message |
+| `read` | BooleanField | No | Read status (default: False) |
+| `read_datetime` | DateTimeField | No | When marked as read |
 
 ## `NotificationPush`
 
-- Track push notifications that may require extra information.
+For push notifications.
+
+### Additional Fields
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `message` | TextField | Yes | Push notification message |
+| `data` | JSONField | No | Additional payload |
+| `device_tokens` | TextField | No | Comma-separated device tokens |
+| `platform` | CharField | No | Target platform (iOS/Android/Web) |
+
+## EmailTemplate Model
+
+Auto-created when templates are used.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `name` | CharField | Template file name |
+| `subject` | CharField | Default subject |
+| `content` | TextField | Template HTML content |
+| `template_path` | CharField | File system path |
+
+## Database Optimization
+
+### Recommended Indexes
+
+```python
+class Meta:
+    indexes = [
+        models.Index(fields=['recipients', '-datetime_sent']),
+        models.Index(fields=['sent_successfully']),
+        models.Index(fields=['read']),  # For NotificationBasic
+    ]
+```
+
+### Efficient Queries
+
+```python
+# Recent unread notifications
+NotificationBasic.objects.filter(
+    recipients__contains=user_email,
+    read=False,
+    datetime_sent__gte=timezone.now() - timedelta(days=7)
+).order_by('-datetime_sent')[:10]
+```
+
+## Admin Interface
+
+All models are registered with Django Admin for easy management.
+
+See [Usage Guide](usage.md) for code examples.

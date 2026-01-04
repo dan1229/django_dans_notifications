@@ -1,80 +1,158 @@
 # Email Templates
 
-This file is intended to document and explain all the email templates in this project so you can use them properly. By default, this project will include a handful that are necessary for the app to work. However, as you add templates, please include them in this document.
-
-**Note: The email templates have been updated with modern, responsive styling while maintaining full backwards compatibility.**
-
-## Adding Your Own
-
-To add your own email template, simply add your `.html` files to your local templates folder. You can also place it in `<TEMPLATES_DIRECTORY>/emails` and it will be picked up automatically. These can be written as [Django Templates](https://docs.djangoproject.com/en/3.2/ref/templates/language/) and passed context variables from the `send_email` function.
-
-**NOTE:** you MUST have Django templates set up in your project already.
-
-Then, to send an email simply use the `send_email` function and pass any options you'd like. For example:
-
-```python
-notification_email = NotificationEmail.objects.send_email(
-    "subject",
-    "django-dans-emails/<FILENAME>.html",  # note: this can be a path to your local template
-    from_email,
-    [to_email(s)],
-    {"context_variable": "value"},
-)
-```
-
-An `EmailTemplate` object will be automatically created for every HTML file and thus viewable in the admin.
+Django Dans Notifications uses Django's template engine for HTML emails. Templates are automatically registered as `EmailTemplate` objects viewable in the Django admin.
 
 ## Built-in Templates
 
-For your convenience, a number of HTML templates have been included by default.
+All templates are responsive and tested across major email clients.
 
-### contact.html
+### 1. default.html
+General-purpose template.
 
-Used for contact style emails.
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `team_name` | No | Organization name |
+| `message` | No | Main content |
 
-| Name        | Type | Required | Description                         |
-|-------------|------|----------|-------------------------------------|
-| `name`      | str  | yes      | Name of person filling out form     |
-| `email`     | str  | yes      | Email of person filling out form    |
-| `message`   | str  | yes      | Body message/content for email      |
-| `team_name` | str  | no       | Name of 'team' running this project |
+### 2. contact.html
+For contact form submissions.
 
-### default.html
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `name` | Yes | Contact person's name |
+| `email` | Yes | Contact person's email |
+| `message` | Yes | Contact message |
+| `team_name` | No | Organization name |
 
-Default email template. You probably will never send this; it's primarily for errors.
+### 3. empty.html
+Minimal template for simple messages.
 
-| Name        | Type | Required | Description                         |
-|-------------|------|----------|-------------------------------------|
-| `team_name` | str  | no       | Name of 'team' running this project |
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `message` | Yes | Email content |
+| `team_name` | No | Organization name |
 
-### empty.html
+### 4. password_reset.html
+For password reset emails.
 
-Empty email template. Used for contact forms and messages where the 'message' or 'content' can be supplied.
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `password_reset_url` | Yes | Reset URL |
+| `team_name` | No | Organization name |
+| `expiry_time` | No | Link expiration time |
 
-| Name        | Type | Required | Description                         |
-|-------------|------|----------|-------------------------------------|
-| `message`   | str  | yes      | Body message/content for email      |
-| `team_name` | str  | no       | Name of 'team' running this project |
+## Creating Custom Templates
 
-### password_reset.html
+### Setup
 
-Email to send on a password reset request. Should include a link for the user to reset their password.
+1. Ensure templates directory is configured:
+```python
+# settings.py
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'templates'],
+    },
+]
+```
 
-| Name                 | Type | Required | Description                         |
-|----------------------|------|----------|-------------------------------------|
-| `password_reset_url` | str  | yes      | URL to direct user to               |
-| `team_name`          | str  | no       | Name of 'team' running this project |
+2. Create your template:
+```
+project/
+├── templates/
+│   ├── emails/
+│   │   └── welcome.html
+```
 
-### template.html
+### Basic Template Structure
 
-Template email. This just contains template HTML to fill in as you create new EmailTemplates. This will also probably never be explicitly sent.
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Inline CSS for email compatibility */
+        body { font-family: Arial, sans-serif; }
+        .container { max-width: 600px; margin: 0 auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hello {{ username }}!</h1>
+        <p>{{ message }}</p>
+        {% if team_name %}
+        <p>Best regards,<br>{{ team_name }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
+```
 
-## Template Features
+### Using Custom Templates
 
-All templates now include:
-- **Responsive design** for mobile and desktop devices
-- **Professional styling** with better typography and spacing
-- **Email client compatibility** tested across major email clients
-- **Team branding support** via the `team_name` context variable
+```python
+NotificationEmail.objects.send_email(
+    subject="Welcome!",
+    template="emails/welcome.html",  # Your template path
+    sender="hello@example.com",
+    recipients=["user@example.com"],
+    context={
+        "username": "John",
+        "message": "Welcome to our platform!"
+    }
+)
+```
 
-The templates maintain the same context variables and usage patterns as before while providing a much more professional appearance.
+## Email Best Practices
+
+### Compatibility
+- Use inline CSS (not external stylesheets)
+- Use table layouts for complex designs
+- Test with major email clients
+
+### Responsive Design
+```css
+@media only screen and (max-width: 600px) {
+    .container { width: 100% !important; }
+}
+```
+
+### Accessibility
+- Use semantic HTML (`<h1>`, `<p>`, etc.)
+- Add alt text to images
+- Ensure sufficient color contrast
+
+## Template Discovery
+
+Templates are automatically discovered when:
+- Placed in `templates/emails/` directory
+- First used with `send_email()`
+- Django server is restarted
+
+## Admin Interface
+
+View and manage templates in Django admin under "Email Templates".
+
+## Troubleshooting
+
+### Template Not Found
+```python
+from django.template.loader import get_template
+try:
+    template = get_template("emails/custom.html")
+except TemplateDoesNotExist:
+    print("Check template path and TEMPLATES setting")
+```
+
+### Context Variables Not Rendering
+Check the stored context in the notification:
+```python
+print(notification.context)  # View JSON in database
+```
+
+### CSS Issues
+- Always inline CSS for emails
+- Use style tags only for media queries
+- Test with tools like Litmus or Email on Acid

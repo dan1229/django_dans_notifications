@@ -24,6 +24,8 @@
 -
 - add to serializers and api docs
 
+
+
 #### notification models - add more fields
 - how to allow user to add extras fields?
 
@@ -48,6 +50,8 @@
 
 
 
+### [1.4.0] - 2026-MM-DD
+- TODO
 
 -----
 ### 1.3.0
@@ -55,31 +59,9 @@
 
 
 
-#### docs
-- getting started
-    - move out of readme
-- api docs
-    - improve
-- usage docs
-    - send email
-    - different models
-- templates
-    - improve
-    - add docs about adding your own
-
-
-
-
-
-
-#### improve api swagger docs
-review
-- triple check params / body / etc are right
-
-
  
 
-### [1.3.0] - 2026-01-DD
+### [1.3.0] - 2026-01-03
 - Improved base / default email templates
     - Enhanced `base.html` template with modern, responsive design
     - Professional styling with better typography and spacing
@@ -98,6 +80,13 @@ review
 - Fixed issue with keys being put at top level instead of `error_fields`
 - Improved Swagger API docs
     - Specifically compatible with drf-yasg
+- Complete documentation overhaul
+    - Created comprehensive Getting Started guide
+    - Added detailed Usage guide with examples
+    - Improved API documentation with request/response examples
+    - Enhanced Model documentation with full field descriptions
+    - Expanded Email Templates documentation with custom template guide
+    - Simplified README with links to new documentation
 
 -------------------------------------------------------
 
