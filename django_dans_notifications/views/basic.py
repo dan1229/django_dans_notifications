@@ -95,9 +95,7 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
             context={"request": request},
         )
         page = self.paginate_queryset(serializer.data)
-        return self.response_handler.response_success(
-            response=self.get_paginated_response(page)
-        )
+        return self.get_paginated_response(page)
 
     @swagger_auto_schema(  # type: ignore[misc]
         operation_description="Retrieve a specific basic notification by ID",

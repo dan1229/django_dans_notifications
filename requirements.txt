@@ -1,6 +1,6 @@
 Django == 5.0
 djangorestframework == 3.14.0
-django_dans_api_toolkit == 1.0.2
+django_dans_api_toolkit == 1.2.0
 coverage == 6.4
 setuptools >= 60.0.0
 drf-yasg == 1.21.7
