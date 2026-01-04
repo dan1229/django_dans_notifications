@@ -80,16 +80,6 @@
 
 
 
-
-#### ✅ DONE: revisit threads.py?
-
-- Fixed thread safety issue in singleton initialization with double-check locking pattern
-- Added error handling to shutdown method to prevent crashes
-- All tests passing
-- Ready to merge
-
-
-
  
 
 ### [1.3.0] - 2026-01-DD
@@ -109,6 +99,7 @@
   - Graceful shutdown on application exit
   - Optional synchronous mode for testing/debugging
 - Fixed issue with keys being put at top level instead of `error_fields`
+- Improved Swagger API docs
 
 -------------------------------------------------------
 
