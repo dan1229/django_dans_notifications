@@ -33,10 +33,45 @@ class NotificationEmailViewSet(viewsets.GenericViewSet):
         operation_description="List email notifications for the authenticated user",
         operation_summary="List Email Notifications",
         tags=["Email Notifications"],
+        manual_parameters=[
+            openapi.Parameter(
+                "page",
+                openapi.IN_QUERY,
+                description="Page number (default pagination: 20 items per page)",
+                type=openapi.TYPE_INTEGER,
+                default=1,
+                required=False,
+            ),
+        ],
         responses={
             200: openapi.Response(
-                description="List of email notifications",
-                schema=NotificationEmailSerializer(many=True),
+                description="Paginated list of email notifications (default: 20 items per page)",
+                schema=openapi.Schema(
+                    type=openapi.TYPE_OBJECT,
+                    properties={
+                        "count": openapi.Schema(
+                            type=openapi.TYPE_INTEGER,
+                            description="Total number of notifications",
+                        ),
+                        "next": openapi.Schema(
+                            type=openapi.TYPE_STRING,
+                            format=openapi.FORMAT_URI,
+                            description="Next page URL",
+                            nullable=True,
+                        ),
+                        "previous": openapi.Schema(
+                            type=openapi.TYPE_STRING,
+                            format=openapi.FORMAT_URI,
+                            description="Previous page URL",
+                            nullable=True,
+                        ),
+                        "results": openapi.Schema(
+                            type=openapi.TYPE_ARRAY,
+                            items=NotificationEmailSerializer(),
+                            description="Array of email notifications for current page",
+                        ),
+                    },
+                ),
             ),
             401: openapi.Response(description="Authentication required"),
         },

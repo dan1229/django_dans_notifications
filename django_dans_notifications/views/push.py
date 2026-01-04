@@ -34,10 +34,45 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
         operation_description="List push notifications for the authenticated user",
         operation_summary="List Push Notifications",
         tags=["Push Notifications"],
+        manual_parameters=[
+            openapi.Parameter(
+                "page",
+                openapi.IN_QUERY,
+                description="Page number (default pagination: 20 items per page)",
+                type=openapi.TYPE_INTEGER,
+                default=1,
+                required=False,
+            ),
+        ],
         responses={
             200: openapi.Response(
-                description="List of push notifications",
-                schema=NotificationPushSerializer(many=True),
+                description="Paginated list of push notifications (default: 20 items per page)",
+                schema=openapi.Schema(
+                    type=openapi.TYPE_OBJECT,
+                    properties={
+                        "count": openapi.Schema(
+                            type=openapi.TYPE_INTEGER,
+                            description="Total number of notifications",
+                        ),
+                        "next": openapi.Schema(
+                            type=openapi.TYPE_STRING,
+                            format=openapi.FORMAT_URI,
+                            description="Next page URL",
+                            nullable=True,
+                        ),
+                        "previous": openapi.Schema(
+                            type=openapi.TYPE_STRING,
+                            format=openapi.FORMAT_URI,
+                            description="Previous page URL",
+                            nullable=True,
+                        ),
+                        "results": openapi.Schema(
+                            type=openapi.TYPE_ARRAY,
+                            items=NotificationPushSerializer(),
+                            description="Array of push notifications for current page",
+                        ),
+                    },
+                ),
             ),
             401: openapi.Response(description="Authentication required"),
         },
@@ -117,8 +152,18 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
             properties={
                 "recipients": openapi.Schema(
                     type=openapi.TYPE_ARRAY,
-                    items=openapi.Schema(type=openapi.TYPE_STRING),
-                    description="List of recipient emails or user IDs",
+                    items=openapi.Schema(
+                        type=openapi.TYPE_STRING,
+                        pattern=r"^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|\d+)$",
+                        description="Email address, UUID, or user ID",
+                    ),
+                    description="List of recipient emails, UUIDs, or user IDs",
+                    example=[
+                        "user@example.com",
+                        "123e4567-e89b-12d3-a456-426614174000",
+                        "123",
+                    ],
+                    min_items=1,
                 ),
                 "message": openapi.Schema(
                     type=openapi.TYPE_STRING,
