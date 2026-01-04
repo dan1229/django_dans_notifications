@@ -30,7 +30,7 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
     permission_classes = (IsAuthenticated,)
     response_handler = ApiResponseHandler()
 
-    @swagger_auto_schema(
+    @swagger_auto_schema(  # type: ignore[misc]
         operation_description="List push notifications for the authenticated user",
         operation_summary="List Push Notifications",
         tags=["Push Notifications"],
@@ -98,7 +98,7 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
             response=self.get_paginated_response(page)
         )
 
-    @swagger_auto_schema(
+    @swagger_auto_schema(  # type: ignore[misc]
         operation_description="Retrieve a specific push notification by ID",
         operation_summary="Retrieve Push Notification",
         tags=["Push Notifications"],
@@ -142,7 +142,7 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
         )
         return self.response_handler.response_success(results=serializer.data)
 
-    @swagger_auto_schema(
+    @swagger_auto_schema(  # type: ignore[misc]
         operation_description="Create a new push notification",
         operation_summary="Create Push Notification",
         tags=["Push Notifications"],

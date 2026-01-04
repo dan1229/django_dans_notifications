@@ -31,7 +31,7 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
     permission_classes = (IsAuthenticated,)
     response_handler = ApiResponseHandler()
 
-    @swagger_auto_schema(
+    @swagger_auto_schema(  # type: ignore[misc]
         operation_description="List basic notifications for the authenticated user",
         operation_summary="List Basic Notifications",
         tags=["Basic Notifications"],
@@ -99,7 +99,7 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
             response=self.get_paginated_response(page)
         )
 
-    @swagger_auto_schema(
+    @swagger_auto_schema(  # type: ignore[misc]
         operation_description="Retrieve a specific basic notification by ID",
         operation_summary="Retrieve Basic Notification",
         tags=["Basic Notifications"],
@@ -143,7 +143,7 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
         )
         return self.response_handler.response_success(results=serializer.data)
 
-    @swagger_auto_schema(
+    @swagger_auto_schema(  # type: ignore[misc]
         operation_description="Create a new basic notification",
         operation_summary="Create Basic Notification",
         tags=["Basic Notifications"],
@@ -220,7 +220,7 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
             results=serializer.data, status=201
         )
 
-    @swagger_auto_schema(
+    @swagger_auto_schema(  # type: ignore[misc]
         operation_description="Mark a basic notification as read or unread",
         operation_summary="Update Basic Notification Read Status",
         tags=["Basic Notifications"],

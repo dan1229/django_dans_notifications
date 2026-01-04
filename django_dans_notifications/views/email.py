@@ -29,7 +29,7 @@ class NotificationEmailViewSet(viewsets.GenericViewSet):
     permission_classes = (IsAuthenticated,)
     response_handler = ApiResponseHandler()
 
-    @swagger_auto_schema(
+    @swagger_auto_schema(  # type: ignore[misc]
         operation_description="List email notifications for the authenticated user",
         operation_summary="List Email Notifications",
         tags=["Email Notifications"],
@@ -97,7 +97,7 @@ class NotificationEmailViewSet(viewsets.GenericViewSet):
             response=self.get_paginated_response(page)
         )
 
-    @swagger_auto_schema(
+    @swagger_auto_schema(  # type: ignore[misc]
         operation_description="Retrieve a specific email notification by ID",
         operation_summary="Retrieve Email Notification",
         tags=["Email Notifications"],
