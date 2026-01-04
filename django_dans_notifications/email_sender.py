@@ -170,7 +170,9 @@ class EmailSender:
 
 
 # Convenience function for backward compatibility
-def send_email_async(func: Callable[..., Any], *args: Any, **kwargs: Any) -> Union[Future[Any], Any]:
+def send_email_async(
+    func: Callable[..., Any], *args: Any, **kwargs: Any
+) -> Union[Future[Any], Any]:
     """
     Send email asynchronously using the singleton EmailSender.
 
