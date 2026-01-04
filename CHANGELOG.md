@@ -12,6 +12,34 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
+### [1.3.0] - 2026-01-03
+- Improved base / default email templates
+    - Enhanced `base.html` template with modern, responsive design
+    - Professional styling with better typography and spacing
+    - Mobile-friendly layout with email client compatibility
+    - Improved `contact.html` template with cleaner information display
+    - All changes are backwards compatible - no configuration required
+- Admin usability improvements
+    - Better sorting and searching
+    - More relevant columns
+- Improved email threading system with `EmailSender` class
+  - Thread pool executor with configurable max workers (default: 3)
+  - Automatic retry logic with exponential backoff for failed sends
+  - Proper asynchronous execution (fixes previous .run() vs .start() bug)
+  - Graceful shutdown on application exit
+  - Optional synchronous mode for testing/debugging
+- Fixed issue with keys being put at top level instead of `error_fields`
+- Improved Swagger API docs
+    - Specifically compatible with drf-yasg
+- Complete documentation overhaul
+    - Created comprehensive Getting Started guide
+    - Added detailed Usage guide with examples
+    - Improved API documentation with request/response examples
+    - Enhanced Model documentation with full field descriptions
+    - Expanded Email Templates documentation with custom template guide
+    - Simplified README with links to new documentation
+
+    
 ### [1.2.1] - 2024-07-14
 - Fixed `EmailThread` usage in `send_email` function
 
