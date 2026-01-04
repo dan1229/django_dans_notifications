@@ -36,27 +36,17 @@ class NotificationBasicSerializer(BaseSerializer):
             "datetime_created",
         )
         extra_kwargs = {
-            'message': {
-                'help_text': 'The notification message content'
+            "message": {"help_text": "The notification message content"},
+            "read": {"help_text": "Whether the notification has been marked as read"},
+            "datetime_created": {
+                "help_text": "Timestamp when the notification was created"
             },
-            'read': {
-                'help_text': 'Whether the notification has been marked as read'
+            "datetime_sent": {"help_text": "Timestamp when the notification was sent"},
+            "sent_successfully": {
+                "help_text": "Whether the notification was sent successfully"
             },
-            'datetime_created': {
-                'help_text': 'Timestamp when the notification was created'
-            },
-            'datetime_sent': {
-                'help_text': 'Timestamp when the notification was sent'
-            },
-            'sent_successfully': {
-                'help_text': 'Whether the notification was sent successfully'
-            },
-            'sender': {
-                'help_text': 'Email address of the notification sender'
-            },
-            'recipients': {
-                'help_text': 'List of recipient emails or user IDs'
-            }
+            "sender": {"help_text": "Email address of the notification sender"},
+            "recipients": {"help_text": "List of recipient emails or user IDs"},
         }
 
 
@@ -78,12 +68,8 @@ class NotificationEmailTemplateSerializer(BaseSerializer):
             "nickname",
         )
         extra_kwargs = {
-            'path': {
-                'help_text': 'File path to the email template'
-            },
-            'nickname': {
-                'help_text': 'Human-readable name for the template'
-            }
+            "path": {"help_text": "File path to the email template"},
+            "nickname": {"help_text": "Human-readable name for the template"},
         }
 
 
@@ -96,6 +82,7 @@ class NotificationEmailSerializer(BaseSerializer):
 
     Email notifications use templates and context data to generate HTML content.
     """
+
     template_ref = NotificationEmailTemplateSerializer(
         source="template", required=False, help_text="Template details (read-only)"
     )
@@ -124,30 +111,18 @@ class NotificationEmailSerializer(BaseSerializer):
             "datetime_created",
         )
         extra_kwargs = {
-            'template': {
-                'help_text': 'ID of the email template to use'
+            "template": {"help_text": "ID of the email template to use"},
+            "subject": {"help_text": "Email subject line"},
+            "context": {"help_text": "JSON context data for template rendering"},
+            "datetime_created": {
+                "help_text": "Timestamp when the notification was created"
             },
-            'subject': {
-                'help_text': 'Email subject line'
+            "datetime_sent": {"help_text": "Timestamp when the notification was sent"},
+            "sent_successfully": {
+                "help_text": "Whether the email was sent successfully"
             },
-            'context': {
-                'help_text': 'JSON context data for template rendering'
-            },
-            'datetime_created': {
-                'help_text': 'Timestamp when the notification was created'
-            },
-            'datetime_sent': {
-                'help_text': 'Timestamp when the notification was sent'
-            },
-            'sent_successfully': {
-                'help_text': 'Whether the email was sent successfully'
-            },
-            'sender': {
-                'help_text': 'Email address of the sender'
-            },
-            'recipients': {
-                'help_text': 'List of recipient emails or user IDs'
-            }
+            "sender": {"help_text": "Email address of the sender"},
+            "recipients": {"help_text": "List of recipient emails or user IDs"},
         }
 
     @staticmethod
@@ -182,22 +157,14 @@ class NotificationPushSerializer(BaseSerializer):
             "datetime_created",
         )
         extra_kwargs = {
-            'message': {
-                'help_text': 'The push notification message content'
+            "message": {"help_text": "The push notification message content"},
+            "datetime_created": {
+                "help_text": "Timestamp when the notification was created"
             },
-            'datetime_created': {
-                'help_text': 'Timestamp when the notification was created'
+            "datetime_sent": {"help_text": "Timestamp when the notification was sent"},
+            "sent_successfully": {
+                "help_text": "Whether the push notification was sent successfully"
             },
-            'datetime_sent': {
-                'help_text': 'Timestamp when the notification was sent'
-            },
-            'sent_successfully': {
-                'help_text': 'Whether the push notification was sent successfully'
-            },
-            'sender': {
-                'help_text': 'Email address of the notification sender'
-            },
-            'recipients': {
-                'help_text': 'List of recipient emails or user IDs'
-            }
+            "sender": {"help_text": "Email address of the notification sender"},
+            "recipients": {"help_text": "List of recipient emails or user IDs"},
         }

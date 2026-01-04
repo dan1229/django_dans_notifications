@@ -33,14 +33,14 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
     @swagger_auto_schema(
         operation_description="List push notifications for the authenticated user",
         operation_summary="List Push Notifications",
-        tags=['Push Notifications'],
+        tags=["Push Notifications"],
         responses={
             200: openapi.Response(
                 description="List of push notifications",
-                schema=NotificationPushSerializer(many=True)
+                schema=NotificationPushSerializer(many=True),
             ),
-            401: openapi.Response(description="Authentication required")
-        }
+            401: openapi.Response(description="Authentication required"),
+        },
     )
     def list(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """
@@ -66,25 +66,25 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
     @swagger_auto_schema(
         operation_description="Retrieve a specific push notification by ID",
         operation_summary="Retrieve Push Notification",
-        tags=['Push Notifications'],
+        tags=["Push Notifications"],
         manual_parameters=[
             openapi.Parameter(
-                'pk',
+                "pk",
                 openapi.IN_PATH,
                 description="UUID of the push notification to retrieve",
                 type=openapi.TYPE_STRING,
                 format=openapi.FORMAT_UUID,
-                required=True
+                required=True,
             )
         ],
         responses={
             200: openapi.Response(
                 description="Push notification details",
-                schema=NotificationPushSerializer()
+                schema=NotificationPushSerializer(),
             ),
             404: openapi.Response(description="Notification not found"),
-            401: openapi.Response(description="Authentication required")
-        }
+            401: openapi.Response(description="Authentication required"),
+        },
     )
     def retrieve(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """
@@ -110,30 +110,30 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
     @swagger_auto_schema(
         operation_description="Create a new push notification",
         operation_summary="Create Push Notification",
-        tags=['Push Notifications'],
+        tags=["Push Notifications"],
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
-            required=['recipients', 'message'],
+            required=["recipients", "message"],
             properties={
-                'recipients': openapi.Schema(
+                "recipients": openapi.Schema(
                     type=openapi.TYPE_ARRAY,
                     items=openapi.Schema(type=openapi.TYPE_STRING),
-                    description="List of recipient emails or user IDs"
+                    description="List of recipient emails or user IDs",
                 ),
-                'message': openapi.Schema(
+                "message": openapi.Schema(
                     type=openapi.TYPE_STRING,
-                    description="Push notification message content"
-                )
-            }
+                    description="Push notification message content",
+                ),
+            },
         ),
         responses={
             201: openapi.Response(
                 description="Push notification created successfully",
-                schema=NotificationPushSerializer()
+                schema=NotificationPushSerializer(),
             ),
             400: openapi.Response(description="Invalid input data"),
-            401: openapi.Response(description="Authentication required")
-        }
+            401: openapi.Response(description="Authentication required"),
+        },
     )
     def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """

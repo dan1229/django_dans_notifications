@@ -34,14 +34,14 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
     @swagger_auto_schema(
         operation_description="List basic notifications for the authenticated user",
         operation_summary="List Basic Notifications",
-        tags=['Basic Notifications'],
+        tags=["Basic Notifications"],
         responses={
             200: openapi.Response(
                 description="List of basic notifications",
-                schema=NotificationBasicSerializer(many=True)
+                schema=NotificationBasicSerializer(many=True),
             ),
-            401: openapi.Response(description="Authentication required")
-        }
+            401: openapi.Response(description="Authentication required"),
+        },
     )
     def list(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """
@@ -67,25 +67,25 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
     @swagger_auto_schema(
         operation_description="Retrieve a specific basic notification by ID",
         operation_summary="Retrieve Basic Notification",
-        tags=['Basic Notifications'],
+        tags=["Basic Notifications"],
         manual_parameters=[
             openapi.Parameter(
-                'pk',
+                "pk",
                 openapi.IN_PATH,
                 description="UUID of the notification to retrieve",
                 type=openapi.TYPE_STRING,
                 format=openapi.FORMAT_UUID,
-                required=True
+                required=True,
             )
         ],
         responses={
             200: openapi.Response(
                 description="Basic notification details",
-                schema=NotificationBasicSerializer()
+                schema=NotificationBasicSerializer(),
             ),
             404: openapi.Response(description="Notification not found"),
-            401: openapi.Response(description="Authentication required")
-        }
+            401: openapi.Response(description="Authentication required"),
+        },
     )
     def retrieve(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """
@@ -111,30 +111,29 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
     @swagger_auto_schema(
         operation_description="Create a new basic notification",
         operation_summary="Create Basic Notification",
-        tags=['Basic Notifications'],
+        tags=["Basic Notifications"],
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
-            required=['recipients', 'message'],
+            required=["recipients", "message"],
             properties={
-                'recipients': openapi.Schema(
+                "recipients": openapi.Schema(
                     type=openapi.TYPE_ARRAY,
                     items=openapi.Schema(type=openapi.TYPE_STRING),
-                    description="List of recipient emails or user IDs"
+                    description="List of recipient emails or user IDs",
                 ),
-                'message': openapi.Schema(
-                    type=openapi.TYPE_STRING,
-                    description="Notification message content"
-                )
-            }
+                "message": openapi.Schema(
+                    type=openapi.TYPE_STRING, description="Notification message content"
+                ),
+            },
         ),
         responses={
             201: openapi.Response(
                 description="Basic notification created successfully",
-                schema=NotificationBasicSerializer()
+                schema=NotificationBasicSerializer(),
             ),
             400: openapi.Response(description="Invalid input data"),
-            401: openapi.Response(description="Authentication required")
-        }
+            401: openapi.Response(description="Authentication required"),
+        },
     )
     def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """
@@ -179,34 +178,34 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
     @swagger_auto_schema(
         operation_description="Mark a basic notification as read or unread",
         operation_summary="Update Basic Notification Read Status",
-        tags=['Basic Notifications'],
+        tags=["Basic Notifications"],
         manual_parameters=[
             openapi.Parameter(
-                'pk',
+                "pk",
                 openapi.IN_PATH,
                 description="UUID of the notification to update",
                 type=openapi.TYPE_STRING,
                 format=openapi.FORMAT_UUID,
-                required=True
+                required=True,
             )
         ],
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
             properties={
-                'read': openapi.Schema(
+                "read": openapi.Schema(
                     type=openapi.TYPE_BOOLEAN,
-                    description="Mark notification as read (true) or unread (false)"
+                    description="Mark notification as read (true) or unread (false)",
                 )
-            }
+            },
         ),
         responses={
             200: openapi.Response(
                 description="Basic notification updated successfully",
-                schema=NotificationBasicSerializer()
+                schema=NotificationBasicSerializer(),
             ),
             404: openapi.Response(description="Notification not found"),
-            401: openapi.Response(description="Authentication required")
-        }
+            401: openapi.Response(description="Authentication required"),
+        },
     )
     def partial_update(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """

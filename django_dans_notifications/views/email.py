@@ -32,14 +32,14 @@ class NotificationEmailViewSet(viewsets.GenericViewSet):
     @swagger_auto_schema(
         operation_description="List email notifications for the authenticated user",
         operation_summary="List Email Notifications",
-        tags=['Email Notifications'],
+        tags=["Email Notifications"],
         responses={
             200: openapi.Response(
                 description="List of email notifications",
-                schema=NotificationEmailSerializer(many=True)
+                schema=NotificationEmailSerializer(many=True),
             ),
-            401: openapi.Response(description="Authentication required")
-        }
+            401: openapi.Response(description="Authentication required"),
+        },
     )
     def list(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """
@@ -65,25 +65,25 @@ class NotificationEmailViewSet(viewsets.GenericViewSet):
     @swagger_auto_schema(
         operation_description="Retrieve a specific email notification by ID",
         operation_summary="Retrieve Email Notification",
-        tags=['Email Notifications'],
+        tags=["Email Notifications"],
         manual_parameters=[
             openapi.Parameter(
-                'pk',
+                "pk",
                 openapi.IN_PATH,
                 description="UUID of the email notification to retrieve",
                 type=openapi.TYPE_STRING,
                 format=openapi.FORMAT_UUID,
-                required=True
+                required=True,
             )
         ],
         responses={
             200: openapi.Response(
                 description="Email notification details including rendered content",
-                schema=NotificationEmailSerializer()
+                schema=NotificationEmailSerializer(),
             ),
             404: openapi.Response(description="Notification not found"),
-            401: openapi.Response(description="Authentication required")
-        }
+            401: openapi.Response(description="Authentication required"),
+        },
     )
     def retrieve(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """
