@@ -12,6 +12,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
+### [1.3.1] - 2026-05-12
+- Fixed `sent_successfully` fire-and-forget bug in `NotificationEmail.objects.send_email()`
+    - Previously set to `True` the moment the SMTP send was submitted to the `ThreadPoolExecutor`, before the actual SMTP exchange completed — so failures (auth, connection refused, retries exhausted) only landed in logs, never on the row
+    - Now updated via the future's done-callback after SMTP actually resolves; failures correctly land as `sent_successfully=False`
+    - In sync mode (`EMAIL_SYNC_MODE=True`), the success flag is written inline as before
+    - No schema change; bool semantics preserved — row is `False` until the executor confirms success
+
+
 ### [1.3.0] - 2026-01-03
 - Improved base / default email templates
     - Enhanced `base.html` template with modern, responsive design

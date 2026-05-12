@@ -1,4 +1,5 @@
-from typing import Any, Dict, List, Optional, Union
+from concurrent.futures import Future
+from typing import Any, Callable, Dict, List, Optional, Union
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.db import models
@@ -218,24 +219,33 @@ class NotificationEmailManager(models.Manager):  # type: ignore[type-arg]
         except AttributeError as e:
             LOGGER.error(f"Issue attaching to email: {type(e)} - {e}")
 
+        # Save row first so the executor callback can update by pk after the
+        # SMTP exchange resolves. sent_successfully starts False (model default)
+        # and is flipped to True only once the future confirms success.
+        notification_email.datetime_sent = timezone.now()
+        notification_email.save()
+
         # send email via django
         try:
             if hasattr(settings, "IN_TEST") and settings.IN_TEST:
-                pass  # don't send mail in tests
+                pass  # don't send mail in tests; row stays at default False
             else:
-                # Use the new email sender with retry logic and thread pooling
-                send_email_async(message.send)
-                notification_email.sent_successfully = True
+                result = send_email_async(message.send)
+                if isinstance(result, Future):
+                    result.add_done_callback(
+                        _make_send_result_callback(notification_email.pk)
+                    )
+                else:
+                    # Sync mode: send_email_async ran inline and returned
+                    # without raising, so the SMTP send succeeded.
+                    notification_email.sent_successfully = True
+                    notification_email.save()
         except (
             SMTPException,
             SMTPAuthenticationError,
         ) as e:
             LOGGER.error(f"Error creating and sending email: {type(e)} - {e}")
-            notification_email.sent_successfully = False
 
-        # save regardless of status
-        notification_email.datetime_sent = timezone.now()
-        notification_email.save()
         return notification_email  # type: ignore[no-any-return]
 
 
@@ -265,6 +275,42 @@ def get_default_template() -> NotificationEmailTemplate:
     )[
         0
     ]
+
+
+def _make_send_result_callback(
+    notification_email_pk: Any,
+) -> Callable[["Future[Any]"], None]:
+    """
+    Build a done-callback for the email-send future that writes the real
+    SMTP outcome back to the NotificationEmail row. Runs in the executor
+    worker thread; closes the per-thread DB connection on exit so we don't
+    leak connections across worker threads.
+    """
+
+    def callback(future: "Future[Any]") -> None:
+        from django.db import connection
+
+        try:
+            future.result()  # raises if the SMTP send failed
+            success = True
+        except Exception as e:
+            LOGGER.error(
+                f"Async email send failed for NotificationEmail "
+                f"pk={notification_email_pk}: {e}"
+            )
+            success = False
+        try:
+            NotificationEmail.objects.filter(pk=notification_email_pk).update(
+                sent_successfully=success
+            )
+        except Exception as e:
+            LOGGER.error(
+                f"Failed to update NotificationEmail pk={notification_email_pk}: {e}"
+            )
+        finally:
+            connection.close()
+
+    return callback
 
 
 #
