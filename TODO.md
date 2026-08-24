@@ -50,9 +50,14 @@
 
 #### install the standard release workflow
 - there is no `.github/workflows/detect-version.yml` here at all - releasing means opening
-  the Actions tab and running `release.yml` by hand, and the GitHub release object gets
-  whatever generic body that job writes. This is a public PyPI package, so strangers read
-  that body
+  the Actions tab and running `release.yml` by hand
+    - the empty-body half of this is already closed (2026-08-23): `release.yml` was reading
+      `body` from `github.event.head_commit.message` and `commit` from
+      `github.event.pull_request.head.sha`, neither of which exists on a
+      `workflow_dispatch` run, so every release shipped blank. It now extracts the version's
+      section out of `CHANGELOG.md` - the same awk the standard uses - and fails on a
+      missing or empty section *before* the PyPI upload rather than after. What is left
+      here is the trigger, not the notes
 - the standard makes the release a commit: a `release: [X.X.X]` subject on main tags the
   repo, cuts a `release/X.X.X` marker branch, and creates the release with notes read out
   of `CHANGELOG.md` at that SHA

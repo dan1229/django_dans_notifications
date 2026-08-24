@@ -9,9 +9,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Run black
-        uses: psf/black@stable
-
+      # NOTE: no `psf/black@stable` step here on purpose. That action installs
+      # whatever black is newest, which drifts away from the `black==24.4.2` pin
+      # in requirements-dev.txt and fails on files the pinned version accepts.
+      # The pinned `black --check .` below is the gate.
       - name: Install dev dependencies
         run: pip install -r requirements-dev.txt
 

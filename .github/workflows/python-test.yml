@@ -29,12 +29,22 @@ jobs:
         key: ${{ runner.os }}-pip-${{ matrix.python_version }}-${{ matrix.django_version }}
 
     - name: Install dependencies
+      # Order matters. requirements.txt pins `Django == 5.0` for local dev, so
+      # installing it AFTER the matrix version silently undid the pin and every
+      # cell ended up on one Django. The matrix version goes last so it wins.
+      #
+      # DRF and setuptools are constrained because the open floors resolve to
+      # releases that cannot serve the older half of the matrix: DRF >= 3.16
+      # requires Django >= 4.2, and setuptools >= 81 drops `pkg_resources`,
+      # which the older Django versions still import. DRF 3.15.x spans the whole
+      # matrix (Django 3.0 through 5.0).
       run: |
         python -m pip install --upgrade pip
         pip install -e .
-        pip install -U Django==${{ matrix.django_version }}
         pip install -r requirements.txt
         pip install -r requirements-dev.txt
+        pip install -U "djangorestframework>=3.15,<3.16" "setuptools<81"
+        pip install -U "Django==${{ matrix.django_version }}"
 
     - name: Run tests
       run: python -m coverage run runtests.py

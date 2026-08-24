@@ -27,6 +27,26 @@ jobs:
           python -m pip install --upgrade pip
           pip install setuptools wheel twine
 
+      # Runs BEFORE the upload on purpose. A PyPI version cannot be reissued, so
+      # a CHANGELOG that has no section for this version should fail here, while
+      # nothing has been published yet.
+      - name: Extract release notes from CHANGELOG
+        run: |
+          VERSION="${{ github.event.inputs.version }}"
+          awk -v tag="[$VERSION]" '
+            { h = $0; sub(/^#+[ \t]+/, "", h) }
+            index(h, tag) == 1 && $0 ~ /^#/      { f = 1; next }
+            f && $0 ~ /^#/ && index(h, "[") == 1 { exit }
+            f && /^---+[[:space:]]*$/            { exit }
+            f                                    { print }
+            END                                  { exit !f }
+          ' CHANGELOG.md > notes.raw \
+            || { echo "::error::CHANGELOG.md has no [$VERSION] section"; exit 1; }
+          sed '/./,$!d' notes.raw > notes.md
+          grep -q '[^[:space:]]' notes.md \
+            || { echo "::error::the [$VERSION] section in CHANGELOG.md is empty"; exit 1; }
+          echo "--- release body ---"; cat notes.md
+
       - name: Build and publish
         env:
           TWINE_USERNAME: __token__
@@ -35,10 +55,14 @@ jobs:
           python setup.py sdist bdist_wheel
           twine upload dist/*
 
+      # `body:` used to read `github.event.head_commit.message` and `commit:`
+      # read `github.event.pull_request.head.sha`. This workflow is
+      # workflow_dispatch, which carries neither context, so every release
+      # shipped with an empty body. Notes come out of CHANGELOG.md instead.
       - name: Create release in GitHub
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ github.event.inputs.version }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit: ${{ github.event.pull_request.head.sha }}
-          body: ${{ github.event.head_commit.message }}
+          commit: ${{ github.sha }}
+          bodyFile: notes.md
