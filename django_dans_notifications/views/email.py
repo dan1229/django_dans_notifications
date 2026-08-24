@@ -9,7 +9,10 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from ..models.notifications import NotificationEmail
-from ..serializers import NotificationEmailSerializer
+from ..serializers import (
+    NotificationEmailSerializer,
+    PaginatedNotificationEmailSerializer,
+)
 from django.db.models import Q
 
 """
@@ -46,32 +49,7 @@ class NotificationEmailViewSet(viewsets.GenericViewSet):
         responses={
             200: openapi.Response(
                 description="Paginated list of email notifications (default: 20 items per page)",
-                schema=openapi.Schema(
-                    type=openapi.TYPE_OBJECT,
-                    properties={
-                        "count": openapi.Schema(
-                            type=openapi.TYPE_INTEGER,
-                            description="Total number of notifications",
-                        ),
-                        "next": openapi.Schema(
-                            type=openapi.TYPE_STRING,
-                            format=openapi.FORMAT_URI,
-                            description="Next page URL",
-                            nullable=True,
-                        ),
-                        "previous": openapi.Schema(
-                            type=openapi.TYPE_STRING,
-                            format=openapi.FORMAT_URI,
-                            description="Previous page URL",
-                            nullable=True,
-                        ),
-                        "results": openapi.Schema(
-                            type=openapi.TYPE_ARRAY,
-                            items=NotificationEmailSerializer(),
-                            description="Array of email notifications for current page",
-                        ),
-                    },
-                ),
+                schema=PaginatedNotificationEmailSerializer(),
             ),
             401: openapi.Response(description="Authentication required"),
         },

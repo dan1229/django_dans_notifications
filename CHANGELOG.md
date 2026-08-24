@@ -12,6 +12,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
+### [1.4.0] - 2026-08-23
+- Fixed the OpenAPI schema export returning a 500
+    - `?format=openapi` died with `Object of type NotificationBasicSerializer is not JSON serializable` - the Swagger UI page itself was unaffected
+    - Caused by the `list` endpoints' hand-built response schema, which nested a raw serializer where drf-yasg does not resolve one
+    - All three list endpoints (basic, email, push) now document their paginated response as a named `PaginatedNotification*` definition
+    - No runtime API behaviour changed - responses are byte-for-byte what they were
+
+
 ### [1.3.1] - 2026-05-12
 - Fixed `sent_successfully` fire-and-forget bug in `NotificationEmail.objects.send_email()`
     - Previously set to `True` the moment the SMTP send was submitted to the `ThreadPoolExecutor`, before the actual SMTP exchange completed — so failures (auth, connection refused, retries exhausted) only landed in logs, never on the row

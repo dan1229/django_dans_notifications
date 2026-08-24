@@ -51,6 +51,22 @@ class NotificationBasicSerializer(BaseSerializer):
 
 
 #
+# NOTIFICATION BASIC PAGINATED (swagger only) ========================== #
+#
+class PaginatedNotificationBasicSerializer(serializers.Serializer):
+    """
+    Swagger-only wrapper describing the paginated `list` response shape.
+    """
+
+    count = serializers.IntegerField(help_text="Total number of notifications")
+    next = serializers.URLField(allow_null=True, help_text="Next page URL")
+    previous = serializers.URLField(allow_null=True, help_text="Previous page URL")
+    results = NotificationBasicSerializer(
+        many=True, help_text="Array of basic notifications for current page"
+    )
+
+
+#
 # NOTIFICATION EMAIL TEMPLATE ========================== #
 #
 class NotificationEmailTemplateSerializer(BaseSerializer):
@@ -132,6 +148,22 @@ class NotificationEmailSerializer(BaseSerializer):
 
 
 #
+# NOTIFICATION EMAIL PAGINATED (swagger only) ========================== #
+#
+class PaginatedNotificationEmailSerializer(serializers.Serializer):
+    """
+    Swagger-only wrapper describing the paginated `list` response shape.
+    """
+
+    count = serializers.IntegerField(help_text="Total number of notifications")
+    next = serializers.URLField(allow_null=True, help_text="Next page URL")
+    previous = serializers.URLField(allow_null=True, help_text="Previous page URL")
+    results = NotificationEmailSerializer(
+        many=True, help_text="Array of email notifications for current page"
+    )
+
+
+#
 # NOTIFICATION PUSH ========================== #
 #
 class NotificationPushSerializer(BaseSerializer):
@@ -168,3 +200,19 @@ class NotificationPushSerializer(BaseSerializer):
             "sender": {"help_text": "Email address of the notification sender"},
             "recipients": {"help_text": "List of recipient emails or user IDs"},
         }
+
+
+#
+# NOTIFICATION PUSH PAGINATED (swagger only) ========================== #
+#
+class PaginatedNotificationPushSerializer(serializers.Serializer):
+    """
+    Swagger-only wrapper describing the paginated `list` response shape.
+    """
+
+    count = serializers.IntegerField(help_text="Total number of notifications")
+    next = serializers.URLField(allow_null=True, help_text="Next page URL")
+    previous = serializers.URLField(allow_null=True, help_text="Previous page URL")
+    results = NotificationPushSerializer(
+        many=True, help_text="Array of push notifications for current page"
+    )

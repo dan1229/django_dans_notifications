@@ -10,7 +10,10 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from ..models.notifications import NotificationPush
-from ..serializers import NotificationPushSerializer
+from ..serializers import (
+    NotificationPushSerializer,
+    PaginatedNotificationPushSerializer,
+)
 from django.db.models import Q
 
 """
@@ -47,32 +50,7 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
         responses={
             200: openapi.Response(
                 description="Paginated list of push notifications (default: 20 items per page)",
-                schema=openapi.Schema(
-                    type=openapi.TYPE_OBJECT,
-                    properties={
-                        "count": openapi.Schema(
-                            type=openapi.TYPE_INTEGER,
-                            description="Total number of notifications",
-                        ),
-                        "next": openapi.Schema(
-                            type=openapi.TYPE_STRING,
-                            format=openapi.FORMAT_URI,
-                            description="Next page URL",
-                            nullable=True,
-                        ),
-                        "previous": openapi.Schema(
-                            type=openapi.TYPE_STRING,
-                            format=openapi.FORMAT_URI,
-                            description="Previous page URL",
-                            nullable=True,
-                        ),
-                        "results": openapi.Schema(
-                            type=openapi.TYPE_ARRAY,
-                            items=NotificationPushSerializer(),
-                            description="Array of push notifications for current page",
-                        ),
-                    },
-                ),
+                schema=PaginatedNotificationPushSerializer(),
             ),
             401: openapi.Response(description="Authentication required"),
         },
