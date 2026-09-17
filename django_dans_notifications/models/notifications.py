@@ -1,4 +1,5 @@
 from concurrent.futures import Future
+import re
 from typing import Any, Callable, Dict, List, Optional, Union
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
@@ -194,7 +195,21 @@ class NotificationEmailManager(models.Manager):  # type: ignore[type-arg]
 
         # create message object
         try:
-            text_content = strip_tags(html_string)
+            # The plain-text alternative comes from the same document as the HTML
+            # one, and strip_tags keeps text nodes - so the <head>'s <style>
+            # rules and <title>, plus any <style>/<script> blocks in the body,
+            # would open the plain-text email. Cut them before stripping tags.
+            body_match = re.search(
+                r"<body[^>]*>(.*)</body>", html_string, re.IGNORECASE | re.DOTALL
+            )
+            text_source = body_match.group(1) if body_match else html_string
+            text_source = re.sub(
+                r"<(style|script)\b[^>]*>.*?</\1>",
+                "",
+                text_source,
+                flags=re.IGNORECASE | re.DOTALL,
+            )
+            text_content = strip_tags(text_source)
             message = EmailMultiAlternatives(
                 subject=subject,
                 body=text_content,

@@ -1,6 +1,7 @@
 from typing import List, Dict, Any
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.files import File
+from django.test import override_settings
 from unittest.mock import patch
 from ..base import BaseModelTestCase
 from ....models.notifications import NotificationEmail
@@ -162,3 +163,23 @@ class TestNotificationEmailManager(BaseModelTestCase):
             )
             # Ensure email is not marked as sent in test mode
             self.assertFalse(notification_email.sent_successfully)
+
+    def test_send_email_plain_text_has_no_css(self) -> None:
+        # The plain-text body is derived from the rendered HTML document, whose
+        # <head> carries a responsive <style> block. strip_tags drops tags but
+        # keeps text nodes, so the CSS used to open every plain-text email.
+        template: str = "django-dans-emails/default.html"
+        with patch(
+            "django_dans_notifications.models.notifications.send_email_async"
+        ) as mock_send:
+            with override_settings(IN_TEST=False):
+                NotificationEmail.objects.send_email("Test subject", template=template)
+        # IN_TEST short-circuits message.send(), so the constructed message is
+        # only reachable as the bound method handed to send_email_async.
+        message = mock_send.call_args[0][0].__self__
+        self.assertIn("Have a great day!", message.body)
+        self.assertNotIn("@media", message.body)
+        self.assertNotIn(".container-main", message.body)
+        html: str = message.alternatives[0][0]
+        # The HTML alternative keeps its styles - only the plain part is cleaned.
+        self.assertIn("@media", html)
