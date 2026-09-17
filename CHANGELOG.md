@@ -12,6 +12,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
+### [1.4.1] - 2026-09-17
+- Fixed the plain-text alternative of every email opening with CSS
+    - The plain-text body was `strip_tags()` over the full rendered document, and `strip_tags` keeps text nodes - so the `<head>`'s responsive `<style>` rules (and the `<title>`) opened every plain-text reader's view
+    - The plain text now comes from the document's `<body>` when one exists, and `<style>`/`<script>` blocks are removed before stripping tags, wherever they sit
+    - The HTML alternative is unchanged
+
+
 ### [1.4.0] - 2026-08-23
 - Fixed the OpenAPI schema export returning a 500
     - `?format=openapi` died with `Object of type NotificationBasicSerializer is not JSON serializable` - the Swagger UI page itself was unaffected
