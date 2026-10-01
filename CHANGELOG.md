@@ -12,6 +12,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
+### [1.4.2] - 2026-10-01
+- **Security:** fixed notification endpoints showing a user other people's notifications
+    - The list endpoints filtered on `recipients__contains=<email>`, which is a SQL substring match, and `retrieve` used the matching Python `in` check on the raw string
+    - So an account whose email is a substring of someone else's (`ob@example.com` inside `bob@example.com`) could read that person's notifications, including the context and rendered body of emails like magic-link and password-reset messages. That was enough to sign in as them
+    - Recipients now match only as a whole comma-separated entry, case-insensitively, through the new `recipient_q()` and `recipients_contains()`. `NotificationManager.query_ownership` matches the sender exactly too
+    - Upgrade: no migration. Every project that routes `django_dans_notifications.urls` should take this
+
+
 ### [1.4.1] - 2026-09-17
 - Fixed the plain-text alternative of every email opening with CSS
     - The plain-text body was `strip_tags()` over the full rendered document, and `strip_tags` keeps text nodes - so the `<head>`'s responsive `<style>` rules (and the `<title>`) opened every plain-text reader's view
