@@ -61,6 +61,13 @@ class TestNotificationManager(BaseModelTestCase):
         self.assertIn(self.notification_basic, notifications["basic"])
         self.assertIn(self.notification_push, notifications["push"])
 
+    def test_get_notifications_is_not_a_substring_match(self) -> None:
+        other = NotificationBasic.objects.create(
+            recipients=f"x{self.base_email}", sender="someone@else.com", message="m"
+        )
+        self.assertNotIn(other, self.manager.get_notifications_basic(self.base_email))
+        self.assertEqual(self.manager.get_notifications_basic("").count(), 0)
+
     # =================================================================== #
     # UPDATE TESTS ====================================================== #
     # =================================================================== #

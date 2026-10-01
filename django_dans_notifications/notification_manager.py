@@ -2,7 +2,7 @@ from typing import Dict, Optional
 from django.db.models import Q
 from django.db.models.query import QuerySet
 
-from .models.base import NotificationBase
+from .models.base import NotificationBase, recipient_q
 
 from .models.notifications import NotificationEmail, NotificationBasic, NotificationPush
 
@@ -25,7 +25,9 @@ NOTIFICATION MANAGER ===========================================================
 class NotificationManager:
     @staticmethod
     def query_ownership(user_email: str) -> Q:
-        return Q(sender__contains=user_email) | Q(recipients__contains=user_email)
+        if not user_email:
+            return Q(pk__in=[])
+        return Q(sender__iexact=user_email) | recipient_q(user_email)
 
     #
     # RETRIEVE

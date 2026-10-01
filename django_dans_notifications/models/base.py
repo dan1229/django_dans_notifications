@@ -2,6 +2,7 @@ from typing import Any, List
 import uuid
 
 from django.db import models
+from django.db.models import Q
 
 """
 # ==================================================================================== #
@@ -22,6 +23,26 @@ class AbstractBaseModel(models.Model):
 
     def __str__(self) -> str:
         return "Abstract Base Model"
+
+
+def recipient_q(value: Any, field: str = "recipients") -> Q:
+    """
+    Match rows whose comma-joined `field` holds `value` as one whole entry.
+
+    A plain `__contains` is a substring match, so `ob@example.com` would match a
+    row sent to `bob@example.com` - and hand its reader that row's magic-link or
+    password-reset URL. `recipients_cleanup()` stores entries as `a,b,c` with no
+    spaces, so one entry is the whole string, the first, the last or a middle one.
+    """
+    entry = str(value or "")
+    if not entry:
+        return Q(pk__in=[])
+    return (
+        Q(**{f"{field}__iexact": entry})
+        | Q(**{f"{field}__istartswith": f"{entry},"})
+        | Q(**{f"{field}__iendswith": f",{entry}"})
+        | Q(**{f"{field}__icontains": f",{entry},"})
+    )
 
 
 """
@@ -93,14 +114,18 @@ class NotificationBase(AbstractBaseModel):
 
     def recipients_contains(self, user: Any) -> bool:
         """
-        Detect if 'user' is involved with this notification or not
+        Detect if 'user' is involved with this notification or not.
+
+        Whole-entry match only, never a substring - see `recipient_q`.
         """
+        candidates: List[Any]
         if isinstance(user, str):
-            if user in self.recipients:
-                return True
+            candidates = [user]
         else:
-            if hasattr(user, "email") and str(user.email) in self.recipients:
-                return True
-            if hasattr(user, "id") and str(user.id) in self.recipients:
-                return True
-        return False
+            candidates = [getattr(user, "email", None), getattr(user, "id", None)]
+        entries = {e.strip().lower() for e in self.recipients_list if e.strip()}
+        return any(
+            str(c).strip().lower() in entries
+            for c in candidates
+            if c and str(c).strip()
+        )

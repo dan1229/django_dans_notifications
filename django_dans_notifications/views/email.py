@@ -8,12 +8,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 
+from ..models.base import recipient_q
 from ..models.notifications import NotificationEmail
 from ..serializers import (
     NotificationEmailSerializer,
     PaginatedNotificationEmailSerializer,
 )
-from django.db.models import Q
 
 """
 ============================================================================================ #
@@ -63,8 +63,8 @@ class NotificationEmailViewSet(viewsets.GenericViewSet):
         serializer = serializer_class(
             self.filter_queryset(
                 self.queryset.filter(
-                    Q(recipients__contains=request.user.email)  # type: ignore[union-attr]
-                    | Q(recipients__contains=request.user.id)  # type: ignore[union-attr]
+                    recipient_q(request.user.email)  # type: ignore[union-attr]
+                    | recipient_q(request.user.id)  # type: ignore[union-attr]
                 )
             ),
             many=True,

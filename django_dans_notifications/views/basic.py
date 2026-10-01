@@ -10,12 +10,12 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from ..helpers import str_to_bool
+from ..models.base import recipient_q
 from ..models.notifications import NotificationBasic
 from ..serializers import (
     NotificationBasicSerializer,
     PaginatedNotificationBasicSerializer,
 )
-from django.db.models import Q
 
 """
 ============================================================================================ #
@@ -65,8 +65,8 @@ class NotificationBasicViewSet(viewsets.GenericViewSet):
         serializer = serializer_class(
             self.filter_queryset(
                 self.queryset.filter(
-                    Q(recipients__contains=request.user.email)  # type: ignore[union-attr]
-                    | Q(recipients__contains=request.user.id)  # type: ignore[union-attr]
+                    recipient_q(request.user.email)  # type: ignore[union-attr]
+                    | recipient_q(request.user.id)  # type: ignore[union-attr]
                 )
             ),
             many=True,

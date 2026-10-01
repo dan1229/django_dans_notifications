@@ -161,6 +161,17 @@ class TestBasicNotification(BaseModelTestCase):
         )
         self.assertFalse(notification.recipients_contains(email1))
 
+    def test_recipients_contains_is_not_a_substring_match(self) -> None:
+        # "ob@example.com" sits inside "bob@example.com" - a substring check
+        # treated its owner as a recipient of bob's notifications
+        notification: NotificationBasic = self.model.objects.create(
+            recipients=["bob@example.com", "carol@example.com"], sender=self.base_email
+        )
+        self.assertFalse(notification.recipients_contains("ob@example.com"))
+        self.assertFalse(notification.recipients_contains("bob@example.co"))
+        self.assertFalse(notification.recipients_contains(""))
+        self.assertTrue(notification.recipients_contains("BOB@example.com"))
+
     #
     # RECIPIENTS CLEANUP
     #

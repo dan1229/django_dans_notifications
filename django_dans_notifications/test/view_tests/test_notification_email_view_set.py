@@ -369,3 +369,67 @@ class TestNotificationEmailViewSet(BaseAPITestCase):
         # confirm status code and data
         self.assertEqual(response.status_code, 400)
         self.assertEqual(json_response["message"], "Notification not found.")
+
+    # ==================================================================================
+    # RECIPIENT MATCHING ===============================================================
+    # ==================================================================================
+
+    def _email_to(self, recipients: str) -> Any:
+        return NotificationEmail.objects.create(
+            recipients=recipients,
+            subject="Login link",
+            context={"url_magic_link": "https://example.com/secret"},
+            template=self.email_template,
+        )
+
+    def test_notification_email_list_skips_address_containing_users(self) -> None:
+        # test@test.com is a substring of contest@test.com - a substring match
+        # handed the caller someone else's magic-link email
+        self._email_to("contest@test.com")
+        self._email_to("test@test.com.au")
+
+        request = self.factory.get(
+            self.get_url(), HTTP_AUTHORIZATION=f"Token {self.user_token}"
+        )
+        response = self.view_list(request)
+        response.render()  # type: ignore[attr-defined]
+        json_response = json.loads(response.content)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json_response["count"], 0)
+
+    def test_notification_email_list_matches_whole_entry_anywhere(self) -> None:
+        mine = [
+            self._email_to("test@test.com"),
+            self._email_to("test@test.com,a@b.com"),
+            self._email_to("a@b.com,test@test.com"),
+            self._email_to("a@b.com,test@test.com,c@d.com"),
+        ]
+        self._email_to("a@b.com,contest@test.com,c@d.com")
+
+        request = self.factory.get(
+            self.get_url(), HTTP_AUTHORIZATION=f"Token {self.user_token}"
+        )
+        response = self.view_list(request)
+        response.render()  # type: ignore[attr-defined]
+        json_response = json.loads(response.content)
+
+        self.assertEqual(
+            sorted(r["id"] for r in json_response["results"]),
+            sorted(str(n.id) for n in mine),
+        )
+
+    def test_notification_email_retrieve_address_containing_user(self) -> None:
+        notification = self._email_to("contest@test.com")
+
+        request = self.factory.get(
+            self.get_url_pk(notification.id),
+            HTTP_AUTHORIZATION=f"Token {self.user_token}",
+        )
+        response = self.view_retrieve(request, pk=notification.id)
+        response.render()  # type: ignore[attr-defined]
+
+        self.assertNotIn("secret", response.content.decode())
+        self.assertEqual(
+            json.loads(response.content)["message"], "Notification not found."
+        )
