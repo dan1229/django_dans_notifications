@@ -12,6 +12,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Released]
 
+### [1.5.0] - 2026-10-02
+- **BREAKING:** only staff can create basic and push notifications over the API
+    - `POST /basic/` and `/push/` took any `recipients` from any signed-in user, so anyone could write messages into another user's feed (spam, phishing)
+    - Upgrade: non-staff callers now get `403`. Creating notifications in server code (models, `NotificationManager`) is unchanged
+- **BREAKING:** removed `django_dans_notifications.threads.EmailThread`, unused since `EmailSender` replaced it - use `django_dans_notifications.email_sender.send_email_async(func, *args, **kwargs)` instead; it runs on call and returns a `Future`, not a `Thread`
+
+
 ### [1.4.2] - 2026-10-01
 - **Security:** fixed notification endpoints showing a user other people's notifications
     - The list endpoints filtered on `recipients__contains=<email>`, which is a SQL substring match, and `retrieve` used the matching Python `in` check on the raw string
