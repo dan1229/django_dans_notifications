@@ -1,11 +1,11 @@
-from typing import Any, Dict
+from typing import Any, Dict, List
 from django_dans_api_toolkit.api_response_handler import ApiResponseHandler
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 
@@ -32,6 +32,12 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
     serializer_class = NotificationPushSerializer
     permission_classes = (IsAuthenticated,)
     response_handler = ApiResponseHandler()
+
+    def get_permissions(self) -> List[Any]:
+        # recipients are free-form, so any user could write into anyone's feed - staff only
+        if self.action == "create":
+            return [IsAdminUser()]
+        return super().get_permissions()
 
     @swagger_auto_schema(  # type: ignore[misc]
         operation_description="List push notifications for the authenticated user",
@@ -119,7 +125,7 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
         return self.response_handler.response_success(results=serializer.data)
 
     @swagger_auto_schema(  # type: ignore[misc]
-        operation_description="Create a new push notification",
+        operation_description="Create a new push notification (staff only)",
         operation_summary="Create Push Notification",
         tags=["Push Notifications"],
         request_body=openapi.Schema(
@@ -154,12 +160,14 @@ class NotificationPushViewSet(viewsets.GenericViewSet):
             ),
             400: openapi.Response(description="Invalid input data"),
             401: openapi.Response(description="Authentication required"),
+            403: openapi.Response(description="Staff only"),
         },
     )
     def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """
         Create a new push notification.
         The sender is automatically set to the authenticated user's email.
+        Staff only: see get_permissions.
         """
         request_data_copy: Dict[str, Any] = request.data.copy()
         if hasattr(request.user, "email"):

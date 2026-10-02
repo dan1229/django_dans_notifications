@@ -34,3 +34,9 @@ class BaseAPITestCase(APITestCase):
                 username=self.username, email=self.email, password=self.password
             )
         self.user_token = Token.objects.create(user=self.user)
+
+        # staff user - only staff may create notifications over the API
+        self.staff_user = get_user_model().objects.create(
+            username="api-test-staff", email="staff@test.com", is_staff=True
+        )
+        self.staff_token = Token.objects.create(user=self.staff_user)

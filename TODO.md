@@ -75,7 +75,9 @@
 
 
 ### [1.5.0] - 2026-MM-DD
-- TODO
+- **BREAKING:** only staff can create basic and push notifications over the API
+    - `POST /basic/` and `/push/` took any `recipients` from any signed-in user, so anyone could write messages into another user's feed (spam, phishing)
+    - Upgrade: non-staff callers now get `403`. Creating notifications in server code (models, `NotificationManager`) is unchanged
 
 -------------------------------------------------------
 

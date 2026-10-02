@@ -104,6 +104,8 @@ Get details of a specific basic notification.
 
 Create a new basic notification.
 
+Staff only (`is_staff`); other users get `403 Forbidden`. Server code creating notifications through the models or `NotificationManager` is unaffected.
+
 **Request Body:**
 ```json
 {
@@ -170,6 +172,8 @@ Get details of a specific push notification.
 **POST** `/api/notifications/push/`
 
 Create and send a new push notification.
+
+Staff only (`is_staff`); other users get `403 Forbidden`. Server code creating notifications through the models or `NotificationManager` is unaffected.
 
 **Request Body:**
 ```json

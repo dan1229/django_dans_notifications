@@ -272,7 +272,7 @@ class TestNotificationBasicViewSet(BaseAPITestCase):
             "message": "Test message",
         }
         request = self.factory.post(
-            self.get_url(), data, HTTP_AUTHORIZATION=f"Token {self.user_token}"
+            self.get_url(), data, HTTP_AUTHORIZATION=f"Token {self.staff_token}"
         )
         response = self.view_create(request)
         response.render()  # type: ignore[attr-defined]
@@ -283,10 +283,23 @@ class TestNotificationBasicViewSet(BaseAPITestCase):
         self.assertEqual(json_response["results"]["message"], "Test message")
         self.assertEqual(json_response["message"], "Successfully completed request.")
 
+    def test_notification_basic_create_non_staff_forbidden(self) -> None:
+        data = {
+            "recipients": "someone-else@test.com",
+            "message": "Test message",
+        }
+        request = self.factory.post(
+            self.get_url(), data, HTTP_AUTHORIZATION=f"Token {self.user_token}"
+        )
+        response = self.view_create(request)
+
+        self.assertEqual(response.status_code, 403)
+        self.assertFalse(NotificationBasic.objects.exists())
+
     def test_notification_basic_create_missing_fields(self) -> None:
         data: Dict[Any, Any] = {}
         request = self.factory.post(
-            self.get_url(), data, HTTP_AUTHORIZATION=f"Token {self.user_token}"
+            self.get_url(), data, HTTP_AUTHORIZATION=f"Token {self.staff_token}"
         )
         response = self.view_create(request)
         response.render()  # type: ignore[attr-defined]
@@ -300,7 +313,7 @@ class TestNotificationBasicViewSet(BaseAPITestCase):
             "recipients": self.email,
         }
         request = self.factory.post(
-            self.get_url(), data, HTTP_AUTHORIZATION=f"Token {self.user_token}"
+            self.get_url(), data, HTTP_AUTHORIZATION=f"Token {self.staff_token}"
         )
         response = self.view_create(request)
         response.render()  # type: ignore[attr-defined]
@@ -321,7 +334,7 @@ class TestNotificationBasicViewSet(BaseAPITestCase):
             self.get_url(),
             json.dumps(data),
             content_type="application/json",
-            HTTP_AUTHORIZATION=f"Token {self.user_token}",
+            HTTP_AUTHORIZATION=f"Token {self.staff_token}",
         )
         response = self.view_create(request)
         response.render()  # type: ignore[attr-defined]
@@ -352,7 +365,7 @@ class TestNotificationBasicViewSet(BaseAPITestCase):
             self.get_url(),
             json.dumps(data),
             content_type="application/json",
-            HTTP_AUTHORIZATION=f"Token {self.user_token}",
+            HTTP_AUTHORIZATION=f"Token {self.staff_token}",
         )
         response = self.view_create(request)
         response.render()  # type: ignore[attr-defined]
