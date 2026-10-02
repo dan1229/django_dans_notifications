@@ -11,14 +11,9 @@ LOGGER = logging.getLogger(__name__)
 
 class EmailSender:
     """
-    Improved email sender using ThreadPoolExecutor for better thread management.
-
-    Features:
-    - Controlled concurrency with max workers
-    - Retry logic for failed sends
-    - Graceful shutdown
-    - Better error tracking
-    - Optional synchronous mode for testing
+    Singleton email sender on a ThreadPoolExecutor (`EMAIL_MAX_WORKERS` threads),
+    with retries, shutdown at exit, and a synchronous mode (`EMAIL_SYNC_MODE` or
+    `IN_TEST`). Settings are read once; after `shutdown()` it cannot restart.
     """
 
     _instance: Optional["EmailSender"] = None
@@ -174,10 +169,9 @@ def send_email_async(
     func: Callable[..., Any], *args: Any, **kwargs: Any
 ) -> Union[Future[Any], Any]:
     """
-    Send email asynchronously using the singleton EmailSender.
-
-    This provides a simple interface that's backward compatible with
-    the old EmailThread usage.
+    Run `func(*args, **kwargs)` on the singleton EmailSender, with retries.
+    Returns a Future in async mode (None once the executor is shut down), the
+    result itself in synchronous mode.
     """
     sender = EmailSender()
     return sender.send_with_retry(func, *args, **kwargs)

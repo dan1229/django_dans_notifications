@@ -14,8 +14,6 @@ from .models.notifications import (
 #
 class NotificationBasicSerializer(BaseSerializer):
     """
-    Serializer for basic text notifications.
-
     Basic notifications are simple text messages that can be marked as read/unread.
     """
 
@@ -71,8 +69,6 @@ class PaginatedNotificationBasicSerializer(serializers.Serializer):
 #
 class NotificationEmailTemplateSerializer(BaseSerializer):
     """
-    Serializer for email notification templates.
-
     Email templates define the HTML structure and styling for email notifications.
     """
 
@@ -168,8 +164,6 @@ class PaginatedNotificationEmailSerializer(serializers.Serializer):
 #
 class NotificationPushSerializer(BaseSerializer):
     """
-    Serializer for push notifications.
-
     Push notifications are sent to mobile devices or web browsers.
     """
 

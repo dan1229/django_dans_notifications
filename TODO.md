@@ -48,6 +48,12 @@
         - allowall, isauth or any class
 
 
+#### EmailSender silently drops async sends after shutdown
+- `EmailSender.shutdown()` (registered with atexit, or called by hand) sets `_executor = None`, but the singleton keeps `_initialized = True` and never rebuilds the pool
+- every later `send_with_retry` / `send_email_async` in async mode logs "Executor not initialized" and returns None without running `func` - the email is never sent
+- fix: rebuild the executor lazily on submit (or fall back to sync), and cover it with a test that calls `shutdown()` then sends
+
+
 #### install the standard release workflow
 - there is no `.github/workflows/detect-version.yml` here at all - releasing means opening
   the Actions tab and running `release.yml` by hand
