@@ -75,13 +75,14 @@ All settings are optional and should be added to your `settings.py`:
 # Team name for email templates
 TEAM_NAME = "My Team"
 
-# Set to True during testing to prevent actual email sending
+# Set to True during testing: emails are not actually sent, and sending runs synchronously
 IN_TEST = False
 ```
 
 ### Email Threading Configuration
 
-The app uses an advanced threading system for sending emails asynchronously:
+Emails are sent asynchronously by a singleton `EmailSender`: a thread pool of `EMAIL_MAX_WORKERS`
+threads, with retries and exponential backoff. Settings are read once, at first use:
 
 ```python
 # Maximum concurrent email threads (default: 3)

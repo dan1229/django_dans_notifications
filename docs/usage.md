@@ -123,7 +123,7 @@ manager.mark_notification_basic_read(notification_id=123)
 ### Testing Mode
 ```python
 # settings.py
-IN_TEST = True  # Prevents actual email sending during tests
+IN_TEST = True  # No actual email sending during tests; sending runs synchronously
 ```
 
 ### Debug Email Issues

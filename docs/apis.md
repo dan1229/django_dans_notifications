@@ -230,21 +230,18 @@ Requested notification not found.
 
 ## Pagination
 
-All list endpoints support pagination with the following query parameters:
+All list endpoints are paginated with your project's DRF pagination settings:
 
 - `page`: Page number (default: 1)
-- `page_size`: Number of items per page (configured in settings, default: 20)
+- `page_size`: only honoured if your project's paginator sets `page_size_query_param`; the package sets none
 
 Example:
 ```
-GET /api/notifications/basic/?page=2&page_size=10
+GET /api/notifications/basic/?page=2
 ```
 
 ## Filtering and Ordering
 
-### Basic Notifications
-- Filter by read status: `?read=true` or `?read=false`
-
-### All Notification Types
-- Order by date: `?ordering=-datetime_sent` (newest first)
-- Order by date: `?ordering=datetime_sent` (oldest first)
+The package configures no filter backends. List views pass through `filter_queryset()`, so
+filtering (e.g. `?read=true`) or ordering (e.g. `?ordering=-datetime_sent`) only works if your
+project sets `DEFAULT_FILTER_BACKENDS` accordingly.

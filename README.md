@@ -1,4 +1,5 @@
 # Django Dans Notifications
+#### By: [Daniel Nazarian](https://danielnazarian) 🐧👹
 
 [![Lint](https://github.com/dan1229/django_dans_notifications/actions/workflows/python-lint.yml/badge.svg)](https://github.com/dan1229/django_dans_notifications/actions/workflows/python-lint.yml)
 [![Test](https://github.com/dan1229/django_dans_notifications/actions/workflows/python-test.yml/badge.svg)](https://github.com/dan1229/django_dans_notifications/actions/workflows/python-test.yml)
